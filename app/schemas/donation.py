@@ -78,6 +78,7 @@ class DonationResponse(DonationBase):
     created_at: datetime
     updated_at: datetime
     donation_id: Optional[str] = None
+    food_order_id: Optional[str] = None
     donor_name: Optional[str] = None
     ngo_id: Optional[str] = None
     accepted_by: Optional[str] = None

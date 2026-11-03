@@ -1,6 +1,7 @@
 import logging
+import secrets
+from datetime import datetime, timezone, timedelta
 from bson import ObjectId
-from datetime import datetime, timezone
 from app.database.mongodb import mongodb
 from app.schemas.donation import DonationCreate, DonationUpdate
 from fastapi import HTTPException
@@ -34,8 +35,14 @@ async def create_donation(donor_id: str, donation: DonationCreate) -> dict:
     doc["donor_name"] = donor_user.get("name", "Vinay Aradhya") if donor_user else "Vinay Aradhya"
     
     now = datetime.now(timezone.utc)
-    short_ts = now.strftime("%y%m%d%H%M%S")
-    doc["donation_id"] = f"DON-{doc['donor_name'].split()[0].upper()}-{short_ts[-5:]}"
+    order_num = secrets.randbelow(9000) + 1000
+    food_order_id = f"FB-{order_num}"
+    pickup_otp = f"{secrets.randbelow(9000) + 1000}"
+    
+    doc["food_order_id"] = food_order_id
+    doc["donation_id"] = food_order_id
+    doc["pickup_otp"] = pickup_otp
+    doc["delivery_otp"] = None
     doc["status"] = doc.get("status") or "AVAILABLE"
     doc["created_at"] = now
     doc["updated_at"] = now
@@ -47,6 +54,24 @@ async def create_donation(donor_id: str, donation: DonationCreate) -> dict:
     await log_audit("Donation", doc["id"], "DONATION_CREATED", donor_id, new_status=doc["status"])
     return doc
 
+def _format_donation_response(doc: dict) -> dict:
+    if not doc:
+        return doc
+    if "_id" in doc:
+        doc["id"] = str(doc.pop("_id"))
+    elif "id" not in doc:
+        doc["id"] = f"FB-{secrets.randbelow(9000) + 1000}"
+        
+    if not doc.get("food_order_id"):
+        doc["food_order_id"] = doc.get("donation_id") or f"FB-{doc['id'][-4:].upper()}"
+    if not doc.get("donation_id"):
+        doc["donation_id"] = doc["food_order_id"]
+    if not doc.get("donor_name") and doc.get("donor_id"):
+        doc["donor_name"] = doc["donor_id"]
+    if not doc.get("pickup_otp"):
+        doc["pickup_otp"] = f"{secrets.randbelow(9000) + 1000}"
+    return doc
+
 async def get_donations(status: str = None, donor_id: str = None, skip: int = 0, limit: int = 100) -> list:
     query = {}
     if status and status.upper() != "ALL":
@@ -55,25 +80,13 @@ async def get_donations(status: str = None, donor_id: str = None, skip: int = 0,
         query["$or"] = [{"donor_id": donor_id}, {"donor_uid": donor_id}]
     cursor = mongodb.db.donations.find(query).sort("created_at", -1).skip(skip).limit(limit)
     docs = await cursor.to_list(length=limit)
-    for doc in docs:
-        doc["id"] = str(doc.pop("_id"))
-        if "donation_id" not in doc:
-            doc["donation_id"] = doc["id"]
-        if "donor_name" not in doc and doc.get("donor_id"):
-            doc["donor_name"] = doc["donor_id"]
-    return docs
+    return [_format_donation_response(doc) for doc in docs]
 
 async def get_donations_by_donor(donor_id: str) -> list:
     query = {"$or": [{"donor_id": donor_id}, {"donor_uid": donor_id}]}
     cursor = mongodb.db.donations.find(query).sort("created_at", -1)
     docs = await cursor.to_list(length=1000)
-    for doc in docs:
-        doc["id"] = str(doc.pop("_id"))
-        if "donation_id" not in doc:
-            doc["donation_id"] = doc["id"]
-        if "donor_name" not in doc and doc.get("donor_id"):
-            doc["donor_name"] = doc["donor_id"]
-    return docs
+    return [_format_donation_response(doc) for doc in docs]
 
 async def get_available_for_ngo(ngo_id: str, skip: int = 0, limit: int = 100) -> list:
     # Filter out donations that this NGO has rejected
@@ -88,35 +101,19 @@ async def get_available_for_ngo(ngo_id: str, skip: int = 0, limit: int = 100) ->
     query = {"status": {"$in": ["AVAILABLE", "PENDING", "MATCHING"]}, "_id": {"$nin": rejected_ids}}
     cursor = mongodb.db.donations.find(query).sort("created_at", -1).skip(skip).limit(limit)
     docs = await cursor.to_list(length=limit)
-    for doc in docs:
-        doc["id"] = str(doc.pop("_id"))
-        if "donation_id" not in doc:
-            doc["donation_id"] = doc["id"]
-        if "donor_name" not in doc and doc.get("donor_id"):
-            doc["donor_name"] = doc["donor_id"]
-    return docs
+    return [_format_donation_response(doc) for doc in docs]
 
 async def get_ngo_history(ngo_id: str, skip: int = 0, limit: int = 100) -> list:
     query = {"$or": [{"matched_receiver": ngo_id}, {"accepted_by": ngo_id}, {"accepted_by_ngo_id": ngo_id}]}
     cursor = mongodb.db.donations.find(query).sort("created_at", -1).skip(skip).limit(limit)
     docs = await cursor.to_list(length=limit)
-    for doc in docs:
-        doc["id"] = str(doc.pop("_id"))
-        if "donation_id" not in doc:
-            doc["donation_id"] = doc["id"]
-        if "donor_name" not in doc and doc.get("donor_id"):
-            doc["donor_name"] = doc["donor_id"]
-    return docs
+    return [_format_donation_response(doc) for doc in docs]
 
 async def get_donation_by_id(donation_id: str) -> dict:
     doc = await _find_donation_doc(donation_id)
-    if doc:
-        doc["id"] = str(doc.pop("_id"))
-    return doc
+    return _format_donation_response(doc) if doc else None
 
 import secrets
-from datetime import timedelta
-
 async def accept_donation(donation_id: str, ngo_id: str) -> dict:
     doc = await _find_donation_doc(donation_id)
     if not doc:
@@ -127,8 +124,16 @@ async def accept_donation(donation_id: str, ngo_id: str) -> dict:
     if current_status not in ["AVAILABLE", "PENDING", "MATCHING"]:
         raise HTTPException(status_code=409, detail="Donation no longer available or already accepted")
 
-    # Generate a cryptographically secure 4-digit numeric handover OTP
-    handover_otp = f"{secrets.randbelow(9000) + 1000}"
+    # Maintain existing Pickup OTP for donor handover, or generate if missing
+    pickup_otp = doc.get("pickup_otp")
+    if not pickup_otp:
+        pickup_otp = f"{secrets.randbelow(9000) + 1000}"
+
+    # Generate a DISTINCT 4-digit Delivery OTP for Receiver confirmation
+    delivery_otp = f"{secrets.randbelow(9000) + 1000}"
+    while delivery_otp == pickup_otp:
+        delivery_otp = f"{secrets.randbelow(9000) + 1000}"
+
     now = datetime.now(timezone.utc)
 
     result = await mongodb.db.donations.find_one_and_update(
@@ -138,9 +143,9 @@ async def accept_donation(donation_id: str, ngo_id: str) -> dict:
             "accepted_by": ngo_id,
             "matched_receiver": ngo_id,
             "accepted_by_ngo_id": ngo_id,
-            "handover_otp": handover_otp,
-            "delivery_otp": handover_otp,
-            "pickup_otp": handover_otp,
+            "pickup_otp": pickup_otp,
+            "delivery_otp": delivery_otp,
+            "handover_otp": delivery_otp,
             "otp_generated_at": now,
             "otp_expires_at": now + timedelta(hours=6),
             "updated_at": now

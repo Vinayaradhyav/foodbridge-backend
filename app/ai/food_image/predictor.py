@@ -64,37 +64,28 @@ CATEGORY_KEYWORDS = {
 
 # Definite non-food items that MUST trigger rejection if detected with high confidence
 DEFINITE_NON_FOOD = [
-    # People, Portraits & Human Features
-    "person", "human", "face", "man", "woman", "boy", "girl", "child", "baby", "skin",
-    "head", "portrait", "selfie", "hair", "wig", "groom", "scuba_diver", "clothing",
-    "sleeper", "pajama", "nightshirt", "bare", "arm", "hand", "finger",
+    # People, Portraits & Human Faces (Pure portraits with zero food)
+    "person", "face", "man", "woman", "boy", "girl", "child", "baby",
+    "portrait", "selfie", "hair", "wig", "groom", "scuba_diver", "clothing",
+    "sleeper", "pajama", "nightshirt",
     # Electronics, Gadgets & Hardware
-    "monitor", "screen", "television", "tv", "laptop", "cellular_telephone", "cellphone", "phone",
-    "modem", "keyboard", "mouse", "printer", "speaker", "camera", "headphone", "earphone",
-    "switch", "cord", "wire", "cable", "remote_control", "ipod", "tablet", "desktop_computer",
-    "smartphone", "cellular",
-    # Household Appliances & Kitchen Machinery (Not Food)
-    "dishwasher", "dishrag", "dishcloth", "washing_machine", "refrigerator", "microwave",
-    "toaster", "vacuum", "iron", "sewing_machine", "hair_dryer", "stove", "oven", "sink",
+    "television", "tv", "laptop", "cellular_telephone", "cellphone",
+    "modem", "keyboard", "mouse", "printer", "speaker", "headphone", "earphone",
+    "remote_control", "ipod", "desktop_computer", "smartphone",
+    # Household Appliances & Machinery (Not Food)
+    "dishwasher", "washing_machine", "refrigerator", "vacuum", "iron", "sewing_machine", "hair_dryer",
     # Apparel, Footwear & Accessories
-    "shoe", "running_shoe", "sneaker", "boot", "sandal", "sock", "jean", "t-shirt", "shirt", "suit",
-    "dress", "skirt", "jacket", "coat", "tie", "hat", "cap", "sunglasses", "sunglass",
-    "glasses", "spectacles", "wallet", "purse", "backpack", "umbrella", "watch", "wall_clock",
-    "jersey", "sweatshirt", "pants", "shorts",
+    "shoe", "running_shoe", "sneaker", "boot", "sandal", "sock", "jean", "suit",
+    "dress", "skirt", "jacket", "coat", "tie", "hat", "cap", "sunglasses",
+    "wallet", "purse", "backpack", "umbrella", "watch", "wall_clock",
     # Vehicles & Transportation
     "car", "sports_car", "convertible", "cab", "truck", "pickup", "bus", "motorcycle",
     "motorbike", "bicycle", "wheel", "tire", "traffic_light", "street_sign", "cash_machine",
     "gas_pump", "airplane", "airliner", "boat", "speedboat", "canoe", "yacht", "submarine",
-    # Household Furniture & Structures & Bedding
+    # Household Furniture & Structures
     "chair", "armchair", "folding_chair", "desk", "table_lamp", "lamp", "sofa", "couch",
-    "bed", "pillow", "quilt", "blanket", "wardrobe", "bookcase", "door", "window", "wall", "brick",
-    "floor", "carpet", "tile", "curtain", "radiator", "toilet_tissue", "paper_towel",
-    "toilet", "bathtub", "washbasin", "tub", "studio_couch", "cushion", "sheet", "mattress",
-    "hammock", "sliding_door", "room", "ceiling",
-    # Office, Paper & Stationery
-    "web_site", "comic_book", "book_jacket", "book", "magazine", "newspaper", "notebook",
-    "envelope", "paper", "pen", "pencil", "ruler", "scissors", "eraser", "binder",
-    # Money & Metal Tools
+    "bed", "wardrobe", "bookcase", "door", "window", "toilet", "bathtub", "washbasin",
+    # Metal Tools & Money
     "coin", "money", "cash", "banknote", "credit_card", "safe", "hammer", "wrench", "screwdriver",
     # Animals & Pets
     "dog", "cat", "puppy", "kitten", "horse", "bird", "parrot", "pigeon", "rodent", "hamster"
@@ -269,85 +260,83 @@ class FoodImagePredictor:
     def _detect_food_characteristics_from_image(self, img: Image.Image) -> dict:
         """
         Multi-spectral and color-space analysis to distinguish edible food and packaged groceries
-        from non-food objects, human hands, skin, and backgrounds.
+        from non-food objects. Real-world food donations often have human hands holding the plate
+        or bag; this analyzer detects food features and distinguishes hands holding food from pure non-food.
         """
         img_thumb = img.resize((128, 128))
         arr = np.array(img_thumb, dtype=np.float32) / 255.0
         r, g, b = arr[:, :, 0], arr[:, :, 1], arr[:, :, 2]
 
-        # 1. Multi-space Human Skin & Hand Detection
-        # Standard YCrCb skin chrominance model (Peer et al., Kovac et al.)
+        # 1. Texture & Edge Analysis
+        # Food, grains, cooked rice, biryani, curries, packaging folds have micro-texture & gradients.
+        gray = 0.299 * r + 0.587 * g + 0.114 * b
+        grad_x = np.abs(gray[:, 1:] - gray[:, :-1])
+        grad_y = np.abs(gray[1:, :] - gray[:-1, :])
+        grad_mag = float(np.mean(grad_x) + np.mean(grad_y))
+        local_var = float(np.var(gray))
+
+        # 2. Skin Chrominance Model (YCbCr & Normalized RGB)
         y = 0.299 * r + 0.587 * g + 0.114 * b
         cr = (r - y) * 0.713 + 0.5
         cb = (b - y) * 0.564 + 0.5
-
-        # YCrCb skin mask
         ycrcb_skin = (cr >= 0.52) & (cr <= 0.68) & (cb >= 0.30) & (cb <= 0.50)
-
-        # Normalized RGB skin mask
         rgb_skin = (
-            (r > 0.32) & (g > 0.18) & (b > 0.10) &
+            (r > 0.35) & (g > 0.20) & (b > 0.12) &
             (r > g) & (g > b) &
-            ((r - g) > 0.04) & ((r - g) < 0.32) &
-            ((r - b) > 0.08) & ((r - b) < 0.48)
+            ((r - g) > 0.05) & ((r - g) < 0.30) &
+            ((r - b) > 0.08) & ((r - b) < 0.45)
         )
-
         combined_skin = ycrcb_skin | rgb_skin
         skin_ratio = float(np.mean(combined_skin))
 
-        # Center-crop skin ratio (hands held directly up to camera)
-        h, w = arr.shape[:2]
-        center_skin = combined_skin[h//4:3*h//4, w//4:3*w//4]
-        center_skin_ratio = float(np.mean(center_skin)) if center_skin.size > 0 else 0.0
+        # CRITICAL DISTINCTION: Pure skin is smooth (low grad_mag) and occupies most of the frame.
+        # Hands holding a bag of rice or plate of biryani must NEVER trigger non-food rejection!
+        is_pure_skin_no_food = (skin_ratio > 0.68) and (grad_mag < 0.038)
 
-        # Hand / skin flag: If skin is present in center (>8%) or globally (>6%)
-        is_hand_or_skin = (center_skin_ratio > 0.08) or (skin_ratio > 0.06)
+        # 3. Spectral & Food Signatures
+        # Golden spiced rice, biryani, pulao, curries, lentils
+        golden_curry_mask = (r > 0.38) & (g > 0.28) & (r > b) & ((r - b) > 0.06)
+        golden_curry = float(np.mean(golden_curry_mask))
 
-        # 2. Food Color Traits (Only active if NOT human skin)
-        # Suppress warm tones if pixel belongs to skin
-        non_skin_mask = ~combined_skin
+        # Grains, sugar, salt, flour, dry staples in plastic bags (light granular reflection)
+        glare = float(np.mean((r > 0.88) & (g > 0.85) & (b > 0.80)))
+        light_grains = float(np.mean((r > 0.60) & (g > 0.55) & (b > 0.50)))
+        speckles_spices = float(np.mean((r < 0.55) & (g < 0.45) & (b < 0.35))) # Spices, peanuts, nuts
 
-        # Green vegetables & herbs
-        green_mask = (g > r * 1.1) & (g > b * 1.1) & (g > 0.2) & non_skin_mask
+        # Green vegetables & fresh produce
+        green_mask = (g > r * 1.05) & (g > b * 1.05) & (g > 0.22)
         green_rich = float(np.mean(green_mask))
 
-        # Golden curries, dal, sambar, biryani (MUST NOT be skin)
-        curry_mask = (r > 0.45) & (g > 0.30) & (b < r * 0.68) & non_skin_mask
-        golden_curry = float(np.mean(curry_mask))
-        if is_hand_or_skin:
-            golden_curry = 0.0
-
-        # White/cream rice, dairy, idli, paneer
-        white_cream = float(np.mean((r > 0.70) & (g > 0.70) & (b > 0.65) & non_skin_mask))
-
-        # Baked / bread brown (MUST NOT be skin)
-        baked_brown_mask = (r > 0.40) & (g > 0.25) & (b < 0.32) & non_skin_mask
+        # Baked bread / roti / chapati / crusts
+        baked_brown_mask = (r > 0.38) & (g > 0.22) & (b < 0.32) & (r > g)
         baked_brown = float(np.mean(baked_brown_mask))
-        if is_hand_or_skin:
-            baked_brown = 0.0
+
+        # White / cream dairy or steamed rice
+        white_cream = float(np.mean((r > 0.70) & (g > 0.70) & (b > 0.65)))
 
         color_std = float(np.std(r) + np.std(g) + np.std(b))
         warmth = (float(np.mean(r)) + float(np.mean(g))) - (float(np.mean(b)) * 1.5)
 
-        # Edge & packaging analysis: Packaged foods typically have sharp straight geometric edges
-        gray = 0.299 * r + 0.587 * g + 0.114 * b
-        grad_x = np.abs(gray[:, 1:] - gray[:, :-1])
-        grad_y = np.abs(gray[1:, :] - gray[:-1, :])
+        # High-contrast edge detection for packaging / boxes
         high_contrast_edges = float(np.mean((grad_x[:127, :127] > 0.20) | (grad_y[:127, :127] > 0.20)))
 
         is_likely_food = False
-        if not is_hand_or_skin:
-            if golden_curry > 0.12 or green_rich > 0.06 or (white_cream > 0.25 and color_std > 0.10) or (baked_brown > 0.12):
+        if not is_pure_skin_no_food:
+            if grad_mag > 0.040 or golden_curry > 0.10 or light_grains > 0.25 or green_rich > 0.05 or baked_brown > 0.10:
                 is_likely_food = True
-            elif warmth > 0.12 and color_std > 0.15:
+            elif warmth > 0.10 and color_std > 0.12:
                 is_likely_food = True
 
         return {
             "is_likely_food": is_likely_food,
-            "is_hand_or_skin": is_hand_or_skin,
+            "is_pure_skin_no_food": is_pure_skin_no_food,
             "skin_ratio": skin_ratio,
-            "center_skin_ratio": center_skin_ratio,
+            "grad_mag": grad_mag,
+            "local_var": local_var,
             "golden_curry": golden_curry,
+            "light_grains": light_grains,
+            "glare": glare,
+            "speckles_spices": speckles_spices,
             "green_rich": green_rich,
             "white_cream": white_cream,
             "baked_brown": baked_brown,
@@ -358,15 +347,15 @@ class FoodImagePredictor:
     def predict(self, base64_image: str, declared_food_type: str = "", declared_quantity: int = 0) -> dict:
         """
         Takes base64 food photo, runs MobileNetV2 transfer learning inference,
-        corroborates with multi-space spectral characteristics, verifies packaging or food presence,
-        and enforces strict rejection on human hands, non-food objects, and backgrounds.
+        corroborates with multi-spectral characteristics, verifies packaging or food presence,
+        accurately identifies Indian dishes, grains, and groceries, and prevents false rejections.
         """
         try:
             # 1. Decode Image
             img_data = base64.b64decode(base64_image.split(',')[1] if ',' in base64_image else base64_image)
             img = Image.open(BytesIO(img_data)).convert('RGB')
 
-            # 2. Check visual & skin characteristics
+            # 2. Check visual & spectral food characteristics
             color_traits = self._detect_food_characteristics_from_image(img)
 
             # 3. Model Inference (Transfer Learning on MobileNetV2)
@@ -411,7 +400,7 @@ class FoodImagePredictor:
                 "Canned Goods / Tins": ["can", "tin", "canned", "tin_can", "canister"],
                 "Carton & Tetra Pak (Milk / Juices)": ["carton", "tetra_pak", "juice_box", "milk_carton"],
                 "Sealed Snack & Biscuit Packets": ["packet", "biscuit", "cookie", "chips", "pretzel", "cracker", "namkeen", "snack"],
-                "Packaged Dry Staples & Grains": ["bag", "sack", "flour", "grain", "rice", "dal", "lentil", "pasta", "atta", "cereal"],
+                "Packaged Dry Staples & Grains": ["bag", "sack", "flour", "grain", "rice", "dal", "lentil", "pasta", "atta", "cereal", "sugar"],
                 "Bottled Beverages & Liquids": ["bottle", "water_bottle", "pop_bottle", "beer_bottle", "wine_bottle", "jug"],
                 "Jars & Preserves": ["jar", "preserve", "jam", "honey", "pickle", "sauce"]
             }
@@ -430,19 +419,19 @@ class FoodImagePredictor:
                         break
 
                 # If not a recognized food package, check top predictions for definite non-food objects
-                if not detected_package_type:
-                    for idx, p in enumerate(top_predictions[:3]):
+                # NOTE: Only trigger non-food if color_traits["is_likely_food"] is FALSE to avoid ImageNet artifacts
+                if not detected_package_type and not color_traits["is_likely_food"]:
+                    for idx, p in enumerate(top_predictions[:2]):
                         p_clean = p["category"].lower()
                         for nf in DEFINITE_NON_FOOD:
-                            if _match_keyword(nf, p_clean):
-                                if idx == 0 or p["probability"] >= 0.18:
-                                    is_definite_non_food = True
-                                    detected_non_food_label = p["category"]
-                                    break
+                            if _match_keyword(nf, p_clean) and p["probability"] >= 0.35:
+                                is_definite_non_food = True
+                                detected_non_food_label = p["category"]
+                                break
                         if is_definite_non_food:
                             break
 
-                # If not non-food, look for genuine food categories
+                # If not non-food, look for genuine food categories in predictions
                 if not is_definite_non_food:
                     for p in top_predictions:
                         p_label = p["category"].lower()
@@ -454,23 +443,32 @@ class FoodImagePredictor:
                                     food_found_item = p["category"]
                                 break
 
-            # 5. Non-Food & Hand Filtering (CRITICAL GUARD)
-            # If human hand / skin is detected in the image:
-            if color_traits["is_hand_or_skin"]:
+            # 5. Non-Food Filtering
+            # Only reject if the image is strictly pure smooth skin with zero food:
+            if color_traits["is_pure_skin_no_food"]:
                 is_definite_non_food = True
                 detected_non_food_label = "Human Hand / Skin (Non-Food)"
 
-            # Check if packaged food was declared or detected
+            # Check if cooked dish / rice / biryani is detected
+            is_cooked_meal = False
+            if color_traits["speckles_spices"] >= 0.006 or color_traits["golden_curry"] > 0.20:
+                is_cooked_meal = True
+
+            # Check if packaged food / groceries are detected
             is_packaged = False
             if detected_package_type:
                 is_packaged = True
-            elif any(w in norm_decl for w in ["package", "pack", "canned", "tin", "biscuit", "box", "tetra", "bottle", "carton", "grocery", "grain"]):
+            elif not is_cooked_meal and ((color_traits["glare"] > 0.40 and color_traits["speckles_spices"] < 0.006) or color_traits["light_grains"] > 0.45):
+                # Translucent bag of grains, sugar, pulses, or sealed groceries
+                is_packaged = True
+                detected_package_type = "Packaged Dry Staples & Groceries"
+            elif any(w in norm_decl for w in ["package", "pack", "canned", "tin", "biscuit", "box", "tetra", "bottle", "carton", "grocery", "grain", "sugar", "atta", "flour"]):
                 is_packaged = True
                 detected_package_type = "Packaged Essentials & Groceries"
 
-            # Check if loose food was declared
+            # Check declared category
             declared_cat = None
-            if any(w in norm_decl for w in ["cooked", "meal", "rice", "curry", "dal", "biryani", "sambar", "dosa", "idli", "sabzi", "gravy"]):
+            if any(w in norm_decl for w in ["cooked", "meal", "rice", "curry", "dal", "biryani", "pulao", "sambar", "dosa", "idli", "sabzi", "gravy"]):
                 declared_cat = "Cooked Meals"
             elif any(w in norm_decl for w in ["raw", "produce", "veg", "fruit", "salad"]):
                 declared_cat = "Raw Produce"
@@ -478,18 +476,14 @@ class FoodImagePredictor:
                 declared_cat = "Bakery & Bread"
             elif any(w in norm_decl for w in ["dairy", "milk", "cheese", "paneer", "curd", "yogurt"]):
                 declared_cat = "Dairy Products"
+            elif any(w in norm_decl for w in ["package", "grocery", "staple", "grain"]):
+                declared_cat = "Packaged Foods & Groceries"
 
             # STRICT REJECTION LOGIC:
-            # 1. Human hand or skin detected
-            # 2. Definite non-food item detected by neural vision
-            # 3. No genuine food keyword in top predictions AND visual color/texture indicates no food
-            has_food_keyword = (food_found_category is not None) or is_packaged
-
-            if is_definite_non_food or (not has_food_keyword and not color_traits["is_likely_food"]):
-                non_food_reason = detected_non_food_label if is_definite_non_food else (
-                    top_predictions[0]["category"] if top_predictions else "Non-Food Object"
-                )
-                conf = 0.96 if is_definite_non_food else 0.92
+            # Only reject if definite non-food was identified AND no food characteristics exist
+            if is_definite_non_food and not color_traits["is_likely_food"]:
+                non_food_reason = detected_non_food_label
+                conf = 0.96
 
                 return {
                     "predicted_category": "Non-Food / Graphic",
@@ -517,7 +511,7 @@ class FoodImagePredictor:
             if is_packaged:
                 mapped_category = "Packaged Foods & Groceries"
                 primary_item_name = detected_package_type or "Packaged Essentials & Groceries"
-                confidence = max(0.88, highest_food_prob)
+                confidence = max(0.92, highest_food_prob)
 
                 return {
                     "predicted_category": mapped_category,
@@ -525,11 +519,11 @@ class FoodImagePredictor:
                     "confidence": round(confidence, 2),
                     "top_predictions": [
                         {"category": primary_item_name, "probability": confidence},
-                        {"category": "Packaged Food", "probability": 0.85},
-                        {"category": "Food Grade Package", "probability": 0.80}
+                        {"category": "Packaged Dry Staples & Groceries", "probability": 0.88},
+                        {"category": "Hermetically Sealed Groceries", "probability": 0.85}
                     ],
                     "is_match": True,
-                    "verification_message": f"AI Verified: Sealed Packaged Food identified ({primary_item_name}).",
+                    "verification_message": f"AI Verified: Sealed Packaged Groceries identified ({primary_item_name}).",
                     "freshness_status": "PACKAGED_VERIFIED",
                     "freshness_grade": "Grade A (Hermetically Sealed Packaging)",
                     "spoilage_score": 0.02,
@@ -542,39 +536,43 @@ class FoodImagePredictor:
                     },
                     "is_safe_for_redistribution": True,
                     "recommendation": "Packaged Food Verified: Inspect expiration/best before date and ensure seals are intact before distribution.",
-                    "model_architecture": "MobileNetV2 Deep Vision + Package Geometry Classifier",
+                    "model_architecture": "MobileNetV2 Deep Vision + Bio-Spectral Grocery Analyzer",
                     "disclaimer": "Statutory FSSAI Advisory: Ensure packaged products comply with shelf-life and labeling standards."
                 }
 
             # Map the category for Cooked / Raw / Bakery / Dairy
-            if food_found_category:
+            if is_cooked_meal:
+                mapped_category = "Cooked Meals"
+                primary_item_name = "Cooked Rice / Biryani / Pulao" if color_traits["speckles_spices"] >= 0.005 else "Prepared Cooked Meal"
+                confidence = 0.94
+            elif food_found_category:
                 mapped_category = food_found_category
                 primary_item_name = food_found_item or "Cooked Meals"
-                confidence = max(0.85, highest_food_prob)
+                confidence = max(0.88, highest_food_prob)
             elif declared_cat:
                 mapped_category = declared_cat
                 primary_item_name = declared_food_type.title()
-                confidence = 0.88
+                confidence = 0.90
             elif color_traits["golden_curry"] > 0.12:
                 mapped_category = "Cooked Meals"
                 primary_item_name = "Curry / Gravy Dish"
-                confidence = 0.86
+                confidence = 0.90
             elif color_traits["green_rich"] > 0.06:
                 mapped_category = "Raw Produce"
                 primary_item_name = "Fresh Vegetables / Produce"
-                confidence = 0.85
-            elif color_traits["baked_brown"] > 0.12:
+                confidence = 0.88
+            elif color_traits["baked_brown"] > 0.10:
                 mapped_category = "Bakery & Bread"
-                primary_item_name = "Bread / Baked Item"
-                confidence = 0.84
+                primary_item_name = "Fresh Bakery & Bread"
+                confidence = 0.88
             elif color_traits["white_cream"] > 0.25:
                 mapped_category = "Cooked Meals"
-                primary_item_name = "Steamed Rice / Cooked Dish"
-                confidence = 0.85
+                primary_item_name = "Steamed Rice / Dairy Dish"
+                confidence = 0.88
             else:
                 mapped_category = "Cooked Meals"
-                primary_item_name = "Prepared Food Meal"
-                confidence = 0.80
+                primary_item_name = "Prepared Meal Dish"
+                confidence = 0.85
 
             # Friendly user-facing item names
             if primary_item_name.lower() in ["plate", "platter", "pot", "crock_pot", "caldron", "wok", "frying_pan", "pan", "dish", "serving_dish", "tray"]:

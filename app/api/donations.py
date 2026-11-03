@@ -90,6 +90,77 @@ class HandoverCompletionPayload(BaseModel):
     quantity_confirmed: Optional[bool] = True
     condition_good: Optional[bool] = True
 
+class OtpVerificationPayload(BaseModel):
+    otp: str
+
+@router.post("/{donation_id}/verify-pickup-otp")
+async def verify_donor_pickup_otp(
+    donation_id: str,
+    payload: OtpVerificationPayload,
+    current_user: dict = Depends(require_role(["volunteer", "admin"]))
+):
+    """
+    Validates the Donor's 4-digit Pickup OTP when the volunteer arrives at pickup.
+    Transitions donation to PICKED_UP / IN_TRANSIT.
+    """
+    doc = await donation_service.get_donation_by_id(donation_id)
+    if not doc:
+        raise HTTPException(status_code=404, detail="Donation not found")
+        
+    stored_otp = str(doc.get("pickup_otp", "")).strip()
+    provided_otp = str(payload.otp).strip()
+    if stored_otp and provided_otp != stored_otp:
+        raise HTTPException(status_code=400, detail="Invalid Donor Pickup OTP. Please check with donor.")
+        
+    from app.database.mongodb import mongodb
+    from datetime import datetime, timezone
+    from bson import ObjectId
+    now = datetime.now(timezone.utc)
+    try:
+        f = {"_id": ObjectId(doc["id"])}
+    except Exception:
+        f = {"$or": [{"donation_id": donation_id}, {"id": donation_id}]}
+    await mongodb.db.donations.update_one(f, {"$set": {"status": "IN_TRANSIT", "picked_up_at": now, "updated_at": now}})
+    return {
+        "message": "Pickup OTP verified successfully. Food donation is now IN_TRANSIT.",
+        "status": "IN_TRANSIT",
+        "food_order_id": doc.get("food_order_id") or doc.get("donation_id")
+    }
+
+@router.post("/{donation_id}/verify-delivery-otp")
+async def verify_receiver_delivery_otp(
+    donation_id: str,
+    payload: OtpVerificationPayload,
+    current_user: dict = Depends(require_role(["volunteer", "admin", "ngo", "food_receiver", "receiver"]))
+):
+    """
+    Validates the Receiver's 4-digit Delivery OTP when the volunteer hands over food.
+    Transitions donation to COMPLETED.
+    """
+    doc = await donation_service.get_donation_by_id(donation_id)
+    if not doc:
+        raise HTTPException(status_code=404, detail="Donation not found")
+        
+    stored_otp = str(doc.get("delivery_otp") or doc.get("handover_otp") or "").strip()
+    provided_otp = str(payload.otp).strip()
+    if stored_otp and provided_otp != stored_otp:
+        raise HTTPException(status_code=400, detail="Invalid Receiver Delivery OTP. Please verify with receiver.")
+        
+    from app.database.mongodb import mongodb
+    from datetime import datetime, timezone
+    from bson import ObjectId
+    now = datetime.now(timezone.utc)
+    try:
+        f = {"_id": ObjectId(doc["id"])}
+    except Exception:
+        f = {"$or": [{"donation_id": donation_id}, {"id": donation_id}]}
+    await mongodb.db.donations.update_one(f, {"$set": {"status": "COMPLETED", "completed_at": now, "updated_at": now}})
+    return {
+        "message": "Delivery OTP verified successfully! Food donation completed.",
+        "status": "COMPLETED",
+        "food_order_id": doc.get("food_order_id") or doc.get("donation_id")
+    }
+
 @router.post("/{donation_id}/complete-handover")
 async def complete_handover(
     donation_id: str,
