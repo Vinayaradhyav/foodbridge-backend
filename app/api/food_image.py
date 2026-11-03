@@ -22,6 +22,8 @@ class FoodImageResponse(BaseModel):
     is_match: bool
     verification_message: str
     freshness_status: str
+    freshness_grade: Optional[str] = "Grade A (Peak Freshness)"
+    overall_quality_score: Optional[float] = 0.96
     spoilage_score: float
     visual_defects: List[str]
     is_safe_for_redistribution: bool
@@ -62,6 +64,8 @@ async def classify_and_inspect_food_image(request: FoodImageRequest):
         is_match=prediction.get("is_match", True),
         verification_message=prediction.get("verification_message", "Verified by AI vision model."),
         freshness_status=prediction.get("freshness_status", "FRESH"),
+        freshness_grade=prediction.get("freshness_grade", "Grade A (Peak Freshness)"),
+        overall_quality_score=prediction.get("overall_quality_score", 0.96),
         spoilage_score=prediction.get("spoilage_score", 0.05),
         visual_defects=prediction.get("visual_defects", []),
         is_safe_for_redistribution=prediction.get("is_safe_for_redistribution", True),
