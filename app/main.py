@@ -191,6 +191,16 @@ app.add_middleware(
 
 _server_start_time = time.time()
 
+@app.get("/", tags=["Root"])
+async def root():
+    return {
+        "service": "Food-Bridge Enterprise Cloud Core API",
+        "status": "online_24_7",
+        "authoritative_database": "MongoDB Atlas",
+        "documentation": "/docs",
+        "health": "/api/health"
+    }
+
 @app.get("/health", tags=["Health"])
 @app.get("/api/health", tags=["Health"])
 async def health_check():
