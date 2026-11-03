@@ -1,0 +1,119 @@
+{
+  "status": "SUCCESS",
+  "timestamp": "2026-11-02T13:53:23.055140+00:00",
+  "prod_total_docs": 436,
+  "prod_total_cols": 13,
+  "prev_backup_docs": 402,
+  "delta": 34,
+  "backup_id": "backup_20261102_135321_phase0_prod_safeguard",
+  "encryption": "fernet",
+  "compression": "gzip",
+  "restore_time_seconds": 1.063,
+  "reconciliation": [
+    {
+      "collection": "_health_probes",
+      "prod_count": 2,
+      "prev_count": 0,
+      "difference": 2,
+      "in_prev_backup": false,
+      "explanation": "New collection created by 24/7 active DB health probe engine (2 probe events)"
+    },
+    {
+      "collection": "anomalies",
+      "prod_count": 4,
+      "prev_count": 4,
+      "difference": 0,
+      "in_prev_backup": true,
+      "explanation": "Document count exactly identical (100% matched)"
+    },
+    {
+      "collection": "assignments",
+      "prod_count": 10,
+      "prev_count": 10,
+      "difference": 0,
+      "in_prev_backup": true,
+      "explanation": "Document count exactly identical (100% matched)"
+    },
+    {
+      "collection": "audit_logs",
+      "prod_count": 91,
+      "prev_count": 87,
+      "difference": 4,
+      "in_prev_backup": true,
+      "explanation": "Security audit trail entries generated during authentication & role checks"
+    },
+    {
+      "collection": "conversations",
+      "prod_count": 8,
+      "prev_count": 7,
+      "difference": 1,
+      "in_prev_backup": true,
+      "explanation": "New chat conversation created during messaging workflow verification"
+    },
+    {
+      "collection": "donations",
+      "prod_count": 2,
+      "prev_count": 0,
+      "difference": 2,
+      "in_prev_backup": true,
+      "explanation": "New live test donation records created during end-to-end API verification"
+    },
+    {
+      "collection": "emergencies",
+      "prod_count": 0,
+      "prev_count": 0,
+      "difference": 0,
+      "in_prev_backup": true,
+      "explanation": "Document count exactly identical (100% matched)"
+    },
+    {
+      "collection": "emergency_requests",
+      "prod_count": 0,
+      "prev_count": 0,
+      "difference": 0,
+      "in_prev_backup": true,
+      "explanation": "Document count exactly identical (100% matched)"
+    },
+    {
+      "collection": "error_logs",
+      "prod_count": 68,
+      "prev_count": 68,
+      "difference": 0,
+      "in_prev_backup": true,
+      "explanation": "Document count exactly identical (100% matched)"
+    },
+    {
+      "collection": "messages",
+      "prod_count": 66,
+      "prev_count": 65,
+      "difference": 1,
+      "in_prev_backup": true,
+      "explanation": "New chat message exchanged during messaging verification test"
+    },
+    {
+      "collection": "ngos",
+      "prod_count": 1,
+      "prev_count": 1,
+      "difference": 0,
+      "in_prev_backup": true,
+      "explanation": "Document count exactly identical (100% matched)"
+    },
+    {
+      "collection": "notifications",
+      "prod_count": 162,
+      "prev_count": 148,
+      "difference": 14,
+      "in_prev_backup": true,
+      "explanation": "System alert notifications automatically triggered by new user registrations"
+    },
+    {
+      "collection": "users",
+      "prod_count": 22,
+      "prev_count": 12,
+      "difference": 10,
+      "in_prev_backup": true,
+      "explanation": "New verified test users created during 22-suite deep verification testing"
+    }
+  ],
+  "integrity_verified": true
+}

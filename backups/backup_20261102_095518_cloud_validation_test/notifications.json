@@ -1,0 +1,2090 @@
+[
+  {
+    "_id": {
+      "$oid": "6acbcb666eb111fa077fa410"
+    },
+    "user_id": "donor_vinay",
+    "title": "Donation In Transit",
+    "body": "Volunteer Rohit Kumar has picked up your donation of Sandwiches & Fruit Snack Boxes.",
+    "type": "DONATION_STATUS",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-11T16:46:14.191Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6acbcb666eb111fa077fa411"
+    },
+    "user_id": "ngo_greenvalley",
+    "title": "Incoming Food Delivery",
+    "body": "Delivery on the way from Vinay Aradhya. Estimated arrival in 25 mins.",
+    "type": "DELIVERY_ALERT",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-11T16:46:14.191Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6acbcb666eb111fa077fa412"
+    },
+    "user_id": "vol_rohit",
+    "title": "New Pickup Assigned",
+    "body": "You have been assigned to pick up 45 meals from Vinay Aradhya at MG Road.",
+    "type": "ASSIGNMENT",
+    "read": true,
+    "created_at": {
+      "$date": "2026-10-11T15:46:14.191Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6acbcb666eb111fa077fa413"
+    },
+    "user_id": "admin",
+    "title": "Emergency Request Logged",
+    "body": "Bangalore Flood Relief Camp logged emergency request for 150 meals.",
+    "type": "ADMIN_ALERT",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-11T15:46:14.191Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6accddb5764e6482c69054f7"
+    },
+    "user_id": "admin",
+    "title": "New Registration Pending Approval",
+    "body": "A new FOOD_RECEIVER (Aasra Children Welfare Trust) has registered and requires approval.",
+    "type": "ADMIN_ALERT",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-12T13:16:37.348Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad4d4681acc4329117ea174"
+    },
+    "user_id": "admin",
+    "title": "New Registration Pending Approval",
+    "body": "A new donor (Arun Kumar) has registered and requires approval.",
+    "type": "ADMIN_ALERT",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-18T14:15:04.758Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad6152f4becf6403063e402"
+    },
+    "notification_id": "admin_em_6ad590429a4b302edb593e53",
+    "user_id": "admin_broadcast",
+    "title": "Emergency Request",
+    "message": "Critical emergency request in Flood Camp requires attention.",
+    "type": "EMERGENCY_REQUEST",
+    "related_entity_id": "6ad590429a4b302edb593e53",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-19T03:36:34.557Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad6152f4becf6403063e403"
+    },
+    "notification_id": "admin_em_6ad593f3b1295b1fc090f515",
+    "user_id": "admin_broadcast",
+    "title": "Emergency Request",
+    "message": "Critical emergency request in Flood Camp requires attention.",
+    "type": "EMERGENCY_REQUEST",
+    "related_entity_id": "6ad593f3b1295b1fc090f515",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-19T03:52:19.364Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad6152f4becf6403063e404"
+    },
+    "notification_id": "admin_em_6ad59b6f12d49742df411528",
+    "user_id": "admin_broadcast",
+    "title": "Emergency Request",
+    "message": "Critical emergency request in Flood Camp requires attention.",
+    "type": "EMERGENCY_REQUEST",
+    "related_entity_id": "6ad59b6f12d49742df411528",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-19T04:24:15.399Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad6152f4becf6403063e405"
+    },
+    "notification_id": "admin_em_6ad59eb2964bad6d0f39057a",
+    "user_id": "admin_broadcast",
+    "title": "Emergency Request",
+    "message": "Critical emergency request in Flood Camp requires attention.",
+    "type": "EMERGENCY_REQUEST",
+    "related_entity_id": "6ad59eb2964bad6d0f39057a",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-19T04:38:10.318Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad6152f4becf6403063e406"
+    },
+    "notification_id": "admin_em_6ad5f8f804aa92ed0dd3c3b3",
+    "user_id": "admin_broadcast",
+    "title": "Emergency Request",
+    "message": "Critical emergency request in Flood Camp requires attention.",
+    "type": "EMERGENCY_REQUEST",
+    "related_entity_id": "6ad5f8f804aa92ed0dd3c3b3",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-19T11:03:20.021Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad6152f4becf6403063e407"
+    },
+    "notification_id": "admin_em_6ad5f9e49c72e8213e17c37d",
+    "user_id": "admin_broadcast",
+    "title": "Emergency Request",
+    "message": "Critical emergency request in Flood Camp requires attention.",
+    "type": "EMERGENCY_REQUEST",
+    "related_entity_id": "6ad5f9e49c72e8213e17c37d",
+    "read": true,
+    "created_at": {
+      "$date": "2026-10-19T11:07:16.015Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad6152f4becf6403063e408"
+    },
+    "notification_id": "admin_don_NEW_DONATION_6ad590429a4b302edb593e56",
+    "user_id": "admin_broadcast",
+    "title": "New Donation Available",
+    "message": "A new donation of Groceries was listed.",
+    "type": "NEW_DONATION",
+    "related_entity_id": "6ad590429a4b302edb593e56",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-19T03:36:34.707Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad6152f4becf6403063e409"
+    },
+    "notification_id": "admin_don_NEW_DONATION_6ad593f3b1295b1fc090f517",
+    "user_id": "admin_broadcast",
+    "title": "New Donation Available",
+    "message": "A new donation of Groceries was listed.",
+    "type": "NEW_DONATION",
+    "related_entity_id": "6ad593f3b1295b1fc090f517",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-19T03:52:19.505Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad6152f4becf6403063e40a"
+    },
+    "notification_id": "admin_don_NEW_DONATION_6ad59b6f12d49742df41152a",
+    "user_id": "admin_broadcast",
+    "title": "New Donation Available",
+    "message": "A new donation of Groceries was listed.",
+    "type": "NEW_DONATION",
+    "related_entity_id": "6ad59b6f12d49742df41152a",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-19T04:24:15.488Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad6152f4becf6403063e40b"
+    },
+    "notification_id": "admin_don_NEW_DONATION_6ad59eb2964bad6d0f39057c",
+    "user_id": "admin_broadcast",
+    "title": "New Donation Available",
+    "message": "A new donation of Groceries was listed.",
+    "type": "NEW_DONATION",
+    "related_entity_id": "6ad59eb2964bad6d0f39057c",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-19T04:38:10.408Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad6152f4becf6403063e40c"
+    },
+    "notification_id": "admin_don_NEW_DONATION_6ad5f8f804aa92ed0dd3c3b5",
+    "user_id": "admin_broadcast",
+    "title": "New Donation Available",
+    "message": "A new donation of Groceries was listed.",
+    "type": "NEW_DONATION",
+    "related_entity_id": "6ad5f8f804aa92ed0dd3c3b5",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-19T11:03:20.142Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad6152f4becf6403063e40d"
+    },
+    "notification_id": "admin_don_NEW_DONATION_6ad5f9e49c72e8213e17c37f",
+    "user_id": "admin_broadcast",
+    "title": "New Donation Available",
+    "message": "A new donation of Groceries was listed.",
+    "type": "NEW_DONATION",
+    "related_entity_id": "6ad5f9e49c72e8213e17c37f",
+    "read": true,
+    "created_at": {
+      "$date": "2026-10-19T11:07:16.111Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad61d99e477716861c9a481"
+    },
+    "notification_id": "admin_msg_msg_33975f503bfd",
+    "user_id": "admin_broadcast",
+    "title": "\ud83d\udcac New Message from Vinay Aradhya",
+    "message": "Hello Admin! Testing live WhatsApp/Telegram connection.",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_admin_donor_user",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-19T10:55:14.928Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad61d99e477716861c9a482"
+    },
+    "notification_id": "admin_msg_msg_cb9dc591a77c",
+    "user_id": "admin_broadcast",
+    "title": "\ud83d\udcac New Message from Vinay Aradhya",
+    "message": "hi",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_admin_donor_user",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-19T13:06:50.391Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad61d99e477716861c9a483"
+    },
+    "notification_id": "admin_msg_msg_da32c4102b44",
+    "user_id": "admin_broadcast",
+    "title": "\ud83d\udcac New Message from Vinay Aradhya",
+    "message": "hi",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_admin_donor_user",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-19T13:12:22.434Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad622fb55415dababc63ca0"
+    },
+    "notification_id": "notif_msg_msg_a13022d9dc73",
+    "user_id": "mock_ngo_hope",
+    "title": "\ud83d\udcac New Message from Vinay Aradhya",
+    "message": "Hello, when can you pick up the cooked rice donation?",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_mock_donor_vinay_mock_ngo_hope_donation_DON-001",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-19T14:02:35.965Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad622fc55415dababc63ca2"
+    },
+    "notification_id": "notif_msg_msg_7baeafb31c23",
+    "user_id": "mock_donor_vinay",
+    "title": "\ud83d\udcac New Message from Food Donor",
+    "message": "We will dispatch our volunteer within 30 minutes.",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_mock_donor_vinay_mock_ngo_hope_donation_DON-001",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-19T14:02:36.012Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad62312e477716861c9a485"
+    },
+    "notification_id": "notif_msg_msg_628768bcfe61",
+    "user_id": "admin_broadcast",
+    "title": "\ud83d\udcac New Message from Vinay Aradhya",
+    "message": "Admin please confirm 50 meals delivery",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_admin_donor_user",
+    "read": true,
+    "created_at": {
+      "$date": "2026-10-19T14:02:58.569Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad62312e477716861c9a486"
+    },
+    "notification_id": "notif_msg_msg_628768bcfe61_adm",
+    "user_id": "admin",
+    "title": "\ud83d\udcac New Message from Vinay Aradhya",
+    "message": "Admin please confirm 50 meals delivery",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_admin_donor_user",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-19T14:02:58.569Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad62312e477716861c9a487"
+    },
+    "notification_id": "admin_msg_msg_628768bcfe61",
+    "user_id": "admin_broadcast",
+    "title": "\ud83d\udcac New Message from Vinay Aradhya",
+    "message": "Admin please confirm 50 meals delivery",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_admin_donor_user",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-19T14:02:58.569Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad62a4ce477716861c9a489"
+    },
+    "notification_id": "notif_msg_msg_8322c759ffb3",
+    "user_id": "admin_broadcast",
+    "title": "\ud83d\udcac New Message from Vinay Aradhya",
+    "message": "hi",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_admin_donor_user",
+    "read": true,
+    "created_at": {
+      "$date": "2026-10-19T14:33:48.185Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad62a4ce477716861c9a48a"
+    },
+    "notification_id": "notif_msg_msg_8322c759ffb3_adm",
+    "user_id": "admin",
+    "title": "\ud83d\udcac New Message from Vinay Aradhya",
+    "message": "hi",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_admin_donor_user",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-19T14:33:48.185Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad62a4ce477716861c9a48b"
+    },
+    "notification_id": "admin_msg_msg_8322c759ffb3",
+    "user_id": "admin_broadcast",
+    "title": "\ud83d\udcac New Message from Vinay Aradhya",
+    "message": "hi",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_admin_donor_user",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-19T14:33:48.185Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad62a92e477716861c9a48d"
+    },
+    "notification_id": "notif_msg_msg_03dca0114946",
+    "user_id": "donor_user",
+    "title": "\ud83d\udcac New Message from Food-Bridge Admin Support",
+    "message": "helo",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_admin_donor_user",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-19T14:34:58.374Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad62a9fe477716861c9a48f"
+    },
+    "notification_id": "notif_msg_msg_f08515af7171",
+    "user_id": "donor_user",
+    "title": "\ud83d\udcac New Message from Food-Bridge Admin Support",
+    "message": "what is the problem",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_admin_donor_user",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-19T14:35:11.655Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad62aafe477716861c9a491"
+    },
+    "notification_id": "notif_msg_msg_f2e4daab5b33",
+    "user_id": "admin_broadcast",
+    "title": "\ud83d\udcac New Message from Vinay Aradhya",
+    "message": "nothing all good",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_admin_donor_user",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-19T14:35:27.763Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad62aafe477716861c9a492"
+    },
+    "notification_id": "notif_msg_msg_f2e4daab5b33_adm",
+    "user_id": "admin",
+    "title": "\ud83d\udcac New Message from Vinay Aradhya",
+    "message": "nothing all good",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_admin_donor_user",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-19T14:35:27.763Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad62ab0e477716861c9a493"
+    },
+    "notification_id": "admin_msg_msg_f2e4daab5b33",
+    "user_id": "admin_broadcast",
+    "title": "\ud83d\udcac New Message from Vinay Aradhya",
+    "message": "nothing all good",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_admin_donor_user",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-19T14:35:27.763Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad6e36b6ee0f50b6beb5afe"
+    },
+    "notification_id": "notif_msg_msg_f3cf9208e202",
+    "user_id": "mock_ngo_hope",
+    "title": "\ud83d\udcac New Message from Vinay Aradhya",
+    "message": "Hello, when can you pick up the cooked rice donation?",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_mock_donor_vinay_mock_ngo_hope_donation_DON-001",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-20T03:43:39.478Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad6e36b6ee0f50b6beb5b00"
+    },
+    "notification_id": "notif_msg_msg_1d9226e21a76",
+    "user_id": "mock_donor_vinay",
+    "title": "\ud83d\udcac New Message from Food Donor",
+    "message": "We will dispatch our volunteer within 30 minutes.",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_mock_donor_vinay_mock_ngo_hope_donation_DON-001",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-20T03:43:39.694Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad6e7b030a67420fe9472a5"
+    },
+    "notification_id": "admin_em_6ad6e44dfb4514cb9c551d9c",
+    "user_id": "admin_broadcast",
+    "title": "Emergency Request",
+    "message": "Critical emergency request in Flood Camp requires attention.",
+    "type": "EMERGENCY_REQUEST",
+    "related_entity_id": "6ad6e44dfb4514cb9c551d9c",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-20T03:47:25.114Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad6e7b030a67420fe9472a6"
+    },
+    "notification_id": "admin_don_NEW_DONATION_6ad6e44dfb4514cb9c551d9e",
+    "user_id": "admin_broadcast",
+    "title": "New Donation Available",
+    "message": "A new donation of Groceries was listed.",
+    "type": "NEW_DONATION",
+    "related_entity_id": "6ad6e44dfb4514cb9c551d9e",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-20T03:47:25.323Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad6e8cf30a67420fe9472a9"
+    },
+    "notification_id": "admin_don_NEW_DONATION_6ad6e8ce30a67420fe9472a7",
+    "user_id": "admin_broadcast",
+    "title": "New Donation Available",
+    "message": "A new donation of Prepared Meals was listed.",
+    "type": "NEW_DONATION",
+    "related_entity_id": "6ad6e8ce30a67420fe9472a7",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-20T04:06:38.294Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad77bf296b8598ae80520c3"
+    },
+    "notification_id": "notif_msg_msg_9d657f68ad7e",
+    "user_id": "mock_ngo_hope",
+    "title": "\ud83d\udcac New Message from Vinay Aradhya",
+    "message": "Hello, when can you pick up the cooked rice donation?",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_mock_donor_vinay_mock_ngo_hope_donation_DON-001",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-20T14:34:26.128Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad77bf296b8598ae80520c5"
+    },
+    "notification_id": "notif_msg_msg_6f9f7a62b2d8",
+    "user_id": "mock_donor_vinay",
+    "title": "\ud83d\udcac New Message from Food Donor",
+    "message": "We will dispatch our volunteer within 30 minutes.",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_mock_donor_vinay_mock_ngo_hope_donation_DON-001",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-20T14:34:26.170Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad8638aee5dc99a98edaf76"
+    },
+    "user_id": "admin",
+    "title": "New Registration Pending Approval",
+    "body": "A new FOOD_RECEIVER (food relief hub) has registered and requires approval.",
+    "type": "ADMIN_ALERT",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-21T07:02:34.026Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad8b2b36e81e9ab88b3bf2b"
+    },
+    "user_id": "user_1234567800_ngo",
+    "title": "\ud83c\udf89 Application Approved!",
+    "body": "Your organization application has been authorized by Food-Bridge Admin. You now have full platform access.",
+    "type": "ACCOUNT_VERIFIED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-21T12:40:19.308Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad8b3ff6e81e9ab88b3bf2f"
+    },
+    "user_id": "user_1234567800_ngo",
+    "title": "\ud83c\udf89 Application Approved!",
+    "body": "Your organization application has been authorized by Food-Bridge Admin. You now have full platform access.",
+    "type": "ACCOUNT_VERIFIED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-21T12:45:51.887Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad8b43b6e81e9ab88b3bf32"
+    },
+    "notification_id": "notif_msg_msg_ff4c36b6f11b",
+    "user_id": "1234567800",
+    "title": "\ud83d\udcac New Message from Food-Bridge Executive Admin",
+    "message": "hi",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_1234567800_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-21T12:46:51.563Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad8b4576e81e9ab88b3bf34"
+    },
+    "notification_id": "notif_msg_msg_178ebb3650b9",
+    "user_id": "admin_broadcast",
+    "title": "\ud83d\udcac New Message from mams relief hub",
+    "message": "helo",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_1234567800_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-21T12:47:19.221Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad8b4576e81e9ab88b3bf35"
+    },
+    "notification_id": "notif_msg_msg_178ebb3650b9_adm",
+    "user_id": "admin",
+    "title": "\ud83d\udcac New Message from mams relief hub",
+    "message": "helo",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_1234567800_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-21T12:47:19.221Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad8b4606e81e9ab88b3bf37"
+    },
+    "notification_id": "notif_msg_msg_fc01ee503c97",
+    "user_id": "1234567800",
+    "title": "\ud83d\udcac New Message from Food-Bridge Executive Admin",
+    "message": "\ud83d\ude9a Cold transport fleet arriving in 20 minutes.",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_1234567800_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-21T12:47:28.596Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad8b4706e81e9ab88b3bf39"
+    },
+    "notification_id": "notif_msg_msg_a33007263f15",
+    "user_id": "admin_broadcast",
+    "title": "\ud83d\udcac New Message from mams relief hub",
+    "message": "\ud83d\udea8 Emergency route priority",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_1234567800_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-21T12:47:44.325Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad8b4706e81e9ab88b3bf3a"
+    },
+    "notification_id": "notif_msg_msg_a33007263f15_adm",
+    "user_id": "admin",
+    "title": "\ud83d\udcac New Message from mams relief hub",
+    "message": "\ud83d\udea8 Emergency route priority",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_1234567800_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-21T12:47:44.325Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad8ecf1ab7259a5550a6b7d"
+    },
+    "notification_id": "admin_msg_msg_178ebb3650b9",
+    "user_id": "admin_broadcast",
+    "title": "\ud83d\udcac New Message from mams relief hub",
+    "message": "helo",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_1234567800_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-21T12:47:19.221Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad8ecf1ab7259a5550a6b7e"
+    },
+    "notification_id": "admin_msg_msg_a33007263f15",
+    "user_id": "admin_broadcast",
+    "title": "\ud83d\udcac New Message from mams relief hub",
+    "message": "\ud83d\udea8 Emergency route priority",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_1234567800_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-21T12:47:44.325Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad8ed6eab7259a5550a6b80"
+    },
+    "notification_id": "notif_msg_msg_2c3f1ef87f8e",
+    "user_id": "admin_broadcast",
+    "title": "\ud83d\udcac New Message from mams relief hub",
+    "message": "\u2744\ufe0f Cold storage requisition",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_1234567800_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-21T16:50:54.903Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad8ed6eab7259a5550a6b81"
+    },
+    "notification_id": "notif_msg_msg_2c3f1ef87f8e_adm",
+    "user_id": "admin",
+    "title": "\ud83d\udcac New Message from mams relief hub",
+    "message": "\u2744\ufe0f Cold storage requisition",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_1234567800_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-21T16:50:54.903Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad8ed74ab7259a5550a6b83"
+    },
+    "notification_id": "notif_msg_msg_f92f8480e31e",
+    "user_id": "1234567800",
+    "title": "\ud83d\udcac New Message from Food-Bridge Executive Admin",
+    "message": "\ud83c\udfe2 Fresh meal donation available for your relief center.",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_1234567800_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-21T16:51:00.397Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad8ee63ab7259a5550a6b84"
+    },
+    "notification_id": "admin_msg_msg_2c3f1ef87f8e",
+    "user_id": "admin_broadcast",
+    "title": "\ud83d\udcac New Message from mams relief hub",
+    "message": "\u2744\ufe0f Cold storage requisition",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_1234567800_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-21T16:50:54.903Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad8f384ab7259a5550a6b86"
+    },
+    "notification_id": "notif_msg_msg_7cb36db793e2",
+    "user_id": "1234567800",
+    "title": "\ud83d\udcac New Message from Food-Bridge Executive Admin",
+    "message": "Hi from WhatsApp Admin!",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_1234567800_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-21T17:16:52.704Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad8f3c7ab7259a5550a6b88"
+    },
+    "notification_id": "notif_msg_msg_1ec93601a219",
+    "user_id": "1234567800",
+    "title": "\ud83d\udcac New Message from Food-Bridge Executive Admin",
+    "message": "Hello WhatsApp",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_1234567800_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-21T17:17:59.225Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad8f4a4ab7259a5550a6b8a"
+    },
+    "notification_id": "notif_msg_msg_a6dd4b4ca8af",
+    "user_id": "admin_broadcast",
+    "title": "\ud83d\udcac New Message from mams relief hub",
+    "message": "hi",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_1234567800_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-21T17:21:40.472Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad8f4a4ab7259a5550a6b8b"
+    },
+    "notification_id": "notif_msg_msg_a6dd4b4ca8af_adm",
+    "user_id": "admin",
+    "title": "\ud83d\udcac New Message from mams relief hub",
+    "message": "hi",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_1234567800_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-21T17:21:40.472Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae495afd5fdf2ea26477aae"
+    },
+    "user_id": "admin",
+    "title": "New Registration Pending Approval",
+    "body": "A new donor (Vinay) has registered. AI Trust Score: 85%. Requires admin authorization.",
+    "type": "ADMIN_ALERT",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-30T13:03:43.882Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae495e6d5fdf2ea26477ab0"
+    },
+    "user_id": "admin",
+    "title": "New Registration Pending Approval",
+    "body": "A new FOOD_RECEIVER (gimini ngo) has registered. AI Trust Score: 98%. Requires admin authorization.",
+    "type": "ADMIN_ALERT",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-30T13:04:38.866Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae49613d5fdf2ea26477ab2"
+    },
+    "user_id": "uid_06b0125347164b2b",
+    "title": "\ud83c\udf89 Application Approved!",
+    "body": "Your organization application has been authorized by Food-Bridge Admin. You now have full platform access.",
+    "type": "ACCOUNT_VERIFIED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-30T13:05:23.060Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae566e3c970cbd495e68cff"
+    },
+    "user_id": "ngo_0cb807d6",
+    "title": "\ud83c\udf89 Application Approved!",
+    "body": "Your organization application has been authorized by Food-Bridge Admin. You now have full platform access.",
+    "type": "ACCOUNT_VERIFIED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T03:56:19.827Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae57aa719a71fa65919cd0c"
+    },
+    "user_id": "admin",
+    "title": "New Registration Pending Approval",
+    "body": "A new FOOD_RECEIVER (kk) has registered. AI Trust Score: 96%. Requires admin authorization.",
+    "type": "ADMIN_ALERT",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T05:20:39.531Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae57afc19a71fa65919cd0e"
+    },
+    "user_id": "user_6666655555_ngo",
+    "title": "\ud83c\udf89 Application Approved!",
+    "body": "Your organization application has been authorized by Food-Bridge Admin. You now have full platform access.",
+    "type": "ACCOUNT_VERIFIED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T05:22:03.988Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae57afc19a71fa65919cd10"
+    },
+    "user_id": "user_6666655555_ngo",
+    "title": "\ud83c\udf89 Application Approved!",
+    "body": "Your organization application has been authorized by Food-Bridge Admin. You now have full platform access.",
+    "type": "ACCOUNT_VERIFIED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T05:22:03.991Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae57b3e19a71fa65919cd13"
+    },
+    "user_id": "vol_1773ab54",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Admin action via Food Bridge Web Portal",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T05:23:10.044Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae57b3e19a71fa65919cd14"
+    },
+    "user_id": "vol_1773ab54",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Incomplete credentials or criteria not met",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T05:23:10.046Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae57b6b19a71fa65919cd16"
+    },
+    "notification_id": "notif_msg_msg_b842cecb4d0d",
+    "user_id": "6666655555",
+    "title": "\ud83d\udcac New Message from Food-Bridge Executive Admin",
+    "message": "hi",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_6666655555_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T05:23:54.991Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae57b9119a71fa65919cd18"
+    },
+    "notification_id": "notif_msg_msg_484357ee99bf",
+    "user_id": "6666655555",
+    "title": "\ud83d\udcac New Message from Food-Bridge Executive Admin",
+    "message": "what is the problem",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_6666655555_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T05:24:33.251Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae57bba19a71fa65919cd1b"
+    },
+    "user_id": "vol_b9a9022c",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Incomplete credentials or criteria not met",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T05:25:14.641Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae57bba19a71fa65919cd1c"
+    },
+    "user_id": "vol_b9a9022c",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Admin action via Food Bridge Web Portal",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T05:25:14.643Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae57bbd19a71fa65919cd1e"
+    },
+    "user_id": "vol_60da1b0b",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Admin action via Food Bridge Web Portal",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T05:25:17.916Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae57bc119a71fa65919cd20"
+    },
+    "user_id": "vol_4a276a52",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Admin action via Food Bridge Web Portal",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T05:25:21.687Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae57be019a71fa65919cd23"
+    },
+    "user_id": "donor_0f6d1229",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Incomplete credentials or criteria not met",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T05:25:52.794Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae57be019a71fa65919cd24"
+    },
+    "user_id": "donor_0f6d1229",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Admin action via Food Bridge Web Portal",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T05:25:52.793Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae57c1d19a71fa65919cd26"
+    },
+    "user_id": "donor_c745c2cf",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Admin action via Food Bridge Web Portal",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T05:26:53.377Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae57c1d19a71fa65919cd28"
+    },
+    "user_id": "donor_c745c2cf",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Incomplete credentials or criteria not met",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T05:26:53.379Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae57c4419a71fa65919cd2b"
+    },
+    "user_id": "ngo_30d2b791",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Admin action via Food Bridge Web Portal",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T05:27:32.754Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae57c4419a71fa65919cd2c"
+    },
+    "user_id": "ngo_30d2b791",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Incomplete credentials or criteria not met",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T05:27:32.777Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae57c8119a71fa65919cd2f"
+    },
+    "user_id": "ngo_ff2c75c2",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Admin action via Food Bridge Web Portal",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T05:28:33.315Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae57c8119a71fa65919cd30"
+    },
+    "user_id": "ngo_ff2c75c2",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Incomplete credentials or criteria not met",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T05:28:33.317Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae57ca419a71fa65919cd33"
+    },
+    "user_id": "donor_bc3bc580",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Admin action via Food Bridge Web Portal",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T05:29:08.461Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae57ca419a71fa65919cd34"
+    },
+    "user_id": "donor_bc3bc580",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Incomplete credentials or criteria not met",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T05:29:08.460Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae57cbd19a71fa65919cd37"
+    },
+    "user_id": "donor_2df91e68",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Incomplete credentials or criteria not met",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T05:29:33.813Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae57cbd19a71fa65919cd38"
+    },
+    "user_id": "donor_2df91e68",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Admin action via Food Bridge Web Portal",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T05:29:33.813Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae592935c4845388b02692d"
+    },
+    "notification_id": "notif_msg_msg_a7c964ab36e8",
+    "user_id": "mock_ngo_hope",
+    "title": "\ud83d\udcac New Message from Vinay Aradhya",
+    "message": "Hello, when can you pick up the cooked rice donation?",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_mock_donor_vinay_mock_ngo_hope_donation_DON-001",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T07:02:43.751Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae592935c4845388b02692f"
+    },
+    "notification_id": "notif_msg_msg_053004bf01b7",
+    "user_id": "mock_donor_vinay",
+    "title": "\ud83d\udcac New Message from Food Donor",
+    "message": "We will dispatch our volunteer within 30 minutes.",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_mock_donor_vinay_mock_ngo_hope_donation_DON-001",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T07:02:43.792Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae5929fb55c201c5bcb2d75"
+    },
+    "notification_id": "notif_msg_msg_e075e492c09f",
+    "user_id": "mock_ngo_hope",
+    "title": "\ud83d\udcac New Message from Vinay Aradhya",
+    "message": "Hello, when can you pick up the cooked rice donation?",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_mock_donor_vinay_mock_ngo_hope_donation_DON-001",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T07:02:55.010Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae5929fb55c201c5bcb2d77"
+    },
+    "notification_id": "notif_msg_msg_5eb07f28aa9e",
+    "user_id": "mock_donor_vinay",
+    "title": "\ud83d\udcac New Message from Food Donor",
+    "message": "We will dispatch our volunteer within 30 minutes.",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_mock_donor_vinay_mock_ngo_hope_donation_DON-001",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T07:02:55.038Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae59443b04c1656d8b20a31"
+    },
+    "notification_id": "notif_msg_msg_33a976cb27fe",
+    "user_id": "mock_ngo_hope",
+    "title": "\ud83d\udcac New Message from Vinay Aradhya",
+    "message": "Hello, when can you pick up the cooked rice donation?",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_mock_donor_vinay_mock_ngo_hope_donation_DON-001",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T07:09:55.365Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae59443b04c1656d8b20a33"
+    },
+    "notification_id": "notif_msg_msg_f58c6b980f2e",
+    "user_id": "mock_donor_vinay",
+    "title": "\ud83d\udcac New Message from Food Donor",
+    "message": "We will dispatch our volunteer within 30 minutes.",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_mock_donor_vinay_mock_ngo_hope_donation_DON-001",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T07:09:55.405Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae5e5ee7f6d609aa716beef"
+    },
+    "notification_id": "notif_msg_msg_3baabfd22d52",
+    "user_id": "8971460118",
+    "title": "\ud83d\udcac New Message from Food-Bridge Executive Admin",
+    "message": "hi",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_8971460118_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T12:58:22.175Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae5e61b7f6d609aa716bef1"
+    },
+    "user_id": "test_ngo_uid_123",
+    "title": "\ud83c\udf89 Application Approved!",
+    "body": "Your organization application has been authorized by Food-Bridge Admin. You now have full platform access.",
+    "type": "ACCOUNT_VERIFIED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T12:59:07.270Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae60931bf5b62f3b9abc2f8"
+    },
+    "user_id": "admin",
+    "title": "New Registration Pending Approval",
+    "body": "A new ngo (Shanti Seva Relief Foundation) has registered. AI Trust Score: 83%. Requires admin authorization.",
+    "type": "ADMIN_ALERT",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T15:28:49.966Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae6094ebf5b62f3b9abc2fa"
+    },
+    "user_id": "uid_9c2190f6e51f4961",
+    "title": "\ud83c\udf89 Application Approved!",
+    "body": "Your organization application has been authorized by Food-Bridge Admin. You now have full platform access.",
+    "type": "ACCOUNT_VERIFIED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T15:29:18.185Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae6095cbf5b62f3b9abc2fc"
+    },
+    "user_id": "admin",
+    "title": "New Registration Pending Approval",
+    "body": "A new ngo (Spam Organization Demo) has registered. AI Trust Score: 83%. Requires admin authorization.",
+    "type": "ADMIN_ALERT",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T15:29:32.918Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae6095dbf5b62f3b9abc2fe"
+    },
+    "user_id": "uid_4826482e92944d41",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Invalid organization credentials",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T15:29:33.252Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae6369a82c3b6206ea7cec3"
+    },
+    "notification_id": "notif_msg_msg_cf037355b0b9",
+    "user_id": "mock_ngo_hope",
+    "title": "\ud83d\udcac New Message from Vinay Aradhya",
+    "message": "Hello, when can you pick up the cooked rice donation?",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_mock_donor_vinay_mock_ngo_hope_donation_DON-001",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T18:42:34.930Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae6369a82c3b6206ea7cec5"
+    },
+    "notification_id": "notif_msg_msg_75ab61f94ad7",
+    "user_id": "mock_donor_vinay",
+    "title": "\ud83d\udcac New Message from Food Donor",
+    "message": "We will dispatch our volunteer within 30 minutes.",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_mock_donor_vinay_mock_ngo_hope_donation_DON-001",
+    "read": false,
+    "created_at": {
+      "$date": "2026-10-31T18:42:34.967Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae727e557538bfce4bf6f47"
+    },
+    "notification_id": "notif_msg_msg_1907e2aba4d9",
+    "user_id": "mock_ngo_hope",
+    "title": "\ud83d\udcac New Message from Vinay Aradhya",
+    "message": "Hello, when can you pick up the cooked rice donation?",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_mock_donor_vinay_mock_ngo_hope_donation_DON-001",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T11:52:05.529Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae727e557538bfce4bf6f49"
+    },
+    "notification_id": "notif_msg_msg_82fe8d3ba81c",
+    "user_id": "mock_donor_vinay",
+    "title": "\ud83d\udcac New Message from Food Donor",
+    "message": "We will dispatch our volunteer within 30 minutes.",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_mock_donor_vinay_mock_ngo_hope_donation_DON-001",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T11:52:05.613Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae72b539a203890c7e32dcd"
+    },
+    "user_id": "admin",
+    "title": "New Registration Pending Approval",
+    "body": "A new ngo (Test NGO) has registered. AI Trust Score: 83%. Requires admin authorization.",
+    "type": "ADMIN_ALERT",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T12:06:43.266Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae72b539a203890c7e32dd1"
+    },
+    "user_id": "admin",
+    "title": "New Registration Pending Approval",
+    "body": "A new donor (Test Donor) has registered. AI Trust Score: 85%. Requires admin authorization.",
+    "type": "ADMIN_ALERT",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T12:06:43.330Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae72b539a203890c7e32dd5"
+    },
+    "user_id": "admin",
+    "title": "New Registration Pending Approval",
+    "body": "A new volunteer (Test Volunteer) has registered. AI Trust Score: 85%. Requires admin authorization.",
+    "type": "ADMIN_ALERT",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T12:06:43.423Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae72b589a203890c7e32dd8"
+    },
+    "notification_id": "notif_msg_msg_835fa25bc1a3",
+    "user_id": "mock_ngo_hope",
+    "title": "\ud83d\udcac New Message from Vinay Aradhya",
+    "message": "Hello, when can you pick up the cooked rice donation?",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_mock_donor_vinay_mock_ngo_hope_donation_DON-001",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T12:06:48.847Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae72b589a203890c7e32dda"
+    },
+    "notification_id": "notif_msg_msg_1cdca6dd29c2",
+    "user_id": "mock_donor_vinay",
+    "title": "\ud83d\udcac New Message from Food Donor",
+    "message": "We will dispatch our volunteer within 30 minutes.",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_mock_donor_vinay_mock_ngo_hope_donation_DON-001",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T12:06:48.878Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae72ba09526e5077d799835"
+    },
+    "notification_id": "notif_msg_msg_5a8308afd297",
+    "user_id": "mock_ngo_hope",
+    "title": "\ud83d\udcac New Message from Vinay Aradhya",
+    "message": "Hello, when can you pick up the cooked rice donation?",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_mock_donor_vinay_mock_ngo_hope_donation_DON-001",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T12:08:00.586Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae72ba09526e5077d799837"
+    },
+    "notification_id": "notif_msg_msg_89794ce47ccb",
+    "user_id": "mock_donor_vinay",
+    "title": "\ud83d\udcac New Message from Food Donor",
+    "message": "We will dispatch our volunteer within 30 minutes.",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_mock_donor_vinay_mock_ngo_hope_donation_DON-001",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T12:08:00.612Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae73ecc7cdbb152e480611b"
+    },
+    "notification_id": "notif_msg_msg_c1a24bbac4cb",
+    "user_id": "test_receiver_chat_2",
+    "title": "\ud83d\udcac New Message from Test Donor",
+    "message": "Hello, food is packed and ready for pickup at gate 2.",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_test_donor_chat_1_test_receiver_chat_2_donation_test_don_ref_99",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T13:29:48.326Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae740db493ce10fbacec759"
+    },
+    "notification_id": "notif_msg_msg_c4bb9a1cc0e0",
+    "user_id": "mock_ngo_hope",
+    "title": "\ud83d\udcac New Message from Vinay Aradhya",
+    "message": "Hello, when can you pick up the cooked rice donation?",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_mock_donor_vinay_mock_ngo_hope_donation_DON-001",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T13:38:35.838Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae740db493ce10fbacec75b"
+    },
+    "notification_id": "notif_msg_msg_0ae0a4e533a1",
+    "user_id": "mock_donor_vinay",
+    "title": "\ud83d\udcac New Message from Food Donor",
+    "message": "We will dispatch our volunteer within 30 minutes.",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_mock_donor_vinay_mock_ngo_hope_donation_DON-001",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T13:38:35.868Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae75390a5ccd1ac86b8c9c3"
+    },
+    "user_id": "admin",
+    "title": "New Registration Pending Approval",
+    "body": "A new DONOR (Vinay Aradhya v) has registered. AI Trust Score: 85%. Requires admin authorization.",
+    "type": "ADMIN_ALERT",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T14:58:24.276Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c2d6cf77d6d3470c509"
+    },
+    "user_id": "user_1234567800_ngo",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Admin action via Food Bridge Web Portal",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T16:43:25.651Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c2d6cf77d6d3470c50b"
+    },
+    "user_id": "user_1234567800_ngo",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Verification criteria not met",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T16:43:25.651Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c356cf77d6d3470c50e"
+    },
+    "user_id": "user_1234567800_ngo",
+    "title": "\ud83c\udf89 Application Approved!",
+    "body": "Your organization application has been authorized by Food-Bridge Admin. You now have full platform access.",
+    "type": "ACCOUNT_VERIFIED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T16:43:33.934Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c356cf77d6d3470c50f"
+    },
+    "user_id": "user_1234567800_ngo",
+    "title": "\ud83c\udf89 Application Approved!",
+    "body": "Your organization application has been authorized by Food-Bridge Admin. You now have full platform access.",
+    "type": "ACCOUNT_VERIFIED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T16:43:33.936Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c3a6cf77d6d3470c511"
+    },
+    "user_id": "user_1234567800_ngo",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Admin action via Food Bridge Web Portal",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T16:43:38.109Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c3a6cf77d6d3470c513"
+    },
+    "user_id": "user_1234567800_ngo",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Verification criteria not met",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T16:43:38.116Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c3d6cf77d6d3470c516"
+    },
+    "user_id": "uid_3cf12406e68b41d8",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Admin action via Food Bridge Web Portal",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T16:43:41.525Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c3d6cf77d6d3470c517"
+    },
+    "user_id": "uid_3cf12406e68b41d8",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Verification criteria not met",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T16:43:41.528Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c446cf77d6d3470c51a"
+    },
+    "user_id": "uid_06b0125347164b2b",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Admin action via Food Bridge Web Portal",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T16:43:48.355Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c446cf77d6d3470c51b"
+    },
+    "user_id": "uid_06b0125347164b2b",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Verification criteria not met",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T16:43:48.358Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c496cf77d6d3470c51e"
+    },
+    "user_id": "user_6666655555_ngo",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Admin action via Food Bridge Web Portal",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T16:43:53.672Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c496cf77d6d3470c51f"
+    },
+    "user_id": "user_6666655555_ngo",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Verification criteria not met",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T16:43:53.673Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c4d6cf77d6d3470c522"
+    },
+    "user_id": "uid_9c2190f6e51f4961",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Verification criteria not met",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T16:43:57.751Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c4d6cf77d6d3470c523"
+    },
+    "user_id": "uid_9c2190f6e51f4961",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Admin action via Food Bridge Web Portal",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T16:43:57.753Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae7779100d361eb0e269e48"
+    },
+    "user_id": "admin",
+    "title": "New Registration Pending Approval",
+    "body": "A new FOOD_RECEIVER (Gimini Relief Care) has registered. AI Trust Score: 83%. Requires admin authorization.",
+    "type": "ADMIN_ALERT",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T17:32:01.965Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae77c6400d361eb0e269e4b"
+    },
+    "user_id": "user_6519036810_donor",
+    "title": "Application Update",
+    "body": "Your organization application review was not approved: Admin action via Food Bridge Web Portal",
+    "type": "ACCOUNT_REJECTED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T17:52:36.274Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae77c9800d361eb0e269e5a"
+    },
+    "notification_id": "notif_msg_msg_7da38ba77512",
+    "user_id": "6519036810",
+    "title": "\ud83d\udcac New Message from Food-Bridge Executive Admin",
+    "message": "hi",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_6519036810_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T17:53:28.702Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae77ca500d361eb0e269e5c"
+    },
+    "notification_id": "notif_msg_msg_d22f90b4564c",
+    "user_id": "6519036810",
+    "title": "\ud83d\udcac New Message from Food-Bridge Executive Admin",
+    "message": "\u26a1 How quickly are meal boxes ready for pickup?",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_6519036810_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T17:53:41.249Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d3700d361eb0e269e6c"
+    },
+    "user_id": "user_6519036810_donor",
+    "title": "\ud83c\udf89 Application Approved!",
+    "body": "Your organization application has been authorized by Food-Bridge Admin. You now have full platform access.",
+    "type": "ACCOUNT_VERIFIED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T17:56:07.238Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d4900d361eb0e269e72"
+    },
+    "notification_id": "notif_msg_msg_6a30513493b8",
+    "user_id": "6519036810",
+    "title": "\ud83d\udcac New Message from Food-Bridge Executive Admin",
+    "message": "\u26a1 How quickly are meal boxes ready for pickup?",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_6519036810_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T17:56:25.177Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d5100d361eb0e269e76"
+    },
+    "notification_id": "notif_msg_msg_5b7d083877a1",
+    "user_id": "6519036810",
+    "title": "\ud83d\udcac New Message from Food-Bridge Executive Admin",
+    "message": "\ud83d\ude9a Courier dispatch is being coordinated.",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_6519036810_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T17:56:33.835Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d5c00d361eb0e269e7b"
+    },
+    "notification_id": "notif_msg_msg_61993156f870",
+    "user_id": "6519036810",
+    "title": "\ud83d\udcac New Message from Food-Bridge Executive Admin",
+    "message": "helo",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_6519036810_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T17:56:44.042Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d8900d361eb0e269e88"
+    },
+    "notification_id": "notif_msg_msg_e573be0c4c26",
+    "user_id": "admin_broadcast",
+    "title": "\ud83d\udcac New Message from Vinay Aradhya v",
+    "message": "I need",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_6519036810_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T17:57:29.398Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d8900d361eb0e269e89"
+    },
+    "notification_id": "notif_msg_msg_e573be0c4c26_adm",
+    "user_id": "admin",
+    "title": "\ud83d\udcac New Message from Vinay Aradhya v",
+    "message": "I need",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_6519036810_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T17:57:29.398Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d9000d361eb0e269e8d"
+    },
+    "notification_id": "notif_msg_msg_c1f96f874db4",
+    "user_id": "admin_broadcast",
+    "title": "\ud83d\udcac New Message from Vinay Aradhya v",
+    "message": "one help",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_6519036810_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T17:57:36.474Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d9000d361eb0e269e8e"
+    },
+    "notification_id": "notif_msg_msg_c1f96f874db4_adm",
+    "user_id": "admin",
+    "title": "\ud83d\udcac New Message from Vinay Aradhya v",
+    "message": "one help",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_6519036810_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T17:57:36.474Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d9d00d361eb0e269e92"
+    },
+    "notification_id": "notif_msg_msg_eaf8f684690d",
+    "user_id": "6519036810",
+    "title": "\ud83d\udcac New Message from Food-Bridge Executive Admin",
+    "message": "\u26a1 How quickly are meal boxes ready for pickup?",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_6519036810_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T17:57:49.958Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae77da600d361eb0e269e94"
+    },
+    "notification_id": "notif_msg_msg_e284c2bf8a65",
+    "user_id": "6519036810",
+    "title": "\ud83d\udcac New Message from Food-Bridge Executive Admin",
+    "message": "\ud83d\ude4f Thank you for your generous surplus food donation!",
+    "type": "CHAT_MESSAGE",
+    "related_entity_id": "conv_6519036810_admin",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T17:57:58.241Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae77f1d00d361eb0e269ea4"
+    },
+    "user_id": "admin",
+    "title": "New Registration Pending Approval",
+    "body": "A new DONOR (Vinay Aradhya v) has registered. AI Trust Score: 85%. Requires admin authorization.",
+    "type": "ADMIN_ALERT",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T18:04:13.044Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae781a800d361eb0e269ea6"
+    },
+    "user_id": "admin",
+    "title": "New Registration Pending Approval",
+    "body": "A new FOOD_RECEIVER (dhdh) has registered. AI Trust Score: 96%. Requires admin authorization.",
+    "type": "ADMIN_ALERT",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T18:15:04.845Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae781b400d361eb0e269ea8"
+    },
+    "user_id": "user_8976460119_ngo",
+    "title": "\ud83c\udf89 Application Approved!",
+    "body": "Your organization application has been authorized by Food-Bridge Admin. You now have full platform access.",
+    "type": "ACCOUNT_VERIFIED",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-01T18:15:16.365Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae85d7faf4fdc91fc1e7ce7"
+    },
+    "user_id": "admin",
+    "title": "New Registration Pending Approval",
+    "body": "A new DONOR (Cloud Validation Donor) has registered. AI Trust Score: 85%. Requires admin authorization.",
+    "type": "ADMIN_ALERT",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-02T09:53:03Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae85dc4af4fdc91fc1e7ce9"
+    },
+    "user_id": "admin",
+    "title": "New Registration Pending Approval",
+    "body": "A new DONOR (Cloud Validation Donor) has registered. AI Trust Score: 85%. Requires admin authorization.",
+    "type": "ADMIN_ALERT",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-02T09:54:12.517Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae85e03af4fdc91fc1e7ceb"
+    },
+    "user_id": "admin",
+    "title": "New Registration Pending Approval",
+    "body": "A new DONOR (Cloud Validation Donor) has registered. AI Trust Score: 85%. Requires admin authorization.",
+    "type": "ADMIN_ALERT",
+    "read": false,
+    "created_at": {
+      "$date": "2026-11-02T09:55:15.465Z"
+    }
+  }
+]

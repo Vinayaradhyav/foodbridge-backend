@@ -1,0 +1,103 @@
+{
+  "backup_id": "backup_20261102_135321_phase0_prod_safeguard",
+  "created_at": "2026-11-02T13:53:21.795942+00:00",
+  "database_name": "food-bridge_db",
+  "mongo_source": "localhost",
+  "compression": "gzip",
+  "encryption": "fernet",
+  "collections": {
+    "messages": {
+      "count": 66,
+      "file": "messages.json.gz.enc",
+      "checksum_sha256": "db0214a9e935b947995cda3a9768d4b4b1eb254f98efe035c890a8c044b55d5e",
+      "size_bytes": 4300,
+      "indexes": {}
+    },
+    "anomalies": {
+      "count": 4,
+      "file": "anomalies.json.gz.enc",
+      "checksum_sha256": "ccf0091d27ad9c226130a219413f9f6749879ec33f965cf1df28382f2701376f",
+      "size_bytes": 1164,
+      "indexes": {}
+    },
+    "conversations": {
+      "count": 8,
+      "file": "conversations.json.gz.enc",
+      "checksum_sha256": "1c0aaa92d671f057e5ef9ab595156a4c787e1e7331effc41792b8b7eb5878d72",
+      "size_bytes": 1420,
+      "indexes": {}
+    },
+    "donations": {
+      "count": 2,
+      "file": "donations.json.gz.enc",
+      "checksum_sha256": "863e4e5327a221411e69cb5955924351100e81895221e65c66fc897dfb91e777",
+      "size_bytes": 760,
+      "indexes": {}
+    },
+    "error_logs": {
+      "count": 68,
+      "file": "error_logs.json.gz.enc",
+      "checksum_sha256": "868dd670bdf4abe54f788d69ced12b8d77e4f7eb0fc866b142f1207db1997b65",
+      "size_bytes": 3404,
+      "indexes": {}
+    },
+    "audit_logs": {
+      "count": 91,
+      "file": "audit_logs.json.gz.enc",
+      "checksum_sha256": "36f23d284d8741235e79afe52f90572ac6100b17b31a4c7f69c678bd0827e9b0",
+      "size_bytes": 4452,
+      "indexes": {}
+    },
+    "users": {
+      "count": 22,
+      "file": "users.json.gz.enc",
+      "checksum_sha256": "5da7d0392993f1f6739c3f3065c412bec99c0d4a6dfc21edcb8bb6067d19122e",
+      "size_bytes": 5816,
+      "indexes": {}
+    },
+    "_health_probes": {
+      "count": 2,
+      "file": "_health_probes.json.gz.enc",
+      "checksum_sha256": "5b0338de375b6c6a2fe2d318c46df83c8a6ec30fefb489504087ab23a8469570",
+      "size_bytes": 332,
+      "indexes": {}
+    },
+    "ngos": {
+      "count": 1,
+      "file": "ngos.json.gz.enc",
+      "checksum_sha256": "60eeb9216dfc8e5159606e6ced45cc89d67f2432eba88e373d476b3f6c8122c3",
+      "size_bytes": 420,
+      "indexes": {}
+    },
+    "notifications": {
+      "count": 162,
+      "file": "notifications.json.gz.enc",
+      "checksum_sha256": "40bf45803a2e13bcb14b527576209d8a876d09785b9c6f6fff4f0e43b030ca13",
+      "size_bytes": 7480,
+      "indexes": {}
+    },
+    "emergency_requests": {
+      "count": 0,
+      "file": "emergency_requests.json.gz.enc",
+      "checksum_sha256": "6898a2b0bef5cb7ec1db09b70ac9cce699a92720d88aba0e671e4e60edaa962c",
+      "size_bytes": 120,
+      "indexes": {}
+    },
+    "assignments": {
+      "count": 10,
+      "file": "assignments.json.gz.enc",
+      "checksum_sha256": "6dfea37b6c480ae1a32a09deaa951c488219595881bfae994275882ae5994fbf",
+      "size_bytes": 932,
+      "indexes": {}
+    },
+    "emergencies": {
+      "count": 0,
+      "file": "emergencies.json.gz.enc",
+      "checksum_sha256": "f7f2847343326812fb368b1bfa1fca8118c9ec67eb488481122ed22fac58c60e",
+      "size_bytes": 120,
+      "indexes": {}
+    }
+  },
+  "total_documents": 436,
+  "status": "VERIFIED"
+}

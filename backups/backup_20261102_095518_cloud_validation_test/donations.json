@@ -1,0 +1,33 @@
+[
+  {
+    "_id": {
+      "$oid": "6ae85e06af4fdc91fc1e7cec"
+    },
+    "food_name": "Fresh Biryani and Curry Packets",
+    "food_type": "Cooked Meals",
+    "quantity": 45.0,
+    "unit": "kg",
+    "number_of_meals": 45,
+    "preparation_time": null,
+    "available_from": null,
+    "pickup_deadline": null,
+    "pickup_location": "Indiranagar 100ft Road, Bangalore",
+    "latitude": 12.9784,
+    "longitude": 77.6408,
+    "storage_condition": "Room Temp",
+    "packaging_type": "Boxes",
+    "description": "",
+    "food_image": "",
+    "donor_id": "uid_cddae8b6539842f7",
+    "donor_uid": "uid_cddae8b6539842f7",
+    "donor_name": "Cloud Validation Donor",
+    "donation_id": "DON-CLOUD-95518",
+    "status": "AVAILABLE",
+    "created_at": {
+      "$date": "2026-11-02T09:55:18.084Z"
+    },
+    "updated_at": {
+      "$date": "2026-11-02T09:55:18.084Z"
+    }
+  }
+]

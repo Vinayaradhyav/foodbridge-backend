@@ -1,0 +1,54 @@
+{
+  "module": "AI Module 6: Logistics & Vehicle Route Optimization Engine",
+  "algorithm": "Clarke-Wright Savings + 2-Opt Local Search (CVRPTW-S)",
+  "benchmark_scenarios_evaluated": 1000,
+  "total_stops_optimized": 5964,
+  "total_meals_routed": 124614,
+  "average_distance_reduction_pct": 1.2,
+  "median_distance_reduction_pct": 0.0,
+  "average_distance_saved_km_per_route": 0.67,
+  "average_co2_saved_kg_per_route": 3.21,
+  "total_co2_offset_simulation_kg": 3210.62,
+  "spoilage_compliance_rate_pct": 95.7,
+  "average_solver_latency_ms": 0.19,
+  "p99_solver_latency_ms": 0.3,
+  "supported_fleet_types": [
+    "Bike",
+    "Scooter",
+    "Car",
+    "Auto",
+    "Van",
+    "Tempo",
+    "Truck",
+    "default"
+  ],
+  "per_vehicle_performance": {
+    "Bike": {
+      "trials": 173,
+      "avg_saved_km": 0.63,
+      "avg_co2": 1.19
+    },
+    "Auto": {
+      "trials": 209,
+      "avg_saved_km": 0.6,
+      "avg_co2": 1.95
+    },
+    "Car": {
+      "trials": 198,
+      "avg_saved_km": 0.6,
+      "avg_co2": 3.08
+    },
+    "Van": {
+      "trials": 214,
+      "avg_saved_km": 0.88,
+      "avg_co2": 4.54
+    },
+    "Tempo": {
+      "trials": 206,
+      "avg_saved_km": 0.63,
+      "avg_co2": 4.93
+    }
+  },
+  "fssai_safety_window_hours": 4.0,
+  "benchmarking_duration_seconds": 0.23
+}

@@ -1,0 +1,190 @@
+{
+  "timestamp": "2026-11-02T14:47:34.152286+00:00",
+  "total_tests": 26,
+  "passed": 26,
+  "failed": 0,
+  "results": [
+    {
+      "module": "1. Auth - Donor",
+      "test": "Donor Registration",
+      "status": "PASS",
+      "evidence": "HTTP 200, User ID: 6ae8a2814571cd089111504a",
+      "timestamp": "2026-11-02T14:47:29.966246+00:00"
+    },
+    {
+      "module": "1. Auth - Donor",
+      "test": "Donor Login & JWT Issuance",
+      "status": "PASS",
+      "evidence": "HTTP 200, JWT: eyJhbGciOiJIUzI1Ni...",
+      "timestamp": "2026-11-02T14:47:29.989608+00:00"
+    },
+    {
+      "module": "1. Auth - Donor",
+      "test": "Donor Logout & Token Revocation",
+      "status": "PASS",
+      "evidence": "HTTP 200, Message: Successfully logged out of Food-Bridge session.",
+      "timestamp": "2026-11-02T14:47:30.001291+00:00"
+    },
+    {
+      "module": "1. Auth - Donor",
+      "test": "Donor Re-login After Logout",
+      "status": "PASS",
+      "evidence": "HTTP 200, Fresh Token Issued",
+      "timestamp": "2026-11-02T14:47:30.022510+00:00"
+    },
+    {
+      "module": "1. Auth - Receiver",
+      "test": "Receiver Registration (Pending Approval)",
+      "status": "PASS",
+      "evidence": "HTTP 200, Status: pending_approval, Verification: PENDING, AI Score: 98",
+      "timestamp": "2026-11-02T14:47:30.044252+00:00"
+    },
+    {
+      "module": "1. Auth - Receiver",
+      "test": "Receiver Pre-Approval Login Barrier",
+      "status": "PASS",
+      "evidence": "Verification Status is 'PENDING' -> Frontend redirects to AppRoutes.ngoVerificationPending",
+      "timestamp": "2026-11-02T14:47:30.061608+00:00"
+    },
+    {
+      "module": "1. Auth - Receiver",
+      "test": "Admin Approves Receiver",
+      "status": "PASS",
+      "evidence": "HTTP 200, Status: active, Verification: VERIFIED",
+      "timestamp": "2026-11-02T14:47:30.086820+00:00"
+    },
+    {
+      "module": "1. Auth - Receiver",
+      "test": "Receiver Approved Login & Full Token Access",
+      "status": "PASS",
+      "evidence": "HTTP 200, Verification: VERIFIED, Access Token Issued",
+      "timestamp": "2026-11-02T14:47:30.105298+00:00"
+    },
+    {
+      "module": "1. Auth - Receiver",
+      "test": "Receiver Logout and Re-login Cycle",
+      "status": "PASS",
+      "evidence": "Re-login authenticated successfully",
+      "timestamp": "2026-11-02T14:47:30.131507+00:00"
+    },
+    {
+      "module": "1. Auth - Volunteer",
+      "test": "Volunteer Registration",
+      "status": "PASS",
+      "evidence": "HTTP 200, User ID: 6ae8a2824571cd0891115050",
+      "timestamp": "2026-11-02T14:47:30.152544+00:00"
+    },
+    {
+      "module": "1. Auth - Volunteer",
+      "test": "Volunteer Login & Token Issuance",
+      "status": "PASS",
+      "evidence": "HTTP 200, Access Token Granted",
+      "timestamp": "2026-11-02T14:47:30.169653+00:00"
+    },
+    {
+      "module": "1. Auth - Volunteer",
+      "test": "Volunteer Logout and Re-login Cycle",
+      "status": "PASS",
+      "evidence": "Re-login authenticated successfully",
+      "timestamp": "2026-11-02T14:47:30.196227+00:00"
+    },
+    {
+      "module": "1. Auth - Admin",
+      "test": "Admin Authentication & Privilege Verification",
+      "status": "PASS",
+      "evidence": "HTTP 200, Admin granted full user management access",
+      "timestamp": "2026-11-02T14:47:30.243792+00:00"
+    },
+    {
+      "module": "2. Features - Donor",
+      "test": "Create Food Donation",
+      "status": "PASS",
+      "evidence": "HTTP 200, Donation ID: 6ae8a2824571cd0891115052",
+      "timestamp": "2026-11-02T14:47:30.283316+00:00"
+    },
+    {
+      "module": "2. Features - Donor",
+      "test": "View Donation History & Status",
+      "status": "PASS",
+      "evidence": "HTTP 200, Retrieved 1 active donor donation(s)",
+      "timestamp": "2026-11-02T14:47:30.307102+00:00"
+    },
+    {
+      "module": "2. Features - Receiver",
+      "test": "Receiver Browse Available Food",
+      "status": "PASS",
+      "evidence": "HTTP 200, Discovered 3 public donations",
+      "timestamp": "2026-11-02T14:47:30.322993+00:00"
+    },
+    {
+      "module": "2. Features - Receiver",
+      "test": "Create Emergency Food Relief Request",
+      "status": "PASS",
+      "evidence": "HTTP 201, Emergency ID: em_7e5e0ba4",
+      "timestamp": "2026-11-02T14:47:30.369659+00:00"
+    },
+    {
+      "module": "2. Features - Volunteer",
+      "test": "Volunteer Browse Available Delivery Missions",
+      "status": "PASS",
+      "evidence": "HTTP 200, Volunteer missions queue accessible",
+      "timestamp": "2026-11-02T14:47:30.396411+00:00"
+    },
+    {
+      "module": "2. Features - Admin",
+      "test": "Admin User Management & Audit Queue",
+      "status": "PASS",
+      "evidence": "HTTP 200, Returned 9 registered receiver account(s)",
+      "timestamp": "2026-11-02T14:47:30.428130+00:00"
+    },
+    {
+      "module": "2. Features - Admin",
+      "test": "Security Audit Trail Access",
+      "status": "PASS",
+      "evidence": "HTTP 200, Retrieved 100 audit log records",
+      "timestamp": "2026-11-02T14:47:30.473845+00:00"
+    },
+    {
+      "module": "3. Resilience",
+      "test": "Live Online Direct Database Write",
+      "status": "PASS",
+      "evidence": "HTTP 200, Committed immediately to MongoDB collection 'users'",
+      "timestamp": "2026-11-02T14:47:30.493275+00:00"
+    },
+    {
+      "module": "3. Resilience",
+      "test": "Offline Client Outbox Queue Integrity",
+      "status": "PASS",
+      "evidence": "Payload preserved in local SharedPreferences storage queue 'fb_pending_registrations_queue'",
+      "timestamp": "2026-11-02T14:47:30.493413+00:00"
+    },
+    {
+      "module": "3. Resilience",
+      "test": "Outbox Auto-Sync to Server on Connection Restore",
+      "status": "PASS",
+      "evidence": "HTTP 200, Successfully drained local outbox into MongoDB without data loss",
+      "timestamp": "2026-11-02T14:47:30.512182+00:00"
+    },
+    {
+      "module": "3. Resilience",
+      "test": "Public Cloudflare HTTPS Tunnel Connectivity",
+      "status": "PASS",
+      "evidence": "HTTP 200, Status: healthy, DB Latency: 25.82 ms",
+      "timestamp": "2026-11-02T14:47:33.935445+00:00"
+    },
+    {
+      "module": "4. Storage Audit",
+      "test": "MongoDB Cluster Active Connection",
+      "status": "PASS",
+      "evidence": "Database 'food-bridge_db' active, ping latency: 5.17 ms",
+      "timestamp": "2026-11-02T14:47:33.950290+00:00"
+    },
+    {
+      "module": "4. Storage Audit",
+      "test": "Automated Hygiene & Test Data Cleanup",
+      "status": "PASS",
+      "evidence": "Cleaned 5/5 temporary test user records from MongoDB",
+      "timestamp": "2026-11-02T14:47:34.150903+00:00"
+    }
+  ]
+}

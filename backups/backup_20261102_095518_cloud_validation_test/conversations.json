@@ -1,0 +1,184 @@
+[
+  {
+    "_id": {
+      "$oid": "6ad594afc0872fd535c62ce1"
+    },
+    "conversation_id": "conv_mock_donor_vinay_mock_ngo_hope_donation_DON-001",
+    "context_id": "DON-001",
+    "context_type": "DONATION",
+    "created_at": {
+      "$date": "2026-10-19T03:55:26.984Z"
+    },
+    "last_message": "We will dispatch our volunteer within 30 minutes.",
+    "last_message_time": {
+      "$date": "2026-11-01T13:38:35.868Z"
+    },
+    "participant_names": {
+      "mock_donor_vinay": "mock_donor_vinay",
+      "mock_ngo_hope": "Food Donor"
+    },
+    "participants": [
+      "mock_ngo_hope",
+      "mock_donor_vinay"
+    ],
+    "updated_at": {
+      "$date": "2026-11-01T13:38:35.868Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad5f712c0872fd535c62ce2"
+    },
+    "conversation_id": "conv_admin_donor_user",
+    "context_id": null,
+    "context_type": "GENERAL",
+    "created_at": {
+      "$date": "2026-10-19T10:55:14.928Z"
+    },
+    "last_message": "nothing all good",
+    "last_message_time": {
+      "$date": "2026-10-19T14:35:27.763Z"
+    },
+    "participant_names": {
+      "admin": "admin",
+      "donor_user": "Vinay Aradhya"
+    },
+    "participants": [
+      "donor_user",
+      "admin"
+    ],
+    "updated_at": {
+      "$date": "2026-10-19T14:35:27.763Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad8b43be361a77e8c0d99e6"
+    },
+    "conversation_id": "conv_1234567800_admin",
+    "context_id": null,
+    "context_type": "GENERAL",
+    "created_at": {
+      "$date": "2026-10-21T12:46:51.563Z"
+    },
+    "last_message": "hi",
+    "last_message_time": {
+      "$date": "2026-10-21T17:21:40.472Z"
+    },
+    "participant_names": {
+      "1234567800": "mams relief hub",
+      "admin": "admin"
+    },
+    "participants": [
+      "1234567800",
+      "admin"
+    ],
+    "updated_at": {
+      "$date": "2026-10-21T17:21:40.472Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae57b6b62966fe1bed545fc"
+    },
+    "conversation_id": "conv_6666655555_admin",
+    "context_id": null,
+    "context_type": "GENERAL",
+    "created_at": {
+      "$date": "2026-10-31T05:23:54.991Z"
+    },
+    "last_message": "what is the problem",
+    "last_message_time": {
+      "$date": "2026-10-31T05:24:33.251Z"
+    },
+    "participant_names": {
+      "6666655555": "6666655555",
+      "admin": "Food-Bridge Executive Admin"
+    },
+    "participants": [
+      "6666655555",
+      "admin"
+    ],
+    "updated_at": {
+      "$date": "2026-10-31T05:24:33.251Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae5e5ee62966fe1bed545fd"
+    },
+    "conversation_id": "conv_8971460118_admin",
+    "context_id": null,
+    "context_type": "GENERAL",
+    "created_at": {
+      "$date": "2026-10-31T12:58:22.175Z"
+    },
+    "last_message": "hi",
+    "last_message_time": {
+      "$date": "2026-10-31T12:58:22.175Z"
+    },
+    "participant_names": {
+      "8971460118": "8971460118",
+      "admin": "Food-Bridge Executive Admin"
+    },
+    "participants": [
+      "8971460118",
+      "admin"
+    ],
+    "updated_at": {
+      "$date": "2026-10-31T12:58:22.175Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae73ecc00448ea35bd72cae"
+    },
+    "conversation_id": "conv_test_donor_chat_1_test_receiver_chat_2_donation_test_don_ref_99",
+    "context_id": "test_don_ref_99",
+    "context_type": "DONATION",
+    "created_at": {
+      "$date": "2026-11-01T13:29:48.326Z"
+    },
+    "last_message": "Hello, food is packed and ready for pickup at gate 2.",
+    "last_message_time": {
+      "$date": "2026-11-01T13:29:48.326Z"
+    },
+    "participant_names": {
+      "test_donor_chat_1": "Test Donor",
+      "test_receiver_chat_2": "Test Receiver"
+    },
+    "participants": [
+      "test_donor_chat_1",
+      "test_receiver_chat_2"
+    ],
+    "updated_at": {
+      "$date": "2026-11-01T13:29:48.326Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae77c9800448ea35bd72caf"
+    },
+    "conversation_id": "conv_6519036810_admin",
+    "context_id": null,
+    "context_type": "GENERAL",
+    "created_at": {
+      "$date": "2026-11-01T17:53:28.702Z"
+    },
+    "last_message": "\ud83d\ude4f Thank you for your generous surplus food donation!",
+    "last_message_time": {
+      "$date": "2026-11-01T17:57:58.241Z"
+    },
+    "participant_names": {
+      "6519036810": "6519036810",
+      "admin": "Food-Bridge Executive Admin"
+    },
+    "participants": [
+      "6519036810",
+      "admin"
+    ],
+    "updated_at": {
+      "$date": "2026-11-01T17:57:58.241Z"
+    }
+  }
+]

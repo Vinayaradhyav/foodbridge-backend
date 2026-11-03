@@ -1,0 +1,750 @@
+[
+  {
+    "_id": {
+      "$oid": "6ae6095dbf5b62f3b9abc2ff"
+    },
+    "error_id": "FB-ERR-37D8045D",
+    "path": "/api/users/6ae6095cbf5b62f3b9abc2fb",
+    "method": "DELETE",
+    "error_type": "NameError",
+    "message": "name 'os' is not defined",
+    "timestamp": "2026-10-31T15:29:33.777603+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae718b7ca1cea479469149f"
+    },
+    "error_id": "FB-ERR-85245524",
+    "path": "/api/users",
+    "method": "GET",
+    "error_type": "ResponseValidationError",
+    "message": "1 validation error:\n  {'type': 'value_error', 'loc': ('response', 0, 'phone'), 'msg': 'Value error, Invalid Indian mobile number. Must start with 6, 7, 8, or 9.', 'input': '1234567800', 'ctx': {'error': ValueError('Invalid Indian mobile number. Must start with 6, 7, 8, or 9.')}}\n\n  File \"D:\\food bridge\\backend\\app\\api\\users.py\", line 14, in get_users\n    GET /api/users",
+    "timestamp": "2026-11-01T10:47:19.199991+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae736766321e5404bb38441"
+    },
+    "error_id": "FB-ERR-12316C50",
+    "path": "/api/v1/ngos/",
+    "method": "POST",
+    "error_type": "NotImplementedError",
+    "message": "Collection objects do not implement truth value testing or bool(). Please compare with None instead: collection is not None",
+    "timestamp": "2026-11-01T12:54:14.806020+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae736766321e5404bb38442"
+    },
+    "error_id": "FB-ERR-4874317C",
+    "path": "/api/v1/ngos/test_param_123",
+    "method": "GET",
+    "error_type": "NotImplementedError",
+    "message": "Collection objects do not implement truth value testing or bool(). Please compare with None instead: collection is not None",
+    "timestamp": "2026-11-01T12:54:14.906200+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae7372f36ac121fd8c70b64"
+    },
+    "error_id": "FB-ERR-EA3215EB",
+    "path": "/api/assignments/test_assignment_mock_01/verify-pickup-otp",
+    "method": "POST",
+    "error_type": "InvalidId",
+    "message": "'test_assignment_mock_01' is not a valid ObjectId, it must be a 12-byte input or a 24-character hex string",
+    "timestamp": "2026-11-01T12:57:19.572434+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77c6500d361eb0e269e4d"
+    },
+    "error_id": "FB-ERR-A449E279",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77c6... 1, 17, 52, 36, 274000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:52:37.765286+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77c6900d361eb0e269e4e"
+    },
+    "error_id": "FB-ERR-EDC8D04C",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77c6... 1, 17, 52, 36, 274000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:52:41.523563+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77c6d00d361eb0e269e4f"
+    },
+    "error_id": "FB-ERR-8F1CA83F",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77c6... 1, 17, 52, 36, 274000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:52:45.644991+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77c7100d361eb0e269e50"
+    },
+    "error_id": "FB-ERR-07DF1744",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77c6... 1, 17, 52, 36, 274000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:52:49.544028+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77c7a00d361eb0e269e51"
+    },
+    "error_id": "FB-ERR-04F1A8D3",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77c6... 1, 17, 52, 36, 274000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:52:58.460736+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77c7e00d361eb0e269e52"
+    },
+    "error_id": "FB-ERR-9525BB53",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77c6... 1, 17, 52, 36, 274000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:53:02.213832+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77c8200d361eb0e269e53"
+    },
+    "error_id": "FB-ERR-1544D9BB",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77c6... 1, 17, 52, 36, 274000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:53:06.194860+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77c8600d361eb0e269e54"
+    },
+    "error_id": "FB-ERR-09B0C792",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77c6... 1, 17, 52, 36, 274000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:53:10.662395+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77c8a00d361eb0e269e55"
+    },
+    "error_id": "FB-ERR-C075FA36",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77c6... 1, 17, 52, 36, 274000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:53:14.269579+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77c8e00d361eb0e269e56"
+    },
+    "error_id": "FB-ERR-7893607D",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77c6... 1, 17, 52, 36, 274000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:53:18.674633+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77c9200d361eb0e269e57"
+    },
+    "error_id": "FB-ERR-B3C70019",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77c6... 1, 17, 52, 36, 274000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:53:22.547011+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77c9600d361eb0e269e58"
+    },
+    "error_id": "FB-ERR-F511B2CE",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77c6... 1, 17, 52, 36, 274000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:53:26.918622+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d0700d361eb0e269e5d"
+    },
+    "error_id": "FB-ERR-66B3A7C8",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77c6... 1, 17, 52, 36, 274000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:55:19.536856+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d0a00d361eb0e269e5e"
+    },
+    "error_id": "FB-ERR-C2B130C0",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77c6... 1, 17, 52, 36, 274000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:55:22.199039+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d0e00d361eb0e269e5f"
+    },
+    "error_id": "FB-ERR-3D9BE069",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77c6... 1, 17, 52, 36, 274000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:55:26.168398+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d1200d361eb0e269e60"
+    },
+    "error_id": "FB-ERR-BC0BD371",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77c6... 1, 17, 52, 36, 274000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:55:30.156102+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d1600d361eb0e269e61"
+    },
+    "error_id": "FB-ERR-BFF010DD",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77c6... 1, 17, 52, 36, 274000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:55:34.162251+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d1a00d361eb0e269e62"
+    },
+    "error_id": "FB-ERR-8DC80B8A",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77c6... 1, 17, 52, 36, 274000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:55:38.164634+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d1e00d361eb0e269e63"
+    },
+    "error_id": "FB-ERR-CC47E66D",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77c6... 1, 17, 52, 36, 274000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:55:42.159969+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d2200d361eb0e269e64"
+    },
+    "error_id": "FB-ERR-EAB8B626",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77c6... 1, 17, 52, 36, 274000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:55:46.315230+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d2600d361eb0e269e65"
+    },
+    "error_id": "FB-ERR-28719281",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77c6... 1, 17, 52, 36, 274000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:55:50.197805+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d2a00d361eb0e269e66"
+    },
+    "error_id": "FB-ERR-F51C72A8",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77c6... 1, 17, 52, 36, 274000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:55:54.189185+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d2e00d361eb0e269e67"
+    },
+    "error_id": "FB-ERR-C02DDDF8",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77c6... 1, 17, 52, 36, 274000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:55:58.192548+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d3200d361eb0e269e68"
+    },
+    "error_id": "FB-ERR-580A87A1",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77c6... 1, 17, 52, 36, 274000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:56:02.189350+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d3600d361eb0e269e69"
+    },
+    "error_id": "FB-ERR-7C1F0BC2",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77c6... 1, 17, 52, 36, 274000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:56:06.228317+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d3a00d361eb0e269e6d"
+    },
+    "error_id": "FB-ERR-889257B5",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:56:10.207360+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d3e00d361eb0e269e6e"
+    },
+    "error_id": "FB-ERR-50C9BBFC",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:56:14.194392+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d4200d361eb0e269e6f"
+    },
+    "error_id": "FB-ERR-EF1422B3",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:56:18.181443+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d4600d361eb0e269e70"
+    },
+    "error_id": "FB-ERR-77A27EBB",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:56:22.190101+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d4a00d361eb0e269e73"
+    },
+    "error_id": "FB-ERR-90D5A7D3",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:56:26.184998+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d4e00d361eb0e269e74"
+    },
+    "error_id": "FB-ERR-0B83F010",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:56:30.194751+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d5200d361eb0e269e77"
+    },
+    "error_id": "FB-ERR-7837FBFB",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:56:34.203374+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d5600d361eb0e269e78"
+    },
+    "error_id": "FB-ERR-90CF92B6",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:56:38.146308+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d5a00d361eb0e269e79"
+    },
+    "error_id": "FB-ERR-3D1F4DB4",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:56:42.168390+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d5e00d361eb0e269e7c"
+    },
+    "error_id": "FB-ERR-DC63D257",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:56:46.200865+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d6200d361eb0e269e7d"
+    },
+    "error_id": "FB-ERR-07F99403",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:56:50.163937+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d6600d361eb0e269e7e"
+    },
+    "error_id": "FB-ERR-687A8069",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:56:54.132169+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d6a00d361eb0e269e7f"
+    },
+    "error_id": "FB-ERR-4A8E702A",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:56:58.174843+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d6e00d361eb0e269e80"
+    },
+    "error_id": "FB-ERR-E6504B7A",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:57:02.206775+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d7200d361eb0e269e81"
+    },
+    "error_id": "FB-ERR-CE9859CC",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:57:06.236759+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d7600d361eb0e269e82"
+    },
+    "error_id": "FB-ERR-E50B1D59",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:57:10.182780+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d7a00d361eb0e269e83"
+    },
+    "error_id": "FB-ERR-7F4162AB",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:57:14.215028+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d7e00d361eb0e269e84"
+    },
+    "error_id": "FB-ERR-0BF5319D",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:57:18.177090+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d8200d361eb0e269e85"
+    },
+    "error_id": "FB-ERR-863CA0B6",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:57:22.203887+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d8600d361eb0e269e86"
+    },
+    "error_id": "FB-ERR-87BB3751",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:57:26.205530+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d8a00d361eb0e269e8a"
+    },
+    "error_id": "FB-ERR-B649F600",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:57:30.186476+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d8e00d361eb0e269e8b"
+    },
+    "error_id": "FB-ERR-959D54A9",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:57:34.200848+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d9200d361eb0e269e8f"
+    },
+    "error_id": "FB-ERR-7505B41E",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:57:38.168609+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d9600d361eb0e269e90"
+    },
+    "error_id": "FB-ERR-81A6EA14",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:57:42.156403+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77db200d361eb0e269e95"
+    },
+    "error_id": "FB-ERR-23693092",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:58:10.347120+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77db500d361eb0e269e96"
+    },
+    "error_id": "FB-ERR-CECBF064",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:58:13.632007+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77db900d361eb0e269e97"
+    },
+    "error_id": "FB-ERR-56A6D303",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:58:17.617087+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77dbd00d361eb0e269e98"
+    },
+    "error_id": "FB-ERR-F6128514",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:58:21.652091+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77dc100d361eb0e269e99"
+    },
+    "error_id": "FB-ERR-815B8BE2",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:58:25.682003+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77dc500d361eb0e269e9a"
+    },
+    "error_id": "FB-ERR-26438B2B",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:58:29.675116+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77dc900d361eb0e269e9b"
+    },
+    "error_id": "FB-ERR-4A752B9C",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:58:33.683533+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77dcd00d361eb0e269e9c"
+    },
+    "error_id": "FB-ERR-AEDD9666",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:58:37.685682+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77dd100d361eb0e269e9d"
+    },
+    "error_id": "FB-ERR-AA96A018",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:58:41.692491+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77dd500d361eb0e269e9e"
+    },
+    "error_id": "FB-ERR-6E875120",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:58:45.663364+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77dd900d361eb0e269e9f"
+    },
+    "error_id": "FB-ERR-6F000BE0",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:58:49.653666+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77dde00d361eb0e269ea0"
+    },
+    "error_id": "FB-ERR-B93C8E60",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:58:54.322380+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77ded00d361eb0e269ea1"
+    },
+    "error_id": "FB-ERR-BE9C5253",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:59:09.587471+00:00"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77ded00d361eb0e269ea2"
+    },
+    "error_id": "FB-ERR-BE084C36",
+    "path": "/api/notifications",
+    "method": "GET",
+    "error_type": "ValidationError",
+    "message": "1 validation error for NotificationModel\nmessage\n  Field required [type=missing, input_value={'_id': ObjectId('6ae77d3..., 1, 17, 56, 7, 238000)}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+    "timestamp": "2026-11-01T17:59:09.641501+00:00"
+  }
+]

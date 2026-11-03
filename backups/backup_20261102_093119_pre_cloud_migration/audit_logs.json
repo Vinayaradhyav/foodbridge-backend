@@ -1,0 +1,1225 @@
+[
+  {
+    "_id": {
+      "$oid": "6acbcb666eb111fa077fa414"
+    },
+    "action": "DONATION_CREATED",
+    "user_id": "donor_vinay",
+    "details": "Created live donation DON-VINAY-101",
+    "timestamp": {
+      "$date": "2026-10-11T17:01:14.191Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6acbcb666eb111fa077fa415"
+    },
+    "action": "DONATION_MATCHED",
+    "user_id": "ngo_greenvalley",
+    "details": "Matched with Green Valley NGO",
+    "timestamp": {
+      "$date": "2026-10-11T15:46:14.191Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6acbcb666eb111fa077fa416"
+    },
+    "action": "ASSIGNMENT_DISPATCHED",
+    "user_id": "vol_rohit",
+    "details": "Assigned to Rohit Kumar for delivery",
+    "timestamp": {
+      "$date": "2026-10-11T15:46:14.191Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6acf960f16997dec4b8e7c40"
+    },
+    "entity_type": "Donation",
+    "entity_id": "6acf960f16997dec4b8e7c3f",
+    "action": "DONATION_CREATED",
+    "old_status": null,
+    "new_status": "AVAILABLE",
+    "user_id": "donor_vinay",
+    "reason": null,
+    "metadata": null,
+    "timestamp": {
+      "$date": "2026-10-14T14:47:43.922Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad590429a4b302edb593e57"
+    },
+    "entity_type": "Donation",
+    "entity_id": "6ad590429a4b302edb593e56",
+    "action": "DONATION_CREATED",
+    "old_status": null,
+    "new_status": "AVAILABLE",
+    "user_id": "test_donor_uid_456",
+    "reason": null,
+    "metadata": null,
+    "timestamp": {
+      "$date": "2026-10-19T03:36:34.718Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad593f3b1295b1fc090f518"
+    },
+    "entity_type": "Donation",
+    "entity_id": "6ad593f3b1295b1fc090f517",
+    "action": "DONATION_CREATED",
+    "old_status": null,
+    "new_status": "AVAILABLE",
+    "user_id": "test_donor_uid_456",
+    "reason": null,
+    "metadata": null,
+    "timestamp": {
+      "$date": "2026-10-19T03:52:19.507Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad59b6f12d49742df41152b"
+    },
+    "entity_type": "Donation",
+    "entity_id": "6ad59b6f12d49742df41152a",
+    "action": "DONATION_CREATED",
+    "old_status": null,
+    "new_status": "AVAILABLE",
+    "user_id": "test_donor_uid_456",
+    "reason": null,
+    "metadata": null,
+    "timestamp": {
+      "$date": "2026-10-19T04:24:15.491Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad59eb2964bad6d0f39057d"
+    },
+    "entity_type": "Donation",
+    "entity_id": "6ad59eb2964bad6d0f39057c",
+    "action": "DONATION_CREATED",
+    "old_status": null,
+    "new_status": "AVAILABLE",
+    "user_id": "test_donor_uid_456",
+    "reason": null,
+    "metadata": null,
+    "timestamp": {
+      "$date": "2026-10-19T04:38:10.411Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad5f8f804aa92ed0dd3c3b6"
+    },
+    "entity_type": "Donation",
+    "entity_id": "6ad5f8f804aa92ed0dd3c3b5",
+    "action": "DONATION_CREATED",
+    "old_status": null,
+    "new_status": "AVAILABLE",
+    "user_id": "test_donor_uid_456",
+    "reason": null,
+    "metadata": null,
+    "timestamp": {
+      "$date": "2026-10-19T11:03:20.147Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad5f9e49c72e8213e17c380"
+    },
+    "entity_type": "Donation",
+    "entity_id": "6ad5f9e49c72e8213e17c37f",
+    "action": "DONATION_CREATED",
+    "old_status": null,
+    "new_status": "AVAILABLE",
+    "user_id": "test_donor_uid_456",
+    "reason": null,
+    "metadata": null,
+    "timestamp": {
+      "$date": "2026-10-19T11:07:16.113Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad6e44dfb4514cb9c551d9f"
+    },
+    "entity_type": "Donation",
+    "entity_id": "6ad6e44dfb4514cb9c551d9e",
+    "action": "DONATION_CREATED",
+    "old_status": null,
+    "new_status": "AVAILABLE",
+    "user_id": "test_donor_uid_456",
+    "reason": null,
+    "metadata": null,
+    "timestamp": {
+      "$date": "2026-10-20T03:47:25.333Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad6e8ce30a67420fe9472a8"
+    },
+    "entity_type": "Donation",
+    "entity_id": "6ad6e8ce30a67420fe9472a7",
+    "action": "DONATION_CREATED",
+    "old_status": null,
+    "new_status": "AVAILABLE",
+    "user_id": "donor_harvest_1",
+    "reason": null,
+    "metadata": null,
+    "timestamp": {
+      "$date": "2026-10-20T04:06:38.299Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad8b2b36e81e9ab88b3bf2a"
+    },
+    "action": "APPROVE_USER",
+    "user_id": "6ad8638aee5dc99a98edaf75",
+    "user_name": "mams relief hub",
+    "role": "FOOD_RECEIVER",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-21T12:40:19.308Z"
+    },
+    "details": "Admin authorized organization mams relief hub for full network participation"
+  },
+  {
+    "_id": {
+      "$oid": "6ad8b3086e81e9ab88b3bf2c"
+    },
+    "action": "UPDATE_VERIFICATION_PENDING",
+    "user_id": "6ad8638aee5dc99a98edaf75",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-21T12:41:44.298Z"
+    },
+    "details": "Admin changed verification status to PENDING"
+  },
+  {
+    "_id": {
+      "$oid": "6ad8b3ff6e81e9ab88b3bf2d"
+    },
+    "action": "UPDATE_VERIFICATION_VERIFIED",
+    "user_id": "6ad8638aee5dc99a98edaf75",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-21T12:45:51.895Z"
+    },
+    "details": "Admin action via Food Bridge Web Portal"
+  },
+  {
+    "_id": {
+      "$oid": "6ad8b3ff6e81e9ab88b3bf2e"
+    },
+    "action": "APPROVE_USER",
+    "user_id": "6ad8638aee5dc99a98edaf75",
+    "user_name": "mams relief hub",
+    "role": "FOOD_RECEIVER",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-21T12:45:51.887Z"
+    },
+    "details": "Admin authorized organization mams relief hub for full network participation"
+  },
+  {
+    "_id": {
+      "$oid": "6ad8b3ff6e81e9ab88b3bf30"
+    },
+    "action": "UPDATE_VERIFICATION_VERIFIED",
+    "user_id": "6ad8638aee5dc99a98edaf75",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-21T12:45:51.896Z"
+    },
+    "details": "Admin action via Food Bridge Web Portal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae49613d5fdf2ea26477ab1"
+    },
+    "action": "APPROVE_USER",
+    "user_id": "6ae495e6d5fdf2ea26477aaf",
+    "user_name": "gimini ngo",
+    "role": "FOOD_RECEIVER",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-30T13:05:23.060Z"
+    },
+    "details": "Admin authorized organization gimini ngo for full network participation"
+  },
+  {
+    "_id": {
+      "$oid": "6ae566e3c970cbd495e68cfe"
+    },
+    "action": "APPROVE_USER",
+    "user_id": "6ad8549b61b5ef6c171bfb62",
+    "user_name": "Test NGO 6",
+    "role": "FOOD_RECEIVER",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-31T03:56:19.827Z"
+    },
+    "details": "Admin authorized organization Test NGO 6 for full network participation"
+  },
+  {
+    "_id": {
+      "$oid": "6ae5676d04f74ef98f515638"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ad8549b61b5ef6c171bfb62",
+    "user_name": "Test NGO 6",
+    "role": "FOOD_RECEIVER",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-31T03:58:37.048Z"
+    },
+    "details": "Admin rejected organization Test NGO 6: Testing rejection"
+  },
+  {
+    "_id": {
+      "$oid": "6ae57afb19a71fa65919cd0d"
+    },
+    "action": "APPROVE_USER",
+    "user_id": "6ae57aa719a71fa65919cd0b",
+    "user_name": "kk",
+    "role": "FOOD_RECEIVER",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-31T05:22:03.988Z"
+    },
+    "details": "Admin authorized organization kk for full network participation"
+  },
+  {
+    "_id": {
+      "$oid": "6ae57afc19a71fa65919cd0f"
+    },
+    "action": "APPROVE_USER",
+    "user_id": "6ae57aa719a71fa65919cd0b",
+    "user_name": "kk",
+    "role": "FOOD_RECEIVER",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-31T05:22:03.991Z"
+    },
+    "details": "Admin authorized organization kk for full network participation"
+  },
+  {
+    "_id": {
+      "$oid": "6ae57b3e19a71fa65919cd11"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ad8549b61b5ef6c171bfb79",
+    "user_name": "Test Volunteer 10",
+    "role": "volunteer",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-31T05:23:10.044Z"
+    },
+    "details": "Admin rejected organization Test Volunteer 10: Admin action via Food Bridge Web Portal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae57b3e19a71fa65919cd12"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ad8549b61b5ef6c171bfb79",
+    "user_name": "Test Volunteer 10",
+    "role": "volunteer",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-31T05:23:10.046Z"
+    },
+    "details": "Admin rejected organization Test Volunteer 10: Incomplete credentials or criteria not met"
+  },
+  {
+    "_id": {
+      "$oid": "6ae57bba19a71fa65919cd19"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ad8549b61b5ef6c171bfb71",
+    "user_name": "Test Volunteer 6",
+    "role": "volunteer",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-31T05:25:14.641Z"
+    },
+    "details": "Admin rejected organization Test Volunteer 6: Incomplete credentials or criteria not met"
+  },
+  {
+    "_id": {
+      "$oid": "6ae57bba19a71fa65919cd1a"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ad8549b61b5ef6c171bfb71",
+    "user_name": "Test Volunteer 6",
+    "role": "volunteer",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-31T05:25:14.643Z"
+    },
+    "details": "Admin rejected organization Test Volunteer 6: Admin action via Food Bridge Web Portal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae57bbd19a71fa65919cd1d"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ad8549b61b5ef6c171bfb75",
+    "user_name": "Test Volunteer 8",
+    "role": "volunteer",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-31T05:25:17.916Z"
+    },
+    "details": "Admin rejected organization Test Volunteer 8: Admin action via Food Bridge Web Portal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae57bc119a71fa65919cd1f"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ad8549b61b5ef6c171bfb77",
+    "user_name": "Test Volunteer 9",
+    "role": "volunteer",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-31T05:25:21.687Z"
+    },
+    "details": "Admin rejected organization Test Volunteer 9: Admin action via Food Bridge Web Portal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae57be019a71fa65919cd21"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ad8549b61b5ef6c171bfb4e",
+    "user_name": "Test Donor 1",
+    "role": "DONOR",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-31T05:25:52.794Z"
+    },
+    "details": "Admin rejected organization Test Donor 1: Incomplete credentials or criteria not met"
+  },
+  {
+    "_id": {
+      "$oid": "6ae57be019a71fa65919cd22"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ad8549b61b5ef6c171bfb4e",
+    "user_name": "Test Donor 1",
+    "role": "DONOR",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-31T05:25:52.793Z"
+    },
+    "details": "Admin rejected organization Test Donor 1: Admin action via Food Bridge Web Portal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae57c1d19a71fa65919cd25"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ad8549b61b5ef6c171bfb57",
+    "user_name": "Test Donor 8",
+    "role": "DONOR",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-31T05:26:53.377Z"
+    },
+    "details": "Admin rejected organization Test Donor 8: Admin action via Food Bridge Web Portal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae57c1d19a71fa65919cd27"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ad8549b61b5ef6c171bfb57",
+    "user_name": "Test Donor 8",
+    "role": "DONOR",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-31T05:26:53.379Z"
+    },
+    "details": "Admin rejected organization Test Donor 8: Incomplete credentials or criteria not met"
+  },
+  {
+    "_id": {
+      "$oid": "6ae57c4419a71fa65919cd29"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ad8549b61b5ef6c171bfb66",
+    "user_name": "Test NGO 8",
+    "role": "FOOD_RECEIVER",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-31T05:27:32.754Z"
+    },
+    "details": "Admin rejected organization Test NGO 8: Admin action via Food Bridge Web Portal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae57c4419a71fa65919cd2a"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ad8549b61b5ef6c171bfb66",
+    "user_name": "Test NGO 8",
+    "role": "FOOD_RECEIVER",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-31T05:27:32.777Z"
+    },
+    "details": "Admin rejected organization Test NGO 8: Incomplete credentials or criteria not met"
+  },
+  {
+    "_id": {
+      "$oid": "6ae57c8119a71fa65919cd2d"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ad8549b61b5ef6c171bfb6a",
+    "user_name": "Test NGO 10",
+    "role": "FOOD_RECEIVER",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-31T05:28:33.315Z"
+    },
+    "details": "Admin rejected organization Test NGO 10: Admin action via Food Bridge Web Portal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae57c8119a71fa65919cd2e"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ad8549b61b5ef6c171bfb6a",
+    "user_name": "Test NGO 10",
+    "role": "FOOD_RECEIVER",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-31T05:28:33.317Z"
+    },
+    "details": "Admin rejected organization Test NGO 10: Incomplete credentials or criteria not met"
+  },
+  {
+    "_id": {
+      "$oid": "6ae57ca419a71fa65919cd31"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ad8549b61b5ef6c171bfb5b",
+    "user_name": "Test Donor 10",
+    "role": "DONOR",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-31T05:29:08.461Z"
+    },
+    "details": "Admin rejected organization Test Donor 10: Admin action via Food Bridge Web Portal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae57ca419a71fa65919cd32"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ad8549b61b5ef6c171bfb5b",
+    "user_name": "Test Donor 10",
+    "role": "DONOR",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-31T05:29:08.460Z"
+    },
+    "details": "Admin rejected organization Test Donor 10: Incomplete credentials or criteria not met"
+  },
+  {
+    "_id": {
+      "$oid": "6ae57cbd19a71fa65919cd35"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ad8549b61b5ef6c171bfb55",
+    "user_name": "Test Donor 7",
+    "role": "DONOR",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-31T05:29:33.813Z"
+    },
+    "details": "Admin rejected organization Test Donor 7: Incomplete credentials or criteria not met"
+  },
+  {
+    "_id": {
+      "$oid": "6ae57cbd19a71fa65919cd36"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ad8549b61b5ef6c171bfb55",
+    "user_name": "Test Donor 7",
+    "role": "DONOR",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-31T05:29:33.813Z"
+    },
+    "details": "Admin rejected organization Test Donor 7: Admin action via Food Bridge Web Portal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae5928d5c4845388b026928"
+    },
+    "entity_type": "Donation",
+    "entity_id": "6ae5928d5c4845388b026927",
+    "action": "DONATION_CREATED",
+    "old_status": null,
+    "new_status": "AVAILABLE",
+    "user_id": "test_donor_uid_456",
+    "reason": null,
+    "metadata": null,
+    "timestamp": {
+      "$date": "2026-10-31T07:02:37.977Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae59299b55c201c5bcb2d72"
+    },
+    "entity_type": "Donation",
+    "entity_id": "6ae59299b55c201c5bcb2d71",
+    "action": "DONATION_CREATED",
+    "old_status": null,
+    "new_status": "AVAILABLE",
+    "user_id": "test_donor_uid_456",
+    "reason": null,
+    "metadata": null,
+    "timestamp": {
+      "$date": "2026-10-31T07:02:49.855Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae5e61b7f6d609aa716bef0"
+    },
+    "action": "APPROVE_USER",
+    "user_id": "6ae5928d5c4845388b026921",
+    "user_name": "Test NGO",
+    "role": "ngo",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-31T12:59:07.270Z"
+    },
+    "details": "Admin authorized organization Test NGO for full network participation"
+  },
+  {
+    "_id": {
+      "$oid": "6ae6094ebf5b62f3b9abc2f9"
+    },
+    "action": "APPROVE_USER",
+    "user_id": "6ae60931bf5b62f3b9abc2f7",
+    "user_name": "Shanti Seva Relief Foundation",
+    "role": "ngo",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-31T15:29:18.185Z"
+    },
+    "details": "Admin authorized organization Shanti Seva Relief Foundation for full network participation"
+  },
+  {
+    "_id": {
+      "$oid": "6ae6095dbf5b62f3b9abc2fd"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ae6095cbf5b62f3b9abc2fb",
+    "user_name": "Spam Organization Demo",
+    "role": "ngo",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-31T15:29:33.252Z"
+    },
+    "details": "Admin rejected organization Spam Organization Demo: Invalid organization credentials"
+  },
+  {
+    "_id": {
+      "$oid": "6ae60a0bbbbbde878e453ce1"
+    },
+    "action": "DELETE_ACCOUNT",
+    "user_id": "uid_4826482e92944d41",
+    "actor_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-10-31T15:32:27.067Z"
+    },
+    "details": "Account uid_4826482e92944d41 permanently deleted and personal data anonymized under GDPR/Data Protection guidelines."
+  },
+  {
+    "_id": {
+      "$oid": "6ae72b539a203890c7e32dd3"
+    },
+    "entity_type": "Donation",
+    "entity_id": "6ae72b539a203890c7e32dd2",
+    "action": "DONATION_CREATED",
+    "old_status": null,
+    "new_status": "AVAILABLE",
+    "user_id": "test_donor_uid_456",
+    "reason": null,
+    "metadata": null,
+    "timestamp": {
+      "$date": "2026-11-01T12:06:43.407Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae72b9c9526e5077d799832"
+    },
+    "entity_type": "Donation",
+    "entity_id": "6ae72b9c9526e5077d799831",
+    "action": "DONATION_CREATED",
+    "old_status": null,
+    "new_status": "AVAILABLE",
+    "user_id": "test_donor_uid_456",
+    "reason": null,
+    "metadata": null,
+    "timestamp": {
+      "$date": "2026-11-01T12:07:56.176Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae72ba09526e5077d79983d"
+    },
+    "entity_type": "NGO",
+    "entity_id": "NGO-8941",
+    "action": "80G_CERTIFICATE_VERIFIED",
+    "old_status": null,
+    "new_status": "VERIFIED",
+    "user_id": "mock_token_admin",
+    "reason": "Official tax exemption certificate authenticated",
+    "metadata": {},
+    "timestamp": {
+      "$date": "2026-11-01T12:08:00.888Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae7372f36ac121fd8c70b61"
+    },
+    "entity_type": "Donation",
+    "entity_id": "6ae7372f36ac121fd8c70b60",
+    "action": "DONATION_CREATED",
+    "old_status": null,
+    "new_status": "AVAILABLE",
+    "user_id": "test_donor_isolated_001",
+    "reason": null,
+    "metadata": null,
+    "timestamp": {
+      "$date": "2026-11-01T12:57:19.474Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae7372f36ac121fd8c70b62"
+    },
+    "entity_type": "Donation",
+    "entity_id": "6ae7372f36ac121fd8c70b60",
+    "action": "DONATION_UPDATED",
+    "old_status": null,
+    "new_status": null,
+    "user_id": "test_donor_isolated_001",
+    "reason": null,
+    "metadata": null,
+    "timestamp": {
+      "$date": "2026-11-01T12:57:19.523Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae7372f36ac121fd8c70b63"
+    },
+    "entity_type": "Donation",
+    "entity_id": "6ae7372f36ac121fd8c70b60",
+    "action": "DONATION_DELETED",
+    "old_status": "AVAILABLE",
+    "new_status": "CANCELLED",
+    "user_id": "admin_super",
+    "reason": null,
+    "metadata": null,
+    "timestamp": {
+      "$date": "2026-11-01T12:57:19.548Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae737796564626a324d160c"
+    },
+    "entity_type": "Donation",
+    "entity_id": "6ae737796564626a324d160b",
+    "action": "DONATION_CREATED",
+    "old_status": null,
+    "new_status": "AVAILABLE",
+    "user_id": "test_donor_isolated_001",
+    "reason": null,
+    "metadata": null,
+    "timestamp": {
+      "$date": "2026-11-01T12:58:33.404Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae737796564626a324d160d"
+    },
+    "entity_type": "Donation",
+    "entity_id": "6ae737796564626a324d160b",
+    "action": "DONATION_UPDATED",
+    "old_status": null,
+    "new_status": null,
+    "user_id": "test_donor_isolated_001",
+    "reason": null,
+    "metadata": null,
+    "timestamp": {
+      "$date": "2026-11-01T12:58:33.428Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae737796564626a324d160e"
+    },
+    "entity_type": "Donation",
+    "entity_id": "6ae737796564626a324d160b",
+    "action": "DONATION_DELETED",
+    "old_status": "AVAILABLE",
+    "new_status": "CANCELLED",
+    "user_id": "admin_super",
+    "reason": null,
+    "metadata": null,
+    "timestamp": {
+      "$date": "2026-11-01T12:58:33.449Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae73ecc7cdbb152e4806117"
+    },
+    "entity_type": "Donation",
+    "entity_id": "6ae73ecc7cdbb152e4806116",
+    "action": "DONATION_CREATED",
+    "old_status": null,
+    "new_status": "AVAILABLE",
+    "user_id": "test_donor_isolated_001",
+    "reason": null,
+    "metadata": null,
+    "timestamp": {
+      "$date": "2026-11-01T13:29:48.245Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae73ecc7cdbb152e4806118"
+    },
+    "entity_type": "Donation",
+    "entity_id": "6ae73ecc7cdbb152e4806116",
+    "action": "DONATION_UPDATED",
+    "old_status": null,
+    "new_status": null,
+    "user_id": "test_donor_isolated_001",
+    "reason": null,
+    "metadata": null,
+    "timestamp": {
+      "$date": "2026-11-01T13:29:48.286Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae73ecc7cdbb152e4806119"
+    },
+    "entity_type": "Donation",
+    "entity_id": "6ae73ecc7cdbb152e4806116",
+    "action": "DONATION_DELETED",
+    "old_status": "AVAILABLE",
+    "new_status": "CANCELLED",
+    "user_id": "admin_super",
+    "reason": null,
+    "metadata": null,
+    "timestamp": {
+      "$date": "2026-11-01T13:29:48.305Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae740d6493ce10fbacec756"
+    },
+    "entity_type": "Donation",
+    "entity_id": "6ae740d6493ce10fbacec755",
+    "action": "DONATION_CREATED",
+    "old_status": null,
+    "new_status": "AVAILABLE",
+    "user_id": "test_donor_uid_456",
+    "reason": null,
+    "metadata": null,
+    "timestamp": {
+      "$date": "2026-11-01T13:38:30.961Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae740dc493ce10fbacec761"
+    },
+    "entity_type": "NGO",
+    "entity_id": "NGO-8941",
+    "action": "80G_CERTIFICATE_VERIFIED",
+    "old_status": null,
+    "new_status": "VERIFIED",
+    "user_id": "mock_token_admin",
+    "reason": "Official tax exemption certificate authenticated",
+    "metadata": {},
+    "timestamp": {
+      "$date": "2026-11-01T13:38:36.142Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae74731a5ccd1ac86b8c9c1"
+    },
+    "entity_type": "Donation",
+    "entity_id": "6ae74731a5ccd1ac86b8c9c0",
+    "action": "DONATION_CREATED",
+    "old_status": null,
+    "new_status": "AVAILABLE",
+    "user_id": "user_9036810241_donor",
+    "reason": null,
+    "metadata": null,
+    "timestamp": {
+      "$date": "2026-11-01T14:05:37.658Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c2d6cf77d6d3470c508"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ad8638aee5dc99a98edaf75",
+    "user_name": "mams relief hub",
+    "role": "FOOD_RECEIVER",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-11-01T16:43:25.651Z"
+    },
+    "details": "Admin rejected organization mams relief hub: Admin action via Food Bridge Web Portal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c2d6cf77d6d3470c50a"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ad8638aee5dc99a98edaf75",
+    "user_name": "mams relief hub",
+    "role": "FOOD_RECEIVER",
+    "admin_id": "admin_master",
+    "timestamp": {
+      "$date": "2026-11-01T16:43:25.651Z"
+    },
+    "details": "Admin rejected organization mams relief hub: Verification criteria not met"
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c356cf77d6d3470c50c"
+    },
+    "action": "APPROVE_USER",
+    "user_id": "6ad8638aee5dc99a98edaf75",
+    "user_name": "mams relief hub",
+    "role": "FOOD_RECEIVER",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-11-01T16:43:33.934Z"
+    },
+    "details": "Admin authorized organization mams relief hub for full network participation"
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c356cf77d6d3470c50d"
+    },
+    "action": "APPROVE_USER",
+    "user_id": "6ad8638aee5dc99a98edaf75",
+    "user_name": "mams relief hub",
+    "role": "FOOD_RECEIVER",
+    "admin_id": "admin_master",
+    "timestamp": {
+      "$date": "2026-11-01T16:43:33.936Z"
+    },
+    "details": "Admin authorized organization mams relief hub for full network participation"
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c3a6cf77d6d3470c510"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ad8638aee5dc99a98edaf75",
+    "user_name": "mams relief hub",
+    "role": "FOOD_RECEIVER",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-11-01T16:43:38.109Z"
+    },
+    "details": "Admin rejected organization mams relief hub: Admin action via Food Bridge Web Portal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c3a6cf77d6d3470c512"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ad8638aee5dc99a98edaf75",
+    "user_name": "mams relief hub",
+    "role": "FOOD_RECEIVER",
+    "admin_id": "admin_master",
+    "timestamp": {
+      "$date": "2026-11-01T16:43:38.116Z"
+    },
+    "details": "Admin rejected organization mams relief hub: Verification criteria not met"
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c3d6cf77d6d3470c514"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ae495afd5fdf2ea26477aad",
+    "user_name": "Vinay",
+    "role": "donor",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-11-01T16:43:41.525Z"
+    },
+    "details": "Admin rejected organization Vinay: Admin action via Food Bridge Web Portal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c3d6cf77d6d3470c515"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ae495afd5fdf2ea26477aad",
+    "user_name": "Vinay",
+    "role": "donor",
+    "admin_id": "admin_master",
+    "timestamp": {
+      "$date": "2026-11-01T16:43:41.528Z"
+    },
+    "details": "Admin rejected organization Vinay: Verification criteria not met"
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c446cf77d6d3470c518"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ae495e6d5fdf2ea26477aaf",
+    "user_name": "gimini ngo",
+    "role": "FOOD_RECEIVER",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-11-01T16:43:48.355Z"
+    },
+    "details": "Admin rejected organization gimini ngo: Admin action via Food Bridge Web Portal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c446cf77d6d3470c519"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ae495e6d5fdf2ea26477aaf",
+    "user_name": "gimini ngo",
+    "role": "FOOD_RECEIVER",
+    "admin_id": "admin_master",
+    "timestamp": {
+      "$date": "2026-11-01T16:43:48.358Z"
+    },
+    "details": "Admin rejected organization gimini ngo: Verification criteria not met"
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c496cf77d6d3470c51c"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ae57aa719a71fa65919cd0b",
+    "user_name": "kk",
+    "role": "FOOD_RECEIVER",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-11-01T16:43:53.672Z"
+    },
+    "details": "Admin rejected organization kk: Admin action via Food Bridge Web Portal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c496cf77d6d3470c51d"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ae57aa719a71fa65919cd0b",
+    "user_name": "kk",
+    "role": "FOOD_RECEIVER",
+    "admin_id": "admin_master",
+    "timestamp": {
+      "$date": "2026-11-01T16:43:53.673Z"
+    },
+    "details": "Admin rejected organization kk: Verification criteria not met"
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c4d6cf77d6d3470c520"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ae60931bf5b62f3b9abc2f7",
+    "user_name": "Shanti Seva Relief Foundation",
+    "role": "ngo",
+    "admin_id": "admin_master",
+    "timestamp": {
+      "$date": "2026-11-01T16:43:57.751Z"
+    },
+    "details": "Admin rejected organization Shanti Seva Relief Foundation: Verification criteria not met"
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c4d6cf77d6d3470c521"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ae60931bf5b62f3b9abc2f7",
+    "user_name": "Shanti Seva Relief Foundation",
+    "role": "ngo",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-11-01T16:43:57.753Z"
+    },
+    "details": "Admin rejected organization Shanti Seva Relief Foundation: Admin action via Food Bridge Web Portal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c766cf77d6d3470c524"
+    },
+    "action": "DELETE_ACCOUNT",
+    "user_id": "user_6666655555_ngo",
+    "actor_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-11-01T16:44:38.965Z"
+    },
+    "details": "Account user_6666655555_ngo permanently deleted and personal data anonymized under GDPR/Data Protection guidelines."
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c7b6cf77d6d3470c525"
+    },
+    "action": "DELETE_ACCOUNT",
+    "user_id": "uid_9c2190f6e51f4961",
+    "actor_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-11-01T16:44:43.094Z"
+    },
+    "details": "Account uid_9c2190f6e51f4961 permanently deleted and personal data anonymized under GDPR/Data Protection guidelines."
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c836cf77d6d3470c526"
+    },
+    "action": "DELETE_ACCOUNT",
+    "user_id": "uid_3cf12406e68b41d8",
+    "actor_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-11-01T16:44:51.367Z"
+    },
+    "details": "Account uid_3cf12406e68b41d8 permanently deleted and personal data anonymized under GDPR/Data Protection guidelines."
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c896cf77d6d3470c527"
+    },
+    "action": "DELETE_ACCOUNT",
+    "user_id": "uid_06b0125347164b2b",
+    "actor_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-11-01T16:44:57.222Z"
+    },
+    "details": "Account uid_06b0125347164b2b permanently deleted and personal data anonymized under GDPR/Data Protection guidelines."
+  },
+  {
+    "_id": {
+      "$oid": "6ae76c8e6cf77d6d3470c528"
+    },
+    "action": "DELETE_ACCOUNT",
+    "user_id": "user_1234567800_ngo",
+    "actor_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-11-01T16:45:02.161Z"
+    },
+    "details": "Account user_1234567800_ngo permanently deleted and personal data anonymized under GDPR/Data Protection guidelines."
+  },
+  {
+    "_id": {
+      "$oid": "6ae77c3400d361eb0e269e49"
+    },
+    "action": "DELETE_ACCOUNT",
+    "user_id": "uid_vinay_donor_9036810241",
+    "actor_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-11-01T17:51:48.693Z"
+    },
+    "details": "Account uid_vinay_donor_9036810241 permanently deleted and personal data anonymized under GDPR/Data Protection guidelines."
+  },
+  {
+    "_id": {
+      "$oid": "6ae77c6400d361eb0e269e4a"
+    },
+    "action": "REJECT_USER",
+    "user_id": "6ae75390a5ccd1ac86b8c9c2",
+    "user_name": "Vinay Aradhya v",
+    "role": "DONOR",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-11-01T17:52:36.274Z"
+    },
+    "details": "Admin rejected organization Vinay Aradhya v: Admin action via Food Bridge Web Portal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77c6400d361eb0e269e4c"
+    },
+    "action": "UPDATE_VERIFICATION_REJECTED",
+    "user_id": "6ae75390a5ccd1ac86b8c9c2",
+    "admin_id": "admin_master",
+    "timestamp": {
+      "$date": "2026-11-01T17:52:36.274Z"
+    },
+    "details": "Admin dashboard status update"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d3700d361eb0e269e6a"
+    },
+    "action": "UPDATE_VERIFICATION_VERIFIED",
+    "user_id": "6ae75390a5ccd1ac86b8c9c2",
+    "admin_id": "admin_master",
+    "timestamp": {
+      "$date": "2026-11-01T17:56:07.235Z"
+    },
+    "details": "Admin dashboard status update"
+  },
+  {
+    "_id": {
+      "$oid": "6ae77d3700d361eb0e269e6b"
+    },
+    "action": "APPROVE_USER",
+    "user_id": "6ae75390a5ccd1ac86b8c9c2",
+    "user_name": "Vinay Aradhya v",
+    "role": "DONOR",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-11-01T17:56:07.238Z"
+    },
+    "details": "Admin authorized organization Vinay Aradhya v for full network participation"
+  },
+  {
+    "_id": {
+      "$oid": "6ae781b400d361eb0e269ea7"
+    },
+    "action": "APPROVE_USER",
+    "user_id": "6ae781a800d361eb0e269ea5",
+    "user_name": "dhdh",
+    "role": "FOOD_RECEIVER",
+    "admin_id": "admin_super",
+    "timestamp": {
+      "$date": "2026-11-01T18:15:16.365Z"
+    },
+    "details": "Admin authorized organization dhdh for full network participation"
+  }
+]

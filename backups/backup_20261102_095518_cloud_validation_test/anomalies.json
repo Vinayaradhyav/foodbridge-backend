@@ -1,0 +1,79 @@
+[
+  {
+    "_id": {
+      "$oid": "6ae736786321e5404bb38443"
+    },
+    "user_id": "usr_phantom_991",
+    "user_name": "Metro Grand Banquets (Unverified)",
+    "user_role": "DONOR",
+    "risk_level": "HIGH_RISK",
+    "risk_score": 92,
+    "reasons": [
+      "Extremely high quantity per donation (>5000 items).",
+      "Abnormally large listing quantity on a brand new account.",
+      "Unsupervised AI (Isolation Forest) flagged transaction telemetry as an outlier."
+    ],
+    "related_transaction": "Listed 6,200 meals \u2022 Claimed then canceled 4 times",
+    "status": "OPEN",
+    "timestamp": {
+      "$date": "2026-11-01T12:54:12.833Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae736786321e5404bb38444"
+    },
+    "user_id": "usr_multi_ip_402",
+    "user_name": "Apex Food Redistribution Cell",
+    "user_role": "NGO",
+    "risk_level": "SUSPICIOUS",
+    "risk_score": 64,
+    "reasons": [
+      "Multiple accounts detected operating on the same IP (4 accounts).",
+      "Unusual geographic velocity variance / location hopping.",
+      "High cancellation frequency (5 cancels, 45% ratio)."
+    ],
+    "related_transaction": "Claimed 8 donations across disparate zones within 15 mins",
+    "status": "OPEN",
+    "timestamp": {
+      "$date": "2026-11-01T12:54:12.833Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae736786321e5404bb38445"
+    },
+    "user_id": "usr_spoilage_abuse_118",
+    "user_name": "City Quick Foods",
+    "user_role": "DONOR",
+    "risk_level": "SUSPICIOUS",
+    "risk_score": 55,
+    "reasons": [
+      "Repeated image inspection rejections (3 failed uploads with non-food/spoilage).",
+      "High cancellation frequency (4 cancels, 40% ratio)."
+    ],
+    "related_transaction": "3 flagged image rejections by AI Computer Vision",
+    "status": "OPEN",
+    "timestamp": {
+      "$date": "2026-11-01T12:54:12.833Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae736786321e5404bb38446"
+    },
+    "user_id": "test_donor_uid_456",
+    "user_name": "Test Donor",
+    "user_role": "donor",
+    "risk_level": "SUSPICIOUS",
+    "risk_score": 35,
+    "reasons": [
+      "Unsupervised AI (Isolation Forest) flagged transaction telemetry as an outlier."
+    ],
+    "related_transaction": "4 donations \u2022 Max 20 items",
+    "status": "OPEN",
+    "timestamp": {
+      "$date": "2026-11-01T12:54:16.641Z"
+    }
+  }
+]

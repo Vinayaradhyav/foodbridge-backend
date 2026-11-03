@@ -1,0 +1,56 @@
+{
+  "model_version": "v2.0-ensemble-iforest-rf",
+  "dataset_size": 10000,
+  "test_size": 2000,
+  "accuracy": 1.0,
+  "isolation_forest_alignment": 0.9345,
+  "classification_report": {
+    "NORMAL": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 1880.0
+    },
+    "FRAUD_ANOMALOUS": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 120.0
+    },
+    "accuracy": 1.0,
+    "macro avg": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 2000.0
+    },
+    "weighted avg": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 2000.0
+    }
+  },
+  "feature_importances": {
+    "daily_donations": 0.004991677845781746,
+    "avg_quantity": 0.020500193643801675,
+    "max_quantity": 0.07538831698461287,
+    "cancellations": 0.15518103791511842,
+    "cancel_ratio": 0.3529118168992508,
+    "distance_variance": 0.19697454109736917,
+    "duplicate_ips": 0.11403611497842547,
+    "image_reject_count": 0.0785715688748083,
+    "account_age_days": 0.0014447317608315875
+  },
+  "features": [
+    "daily_donations",
+    "avg_quantity",
+    "max_quantity",
+    "cancellations",
+    "cancel_ratio",
+    "distance_variance",
+    "duplicate_ips",
+    "image_reject_count",
+    "account_age_days"
+  ]
+}

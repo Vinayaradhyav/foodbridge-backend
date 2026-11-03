@@ -1,0 +1,449 @@
+[
+  {
+    "_id": {
+      "$oid": "6ad8638aee5dc99a98edaf75"
+    },
+    "firebase_uid": "user_1234567800_ngo",
+    "name": "Deleted Account",
+    "email": "deleted_02c1a88e9d72@foodbridge.invalid",
+    "phone": "0000000000",
+    "role": "FOOD_RECEIVER",
+    "receiver_type": "RELIEF_HUB",
+    "location": "aradhaya mahasaba, mysore - 560001",
+    "status": "deleted",
+    "verification_status": "REJECTED",
+    "created_at": {
+      "$date": "2026-10-21T07:02:34.006Z"
+    },
+    "updated_at": {
+      "$date": "2026-11-01T16:45:02.161Z"
+    },
+    "last_login": {
+      "$date": "2026-10-21T16:49:56.975Z"
+    },
+    "contact_person": "dr vini",
+    "ai_classification": "Disaster Relief Operational Center (Tier 1 Priority)",
+    "ai_notes": "AI Pre-Screening: Score 98/100. Valid government registration document syntax; Full authorized signatory name provided. Capacity: 1000 meals/day with 2 active transport units. Recommended for Administrator Authorization.",
+    "ai_safety_status": "SAFE - RECOMMENDED FOR APPROVAL",
+    "ai_trust_score": 98,
+    "beneficiary_capacity": 500,
+    "designation": "Operations Director",
+    "fleet_count": 2,
+    "food_capacity": 1000,
+    "operating_hours": "24/7 Disaster & Emergency Relief",
+    "organization_id": "reg#123456008",
+    "pincode": "560001",
+    "storage_facilities": "Refrigerated Cold Storage, Dry Warehouse, Insulated Transport, Hot Holding",
+    "tax_exemption_status": "80G & 12A Certified",
+    "approved_at": {
+      "$date": "2026-11-01T16:43:33.936Z"
+    },
+    "approved_by": "Food-Bridge System Admin",
+    "rejected_at": {
+      "$date": "2026-11-01T16:43:38.116Z"
+    },
+    "rejected_by": "Food-Bridge System Admin",
+    "rejection_reason": "Verification criteria not met",
+    "deleted_at": {
+      "$date": "2026-11-01T16:45:02.161Z"
+    },
+    "fcm_token": null,
+    "hashed_password": null
+  },
+  {
+    "_id": {
+      "$oid": "6ae495afd5fdf2ea26477aad"
+    },
+    "firebase_uid": "uid_3cf12406e68b41d8",
+    "name": "Deleted Account",
+    "email": "deleted_851d5c603773@foodbridge.invalid",
+    "phone": "0000000000",
+    "role": "donor",
+    "receiver_type": null,
+    "location": "Bangalore Central, MG Road",
+    "status": "deleted",
+    "verification_status": "REJECTED",
+    "created_at": {
+      "$date": "2026-10-30T13:03:43.867Z"
+    },
+    "updated_at": {
+      "$date": "2026-11-01T16:44:51.367Z"
+    },
+    "last_login": {
+      "$date": "2026-10-31T13:24:48.354Z"
+    },
+    "hashed_password": null,
+    "rejected_at": {
+      "$date": "2026-11-01T16:43:41.528Z"
+    },
+    "rejected_by": "Food-Bridge System Admin",
+    "rejection_reason": "Verification criteria not met",
+    "deleted_at": {
+      "$date": "2026-11-01T16:44:51.367Z"
+    },
+    "fcm_token": null
+  },
+  {
+    "_id": {
+      "$oid": "6ae495e6d5fdf2ea26477aaf"
+    },
+    "firebase_uid": "uid_06b0125347164b2b",
+    "name": "Deleted Account",
+    "email": "deleted_79e06c5c5b8e@foodbridge.invalid",
+    "phone": "0000000000",
+    "role": "FOOD_RECEIVER",
+    "receiver_type": "NGO_TRUST",
+    "location": "mandya, mandya - 570006",
+    "status": "deleted",
+    "verification_status": "REJECTED",
+    "created_at": {
+      "$date": "2026-10-30T13:04:38.864Z"
+    },
+    "updated_at": {
+      "$date": "2026-11-01T16:44:57.222Z"
+    },
+    "last_login": {
+      "$date": "2026-11-01T16:10:24.314Z"
+    },
+    "organization_id": "#23455667899",
+    "contact_person": "sajar (Operations Director)",
+    "food_capacity": 1000,
+    "beneficiary_capacity": 500,
+    "fleet_count": 5,
+    "hashed_password": null,
+    "ai_trust_score": 98,
+    "ai_safety_status": "SAFE - RECOMMENDED FOR APPROVAL",
+    "ai_classification": "Accredited NGO Trust (Section 8 / Public Charity)",
+    "ai_notes": "AI Pre-Screening: Score 98/100. Valid government registration document syntax; Full authorized signatory name provided. Capacity: 1000 meals/day with 5 active transport units. Recommended for Administrator Authorization.",
+    "approved_at": {
+      "$date": "2026-10-30T13:05:23.060Z"
+    },
+    "approved_by": "Food-Bridge System Admin",
+    "rejected_at": {
+      "$date": "2026-11-01T16:43:48.358Z"
+    },
+    "rejected_by": "Food-Bridge System Admin",
+    "rejection_reason": "Verification criteria not met",
+    "deleted_at": {
+      "$date": "2026-11-01T16:44:57.222Z"
+    },
+    "fcm_token": null
+  },
+  {
+    "_id": {
+      "$oid": "6ae57aa719a71fa65919cd0b"
+    },
+    "firebase_uid": "user_6666655555_ngo",
+    "name": "Deleted Account",
+    "email": "deleted_2d3602122b1b@foodbridge.invalid",
+    "phone": "0000000000",
+    "role": "FOOD_RECEIVER",
+    "receiver_type": "OTHER_AUTHORIZED_ORGANIZATION",
+    "location": "mandy, Bangalore - 570089",
+    "status": "deleted",
+    "verification_status": "REJECTED",
+    "created_at": {
+      "$date": "2026-10-31T05:20:39.516Z"
+    },
+    "updated_at": {
+      "$date": "2026-11-01T16:44:38.965Z"
+    },
+    "last_login": {
+      "$date": "2026-10-31T05:20:39.516Z"
+    },
+    "organization_id": "vshsjw7nni",
+    "contact_person": "rahul",
+    "food_capacity": 1000,
+    "beneficiary_capacity": 500,
+    "fleet_count": 2,
+    "hashed_password": null,
+    "ai_trust_score": 96,
+    "ai_safety_status": "SAFE - RECOMMENDED FOR APPROVAL",
+    "ai_classification": "Accredited NGO Trust (Section 8 / Public Charity)",
+    "ai_notes": "AI Pre-Screening: Score 96/100. Valid government registration document syntax; Verified 10-digit telephone format. Capacity: 1000 meals/day with 2 active transport units. Recommended for Administrator Authorization.",
+    "approved_at": {
+      "$date": "2026-10-31T05:22:03.991Z"
+    },
+    "approved_by": "Food-Bridge System Admin",
+    "rejected_at": {
+      "$date": "2026-11-01T16:43:53.673Z"
+    },
+    "rejected_by": "Food-Bridge System Admin",
+    "rejection_reason": "Verification criteria not met",
+    "deleted_at": {
+      "$date": "2026-11-01T16:44:38.965Z"
+    },
+    "fcm_token": null
+  },
+  {
+    "_id": {
+      "$oid": "6ae57e741a4eebf98da81f2d"
+    },
+    "firebase_uid": "admin_master_001",
+    "name": "System Administrator",
+    "email": "admin@foodbridge.org",
+    "phone": "9999999999",
+    "role": "admin",
+    "status": "active",
+    "verification_status": "VERIFIED",
+    "is_email_verified": true,
+    "hashed_password": "02e1953bafae38c25f3a1195c0e0878a$cdf0236f12a08a3f0e90687a29c2802839d993f590654146ee777921b0a8fe9c",
+    "created_at": {
+      "$date": "2026-10-31T05:36:52.736Z"
+    },
+    "updated_at": {
+      "$date": "2026-10-31T05:36:52.736Z"
+    },
+    "last_login": {
+      "$date": "2026-10-31T13:24:47.918Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae60931bf5b62f3b9abc2f7"
+    },
+    "firebase_uid": "uid_9c2190f6e51f4961",
+    "name": "Deleted Account",
+    "email": "deleted_7f19678240f9@foodbridge.invalid",
+    "phone": "0000000000",
+    "role": "ngo",
+    "receiver_type": null,
+    "location": "Jayanagar 4th Block, Bangalore",
+    "status": "deleted",
+    "verification_status": "REJECTED",
+    "created_at": {
+      "$date": "2026-10-31T15:28:49.937Z"
+    },
+    "updated_at": {
+      "$date": "2026-11-01T16:44:43.094Z"
+    },
+    "last_login": {
+      "$date": "2026-10-31T15:28:49.937Z"
+    },
+    "hashed_password": null,
+    "ai_trust_score": 83,
+    "ai_safety_status": "MODERATE - MANUAL REVIEW RECOMMENDED",
+    "ai_classification": "Accredited NGO Trust (Section 8 / Public Charity)",
+    "ai_notes": "AI Pre-Screening: Score 83/100. Verified 10-digit telephone format; Legitimate organization communication domain. Capacity: 500 meals/day with 1 active transport units. Recommended for Administrator Authorization.",
+    "approved_at": {
+      "$date": "2026-10-31T15:29:18.185Z"
+    },
+    "approved_by": "Food-Bridge System Admin",
+    "rejected_at": {
+      "$date": "2026-11-01T16:43:57.753Z"
+    },
+    "rejected_by": "Food-Bridge System Admin",
+    "rejection_reason": "Admin action via Food Bridge Web Portal",
+    "deleted_at": {
+      "$date": "2026-11-01T16:44:43.094Z"
+    },
+    "fcm_token": null
+  },
+  {
+    "_id": {
+      "$oid": "6ae75390a5ccd1ac86b8c9c2"
+    },
+    "firebase_uid": "user_6519036810_donor",
+    "name": "Vinay Aradhya v",
+    "email": "vinay@gmail.com",
+    "phone": "6519036810",
+    "role": "DONOR",
+    "receiver_type": null,
+    "location": "Madahalli, Karnataka 570026, India",
+    "status": "active",
+    "verification_status": "VERIFIED",
+    "created_at": {
+      "$date": "2026-11-01T14:58:24.230Z"
+    },
+    "updated_at": {
+      "$date": "2026-11-01T17:56:07.238Z"
+    },
+    "last_login": {
+      "$date": "2026-11-01T17:52:57.077Z"
+    },
+    "food_capacity": 500,
+    "beneficiary_capacity": 250,
+    "fleet_count": 1,
+    "hashed_password": "4c46fb980a4c6d2612f62f07e4db3f76$0f37524b1b18bc93ea269ea8c1fba86d3dad34b64fe5bdc3fd449a75bb28f713",
+    "rejected_at": {
+      "$date": "2026-11-01T17:52:36.274Z"
+    },
+    "rejected_by": "Food-Bridge System Admin",
+    "rejection_reason": "Admin action via Food Bridge Web Portal",
+    "approved_at": {
+      "$date": "2026-11-01T17:56:07.238Z"
+    },
+    "approved_by": "Food-Bridge System Admin"
+  },
+  {
+    "_id": {
+      "$oid": "6ae763d320448109ae6b1161"
+    },
+    "firebase_uid": "uid_vinay_donor_9036810241",
+    "name": "Deleted Account",
+    "email": "deleted_c335f2ce05a2@foodbridge.invalid",
+    "phone": "0000000000",
+    "role": "donor",
+    "location": "Madahalli, Karnataka 570026, India",
+    "status": "deleted",
+    "verification_status": "VERIFIED",
+    "hashed_password": null,
+    "created_at": {
+      "$date": "2026-11-01T16:07:47.197Z"
+    },
+    "updated_at": {
+      "$date": "2026-11-01T17:51:48.693Z"
+    },
+    "last_login": {
+      "$date": "2026-11-01T16:10:22.229Z"
+    },
+    "deleted_at": {
+      "$date": "2026-11-01T17:51:48.693Z"
+    },
+    "fcm_token": null
+  },
+  {
+    "_id": {
+      "$oid": "6ae76bfc6cf77d6d3470c507"
+    },
+    "firebase_uid": "admin_0fb8751d9db08c50",
+    "name": "vinay dev",
+    "email": "vinaydev@food.com",
+    "phone": "7444474444",
+    "role": "admin",
+    "receiver_type": null,
+    "location": "",
+    "status": "active",
+    "verification_status": "VERIFIED",
+    "created_at": {
+      "$date": "2026-11-01T16:42:36.561Z"
+    },
+    "updated_at": {
+      "$date": "2026-11-01T16:42:36.561Z"
+    },
+    "last_login": {
+      "$date": "2026-11-01T16:42:36.561Z"
+    },
+    "is_email_verified": true,
+    "hashed_password": "1514a6691c06b2f9286f652b44613735$2e40749951c1d5d26076c2d27052d077b276ee017fb00cb1fc4f593fc897fa03"
+  },
+  {
+    "_id": {
+      "$oid": "6ae7779100d361eb0e269e47"
+    },
+    "firebase_uid": "uid_b976326d16404240",
+    "name": "Gimini Relief Care",
+    "email": "giminirelief@gmail.com",
+    "phone": "9876500001",
+    "role": "FOOD_RECEIVER",
+    "receiver_type": "RELIEF_HUB",
+    "location": "Bangalore City",
+    "status": "pending_approval",
+    "verification_status": "PENDING",
+    "created_at": {
+      "$date": "2026-11-01T17:32:01.950Z"
+    },
+    "updated_at": {
+      "$date": "2026-11-01T17:32:01.950Z"
+    },
+    "last_login": {
+      "$date": "2026-11-01T17:32:01.950Z"
+    },
+    "food_capacity": 600,
+    "beneficiary_capacity": 300,
+    "fleet_count": 2,
+    "hashed_password": "d7676d6f92b975a7e6b0edc87389049d$6b11ddd36cd52757dbe2f9ec31c5cc775a306a27d02a3a085b0a3aeb4a82b48d",
+    "ai_trust_score": 83,
+    "ai_safety_status": "MODERATE - MANUAL REVIEW RECOMMENDED",
+    "ai_classification": "Disaster Relief Operational Center (Tier 1 Priority)",
+    "ai_notes": "AI Pre-Screening: Score 83/100. Verified 10-digit telephone format; Legitimate organization communication domain. Capacity: 600 meals/day with 2 active transport units. Recommended for Administrator Authorization."
+  },
+  {
+    "_id": {
+      "$oid": "6ae77f1d00d361eb0e269ea3"
+    },
+    "firebase_uid": "user_9036810241_donor",
+    "name": "Vinay Aradhya v",
+    "email": "vinayaradhyav9036@gmail.com",
+    "phone": "9036810241",
+    "role": "DONOR",
+    "receiver_type": null,
+    "location": "bengali",
+    "status": "active",
+    "verification_status": "VERIFIED",
+    "created_at": {
+      "$date": "2026-11-01T18:04:13.004Z"
+    },
+    "updated_at": {
+      "$date": "2026-11-01T18:04:13.004Z"
+    },
+    "last_login": {
+      "$date": "2026-11-02T09:36:03.798Z"
+    },
+    "food_capacity": 500,
+    "beneficiary_capacity": 250,
+    "fleet_count": 1,
+    "hashed_password": "4c46fb980a4c6d2612f62f07e4db3f76$0f37524b1b18bc93ea269ea8c1fba86d3dad34b64fe5bdc3fd449a75bb28f713"
+  },
+  {
+    "_id": {
+      "$oid": "6ae781a800d361eb0e269ea5"
+    },
+    "firebase_uid": "user_8976460119_ngo",
+    "name": "dhdh",
+    "email": "ffff@g.com",
+    "phone": "8976460119",
+    "role": "FOOD_RECEIVER",
+    "receiver_type": "NGO_TRUST",
+    "location": "shivaji nagar, Bangalore - 536666",
+    "status": "active",
+    "verification_status": "VERIFIED",
+    "created_at": {
+      "$date": "2026-11-01T18:15:04.838Z"
+    },
+    "updated_at": {
+      "$date": "2026-11-01T18:15:16.365Z"
+    },
+    "last_login": {
+      "$date": "2026-11-01T18:15:04.838Z"
+    },
+    "organization_id": "zhzh7777",
+    "contact_person": "sj",
+    "food_capacity": 233,
+    "beneficiary_capacity": 226,
+    "fleet_count": 10,
+    "hashed_password": "a0e13e99c9ce366f3be62c43efe3161b$92b93eb8f9d3daae5874a0d71b07414a396b6ea56fa7ecc5cfc4864e79be4157",
+    "ai_trust_score": 96,
+    "ai_safety_status": "SAFE - RECOMMENDED FOR APPROVAL",
+    "ai_classification": "Accredited NGO Trust (Section 8 / Public Charity)",
+    "ai_notes": "AI Pre-Screening: Score 96/100. Valid government registration document syntax; Verified 10-digit telephone format. Capacity: 233 meals/day with 10 active transport units. Recommended for Administrator Authorization.",
+    "approved_at": {
+      "$date": "2026-11-01T18:15:16.365Z"
+    },
+    "approved_by": "Food-Bridge System Admin"
+  },
+  {
+    "_id": {
+      "$oid": "6ae85dc4af4fdc91fc1e7ce8"
+    },
+    "firebase_uid": "uid_073d16e134234941",
+    "name": "Cloud Validation Donor",
+    "email": "donor_1793613251@cloudtest.org",
+    "phone": "9100013251",
+    "role": "DONOR",
+    "receiver_type": null,
+    "location": "Indiranagar, Bangalore",
+    "status": "active",
+    "verification_status": "VERIFIED",
+    "created_at": {
+      "$date": "2026-11-02T09:54:12.514Z"
+    },
+    "updated_at": {
+      "$date": "2026-11-02T09:54:12.514Z"
+    },
+    "last_login": {
+      "$date": "2026-11-02T09:54:14.298Z"
+    },
+    "hashed_password": "c8ce80ad4318fe15c28b3a51feeb326e$c1c17695a08bebfae24a2427c2b34d81dcdfd48a58fc3173f9b5e361a42cddc2"
+  }
+]

@@ -1,0 +1,82 @@
+{
+  "backup_id": "backup_20261102_093119_pre_cloud_migration",
+  "created_at": "2026-11-02T09:31:19.079799+00:00",
+  "database_name": "food-bridge_db",
+  "mongo_source": "localhost",
+  "collections": {
+    "messages": {
+      "count": 65,
+      "file": "messages.json",
+      "checksum_sha256": "68a40bb8ea156c6b7c2e1af8b7904e91662d24dc0984a0ac678e5ebe5fdf6b5b",
+      "size_bytes": 34776
+    },
+    "anomalies": {
+      "count": 4,
+      "file": "anomalies.json",
+      "checksum_sha256": "ecb1620977e8ceffd718d162493756f954749f9668a037834c00f0169fa3c330",
+      "size_bytes": 2417
+    },
+    "conversations": {
+      "count": 7,
+      "file": "conversations.json",
+      "checksum_sha256": "783275a15c942ae827c997671738ed5a0387f70bbf20d0f79b6211ce99f4e846",
+      "size_bytes": 4600
+    },
+    "donations": {
+      "count": 0,
+      "file": "donations.json",
+      "checksum_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "size_bytes": 2
+    },
+    "error_logs": {
+      "count": 68,
+      "file": "error_logs.json",
+      "checksum_sha256": "1ff1d87ffc4894e98d58b848e59212bfbe8e190d9f7cefac40ea52a59333598a",
+      "size_bytes": 35104
+    },
+    "audit_logs": {
+      "count": 86,
+      "file": "audit_logs.json",
+      "checksum_sha256": "915b7a536b6bd788bab7745fddd83cbdb7b2ffd8ed31e5711b56263b5ea2f91b",
+      "size_bytes": 33996
+    },
+    "users": {
+      "count": 12,
+      "file": "users.json",
+      "checksum_sha256": "84ad42fe67389c79ddf57d5eddb7175da09523a27813570090a58852f5667458",
+      "size_bytes": 14229
+    },
+    "ngos": {
+      "count": 1,
+      "file": "ngos.json",
+      "checksum_sha256": "874b73796e2b6c355807a9f3db0c5e3e4a7be7389b3a353c5ed9b5ef413994e9",
+      "size_bytes": 421
+    },
+    "notifications": {
+      "count": 145,
+      "file": "notifications.json",
+      "checksum_sha256": "cb1b09d70d4307585d446f7017009ec7d2948d5055798cd939cd9e708f0a4a27",
+      "size_bytes": 61984
+    },
+    "emergency_requests": {
+      "count": 0,
+      "file": "emergency_requests.json",
+      "checksum_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "size_bytes": 2
+    },
+    "assignments": {
+      "count": 10,
+      "file": "assignments.json",
+      "checksum_sha256": "1941070d42e4ad976da988cc89fdee102ec9b99d30a5c260995f99a590ce72af",
+      "size_bytes": 5466
+    },
+    "emergencies": {
+      "count": 0,
+      "file": "emergencies.json",
+      "checksum_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "size_bytes": 2
+    }
+  },
+  "total_documents": 398,
+  "status": "VERIFIED"
+}

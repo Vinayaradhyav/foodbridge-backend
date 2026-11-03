@@ -1,0 +1,78 @@
+{
+  "module": "AI Module 5: Multilingual NLP Emergency & Chatbot Engine",
+  "model_architecture": "Calibrated SGD Classifier with Char-WB TF-IDF (2-5 grams)",
+  "test_accuracy": 1.0,
+  "weighted_f1_score": 1.0,
+  "training_samples": 9600,
+  "test_samples": 2400,
+  "supported_languages": [
+    "en",
+    "kn",
+    "hi",
+    "ta",
+    "te"
+  ],
+  "language_names": {
+    "en": "English",
+    "kn": "Kannada",
+    "hi": "Hindi",
+    "ta": "Tamil",
+    "te": "Telugu"
+  },
+  "per_class_metrics": {
+    "DONATION_INQUIRY": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 456.0
+    },
+    "EMERGENCY_SOS": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 457.0
+    },
+    "FOOD_SAFETY": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 455.0
+    },
+    "GREETING_HELP": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 250.0
+    },
+    "NGO_INQUIRY": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 227.0
+    },
+    "STATUS_TRACKING": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 248.0
+    },
+    "VOLUNTEER_INQUIRY": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 307.0
+    },
+    "macro avg": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 2400.0
+    },
+    "weighted avg": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 2400.0
+    }
+  }
+}

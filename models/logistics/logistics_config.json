@@ -1,0 +1,25 @@
+{
+  "average_speeds_kmh": {
+    "Bike": 25.0,
+    "Scooter": 25.0,
+    "Car": 30.0,
+    "Auto": 25.0,
+    "Van": 35.0,
+    "Tempo": 30.0,
+    "Truck": 25.0,
+    "default": 30.0
+  },
+  "emission_factors_co2_per_km": {
+    "Bike": 0.05,
+    "Scooter": 0.06,
+    "Car": 0.14,
+    "Auto": 0.09,
+    "Van": 0.2,
+    "Tempo": 0.22,
+    "Truck": 0.35,
+    "default": 0.15
+  },
+  "max_stops_per_cluster": 12,
+  "fssai_perishable_threshold_hours": 4.0,
+  "default_traffic_multiplier": 1.25
+}

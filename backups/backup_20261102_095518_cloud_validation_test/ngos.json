@@ -1,0 +1,20 @@
+[
+  {
+    "_id": {
+      "$oid": "6ae736ebc31322df36f6e46f"
+    },
+    "name": null,
+    "organization_name": null,
+    "registration_number": null,
+    "phone": null,
+    "email": null,
+    "address": null,
+    "capacity_meals": 100,
+    "user_id": "admin_super",
+    "verification_status": "PENDING",
+    "created_at": {
+      "$date": "2026-11-01T12:56:11.646Z"
+    },
+    "is_verified": false
+  }
+]
