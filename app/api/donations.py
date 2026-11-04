@@ -108,9 +108,17 @@ async def verify_donor_pickup_otp(
         raise HTTPException(status_code=404, detail="Donation not found")
         
     stored_otp = str(doc.get("pickup_otp", "")).strip()
+    order_id = str(doc.get("food_order_id") or doc.get("donation_id") or "").strip()
+    order_digits = "".join(filter(str.isdigit, order_id))
+    order_otp = order_digits[-4:] if len(order_digits) >= 4 else ""
     provided_otp = str(payload.otp).strip()
-    if stored_otp and provided_otp != stored_otp:
-        raise HTTPException(status_code=400, detail="Invalid Donor Pickup OTP. Please check with donor.")
+
+    is_valid = (
+        (stored_otp and provided_otp == stored_otp) or
+        (order_otp and provided_otp == order_otp)
+    )
+    if not is_valid:
+        raise HTTPException(status_code=400, detail="Invalid Donor Pickup OTP. Please check the 4-digit code matching the food order ID.")
         
     from app.database.mongodb import mongodb
     from datetime import datetime, timezone
@@ -141,10 +149,18 @@ async def verify_receiver_delivery_otp(
     if not doc:
         raise HTTPException(status_code=404, detail="Donation not found")
         
-    stored_otp = str(doc.get("delivery_otp") or doc.get("handover_otp") or "").strip()
+    stored_otp = str(doc.get("delivery_otp") or doc.get("handover_otp") or doc.get("pickup_otp") or "").strip()
+    order_id = str(doc.get("food_order_id") or doc.get("donation_id") or "").strip()
+    order_digits = "".join(filter(str.isdigit, order_id))
+    order_otp = order_digits[-4:] if len(order_digits) >= 4 else ""
     provided_otp = str(payload.otp).strip()
-    if stored_otp and provided_otp != stored_otp:
-        raise HTTPException(status_code=400, detail="Invalid Receiver Delivery OTP. Please verify with receiver.")
+
+    is_valid = (
+        (stored_otp and provided_otp == stored_otp) or
+        (order_otp and provided_otp == order_otp)
+    )
+    if not is_valid:
+        raise HTTPException(status_code=400, detail="Invalid Receiver Delivery OTP. Please verify the 4-digit code matching the food order ID.")
         
     from app.database.mongodb import mongodb
     from datetime import datetime, timezone

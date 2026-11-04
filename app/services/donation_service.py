@@ -23,8 +23,8 @@ async def _find_donation_doc(donation_id: str):
         ]
     })
 
-async def create_donation(donor_id: str, donation: DonationCreate) -> dict:
-    doc = donation.model_dump(by_alias=True)
+async def create_donation(donor_id: str, donation) -> dict:
+    doc = donation.model_dump(by_alias=True) if hasattr(donation, "model_dump") else dict(donation)
     doc["donor_id"] = donor_id
     doc["donor_uid"] = donor_id
     
@@ -35,14 +35,17 @@ async def create_donation(donor_id: str, donation: DonationCreate) -> dict:
     doc["donor_name"] = donor_user.get("name", "Vinay Aradhya") if donor_user else "Vinay Aradhya"
     
     now = datetime.now(timezone.utc)
+    # Generate unique 4-digit code. In the Zomato delivery model:
+    # Food Order ID is FB-XXXX and the exact 4 digits XXXX act as the handover OTP!
     order_num = secrets.randbelow(9000) + 1000
     food_order_id = f"FB-{order_num}"
-    pickup_otp = f"{secrets.randbelow(9000) + 1000}"
+    handover_otp = str(order_num)
     
     doc["food_order_id"] = food_order_id
     doc["donation_id"] = food_order_id
-    doc["pickup_otp"] = pickup_otp
-    doc["delivery_otp"] = None
+    doc["pickup_otp"] = handover_otp
+    doc["delivery_otp"] = handover_otp
+    doc["handover_otp"] = handover_otp
     doc["status"] = doc.get("status") or "AVAILABLE"
     doc["created_at"] = now
     doc["updated_at"] = now
@@ -68,8 +71,19 @@ def _format_donation_response(doc: dict) -> dict:
         doc["donation_id"] = doc["food_order_id"]
     if not doc.get("donor_name") and doc.get("donor_id"):
         doc["donor_name"] = doc["donor_id"]
-    if not doc.get("pickup_otp"):
-        doc["pickup_otp"] = f"{secrets.randbelow(9000) + 1000}"
+
+    # Extract 4-digit numeric code from food_order_id to unify order number & OTP (Zomato delivery model)
+    digits = "".join(filter(str.isdigit, doc["food_order_id"]))
+    if len(digits) >= 4:
+        otp_val = digits[-4:]
+    else:
+        otp_val = str(secrets.randbelow(9000) + 1000)
+        doc["food_order_id"] = f"FB-{otp_val}"
+        doc["donation_id"] = doc["food_order_id"]
+
+    doc["pickup_otp"] = doc.get("pickup_otp") or otp_val
+    doc["delivery_otp"] = doc.get("delivery_otp") or otp_val
+    doc["handover_otp"] = doc["delivery_otp"]
     return doc
 
 async def get_donations(status: str = None, donor_id: str = None, skip: int = 0, limit: int = 100) -> list:
@@ -124,15 +138,20 @@ async def accept_donation(donation_id: str, ngo_id: str) -> dict:
     if current_status not in ["AVAILABLE", "PENDING", "MATCHING"]:
         raise HTTPException(status_code=409, detail="Donation no longer available or already accepted")
 
-    # Maintain existing Pickup OTP for donor handover, or generate if missing
-    pickup_otp = doc.get("pickup_otp")
-    if not pickup_otp:
-        pickup_otp = f"{secrets.randbelow(9000) + 1000}"
+    # Zomato Delivery Model: The last 4 digits of Food Order ID act as the handover OTP
+    food_order_id = doc.get("food_order_id") or doc.get("donation_id") or ""
+    digits = "".join(filter(str.isdigit, food_order_id))
+    if len(digits) >= 4:
+        handover_otp = digits[-4:]
+    elif doc.get("pickup_otp"):
+        handover_otp = str(doc.get("pickup_otp"))
+    else:
+        rand_num = secrets.randbelow(9000) + 1000
+        handover_otp = str(rand_num)
+        food_order_id = f"FB-{rand_num}"
 
-    # Generate a DISTINCT 4-digit Delivery OTP for Receiver confirmation
-    delivery_otp = f"{secrets.randbelow(9000) + 1000}"
-    while delivery_otp == pickup_otp:
-        delivery_otp = f"{secrets.randbelow(9000) + 1000}"
+    pickup_otp = handover_otp
+    delivery_otp = handover_otp
 
     now = datetime.now(timezone.utc)
 
@@ -143,6 +162,7 @@ async def accept_donation(donation_id: str, ngo_id: str) -> dict:
             "accepted_by": ngo_id,
             "matched_receiver": ngo_id,
             "accepted_by_ngo_id": ngo_id,
+            "food_order_id": food_order_id,
             "pickup_otp": pickup_otp,
             "delivery_otp": delivery_otp,
             "handover_otp": delivery_otp,
@@ -156,6 +176,10 @@ async def accept_donation(donation_id: str, ngo_id: str) -> dict:
         raise HTTPException(status_code=409, detail="Donation no longer available or already accepted")
         
     result["id"] = str(result.pop("_id"))
+    result["food_order_id"] = result.get("food_order_id") or food_order_id
+    result["pickup_otp"] = pickup_otp
+    result["delivery_otp"] = delivery_otp
+    result["handover_otp"] = delivery_otp
     await log_audit("Donation", result["id"], "DONATION_ACCEPTED", ngo_id, old_status=current_status, new_status="MATCHED")
     return result
 

@@ -69,26 +69,30 @@ DEFINITE_NON_FOOD = [
     "portrait", "selfie", "hair", "wig", "groom", "scuba_diver", "clothing",
     "sleeper", "pajama", "nightshirt",
     # Electronics, Gadgets & Hardware
-    "television", "tv", "laptop", "cellular_telephone", "cellphone",
+    "television", "tv", "laptop", "cellular_telephone", "cellphone", "mobile_phone", "telephone",
     "modem", "keyboard", "mouse", "printer", "speaker", "headphone", "earphone",
-    "remote_control", "ipod", "desktop_computer", "smartphone",
+    "remote_control", "ipod", "desktop_computer", "smartphone", "hand-held_computer",
+    "screen", "monitor", "joystick", "loudspeaker", "microphone", "camera", "tripod", "oscilloscope",
     # Household Appliances & Machinery (Not Food)
     "dishwasher", "washing_machine", "refrigerator", "vacuum", "iron", "sewing_machine", "hair_dryer",
     # Apparel, Footwear & Accessories
-    "shoe", "running_shoe", "sneaker", "boot", "sandal", "sock", "jean", "suit",
-    "dress", "skirt", "jacket", "coat", "tie", "hat", "cap", "sunglasses",
-    "wallet", "purse", "backpack", "umbrella", "watch", "wall_clock",
+    "shoe", "running_shoe", "sneaker", "boot", "sandal", "sock", "jean", "jeans", "suit",
+    "dress", "skirt", "jacket", "coat", "tie", "hat", "cap", "sunglasses", "spectacles",
+    "wallet", "purse", "backpack", "umbrella", "watch", "wall_clock", "belt", "mitten", "glove",
     # Vehicles & Transportation
     "car", "sports_car", "convertible", "cab", "truck", "pickup", "bus", "motorcycle",
     "motorbike", "bicycle", "wheel", "tire", "traffic_light", "street_sign", "cash_machine",
     "gas_pump", "airplane", "airliner", "boat", "speedboat", "canoe", "yacht", "submarine",
     # Household Furniture & Structures
     "chair", "armchair", "folding_chair", "desk", "table_lamp", "lamp", "sofa", "couch",
-    "bed", "wardrobe", "bookcase", "door", "window", "toilet", "bathtub", "washbasin",
+    "bed", "wardrobe", "bookcase", "door", "window", "toilet", "bathtub", "washbasin", "sink",
+    "pillow", "quilt", "rug", "carpet",
     # Metal Tools & Money
     "coin", "money", "cash", "banknote", "credit_card", "safe", "hammer", "wrench", "screwdriver",
+    "pliers", "axe", "saw", "drill", "nail", "screw", "padlock", "ruler", "rule", "scissors",
     # Animals & Pets
-    "dog", "cat", "puppy", "kitten", "horse", "bird", "parrot", "pigeon", "rodent", "hamster"
+    "dog", "cat", "puppy", "kitten", "horse", "bird", "parrot", "pigeon", "rodent", "hamster",
+    "rabbit", "mouse", "rat", "lizard", "snake", "insect", "spider"
 ]
 
 
@@ -286,12 +290,14 @@ class FoodImagePredictor:
             ((r - g) > 0.05) & ((r - g) < 0.30) &
             ((r - b) > 0.08) & ((r - b) < 0.45)
         )
-        combined_skin = ycrcb_skin | rgb_skin
+        # Strict skin requires BOTH YCbCr chrominance and RGB bounds to avoid catching yellow rice or curries
+        combined_skin = ycrcb_skin & rgb_skin
         skin_ratio = float(np.mean(combined_skin))
 
-        # CRITICAL DISTINCTION: Pure skin is smooth (low grad_mag) and occupies most of the frame.
-        # Hands holding a bag of rice or plate of biryani must NEVER trigger non-food rejection!
-        is_pure_skin_no_food = (skin_ratio > 0.68) and (grad_mag < 0.038)
+        # CRITICAL: Pure skin is smooth, flat (very low grad_mag < 0.022), low local variance (< 0.015),
+        # and dominates >75% of the frame with NO granular food textures.
+        # Photos of hands holding bowls, plates, rice, or groceries have texture & grains and are NOT pure skin.
+        is_pure_skin_no_food = (skin_ratio > 0.75) and (grad_mag < 0.022) and (local_var < 0.015)
 
         # 3. Spectral & Food Signatures
         # Golden spiced rice, biryani, pulao, curries, lentils
@@ -406,52 +412,64 @@ class FoodImagePredictor:
             }
 
             detected_package_type = None
+            top_non_food_item = None
+            top_non_food_prob = 0.0
+            non_food_prob_sum = 0.0
+            food_prob_sum = 0.0
 
-            if top_predictions and not is_definite_non_food:
-                # Check for packaged food classes in predictions first
+            if top_predictions:
+                # 4a. Check top predictions for non-food vs food classes
                 for p in top_predictions:
                     p_clean = p["category"].lower()
-                    for pkg_label, pkg_kws in packaged_types.items():
-                        if any(_match_keyword(kw, p_clean) for kw in pkg_kws):
-                            detected_package_type = pkg_label
-                            break
-                    if detected_package_type:
-                        break
+                    prob = p["probability"]
 
-                # If not a recognized food package, check top predictions for definite non-food objects
-                # NOTE: Only trigger non-food if color_traits["is_likely_food"] is FALSE to avoid ImageNet artifacts
-                if not detected_package_type and not color_traits["is_likely_food"]:
-                    for idx, p in enumerate(top_predictions[:2]):
-                        p_clean = p["category"].lower()
-                        for nf in DEFINITE_NON_FOOD:
-                            if _match_keyword(nf, p_clean) and p["probability"] >= 0.35:
-                                is_definite_non_food = True
-                                detected_non_food_label = p["category"]
+                    # Check definite non-food
+                    is_nf = False
+                    for nf in DEFINITE_NON_FOOD:
+                        if _match_keyword(nf, p_clean):
+                            is_nf = True
+                            non_food_prob_sum += prob
+                            if prob > top_non_food_prob:
+                                top_non_food_prob = prob
+                                top_non_food_item = p["category"]
+                            break
+
+                    if not is_nf:
+                        # Check packaged food classes in predictions
+                        for pkg_label, pkg_kws in packaged_types.items():
+                            if any(_match_keyword(kw, p_clean) for kw in pkg_kws):
+                                if not detected_package_type:
+                                    detected_package_type = pkg_label
+                                food_prob_sum += prob
+                                if prob > highest_food_prob:
+                                    highest_food_prob = prob
+                                    food_found_category = "Packaged Foods & Groceries"
+                                    food_found_item = p["category"]
                                 break
-                        if is_definite_non_food:
-                            break
 
-                # If not non-food, look for genuine food categories in predictions
-                if not is_definite_non_food:
-                    for p in top_predictions:
-                        p_label = p["category"].lower()
+                        # Check genuine food categories in predictions
                         for cat, keywords in CATEGORY_KEYWORDS.items():
-                            if any(_match_keyword(kw, p_label) for kw in keywords):
-                                if p["probability"] > highest_food_prob:
-                                    highest_food_prob = p["probability"]
+                            if any(_match_keyword(kw, p_clean) for kw in keywords):
+                                food_prob_sum += prob
+                                if prob > highest_food_prob:
+                                    highest_food_prob = prob
                                     food_found_category = cat
                                     food_found_item = p["category"]
                                 break
 
-            # 5. Non-Food Filtering
-            # Only reject if the image is strictly pure smooth skin with zero food:
+                # Trigger non-food rejection if model strongly identifies non-food objects
+                if (top_non_food_prob >= 0.25 or non_food_prob_sum >= 0.35) and food_prob_sum < 0.15:
+                    is_definite_non_food = True
+                    detected_non_food_label = top_non_food_item or "Non-Food Object"
+
+            # 5. Non-Food Filtering for Pure Skin / Portraits (Zero food present)
             if color_traits["is_pure_skin_no_food"]:
                 is_definite_non_food = True
                 detected_non_food_label = "Human Hand / Skin (Non-Food)"
 
-            # Check if cooked dish / rice / biryani is detected
+            # Check if cooked dish / rice / biryani is detected via multi-spectral signatures
             is_cooked_meal = False
-            if color_traits["speckles_spices"] >= 0.006 or color_traits["golden_curry"] > 0.20:
+            if color_traits["golden_curry"] > 0.20 or (color_traits["speckles_spices"] >= 0.015 and color_traits["golden_curry"] > 0.10):
                 is_cooked_meal = True
 
             # Check if packaged food / groceries are detected
@@ -480,15 +498,25 @@ class FoodImagePredictor:
                 declared_cat = "Packaged Foods & Groceries"
 
             # STRICT REJECTION LOGIC:
-            # Only reject if definite non-food was identified AND no food characteristics exist
-            if is_definite_non_food and not color_traits["is_likely_food"]:
-                non_food_reason = detected_non_food_label
-                conf = 0.96
+            # Reject if definite non-food was identified, OR if neither ImageNet food classes nor spectral food traits exist
+            has_food_spectral = (
+                is_cooked_meal or
+                is_packaged or
+                color_traits["golden_curry"] > 0.15 or
+                color_traits["green_rich"] > 0.08 or
+                color_traits["baked_brown"] > 0.15 or
+                color_traits["white_cream"] > 0.35 or
+                (color_traits["light_grains"] > 0.35 and color_traits["grad_mag"] > 0.035)
+            )
+
+            if is_definite_non_food or (not has_food_spectral and food_found_category is None and declared_cat is None and not is_packaged):
+                non_food_reason = detected_non_food_label if is_definite_non_food else (top_non_food_item or "Non-Food Object")
+                conf = max(0.92, top_non_food_prob) if top_non_food_prob > 0 else 0.94
 
                 return {
                     "predicted_category": "Non-Food / Graphic",
                     "food_item_name": non_food_reason,
-                    "confidence": conf,
+                    "confidence": round(conf, 2),
                     "top_predictions": top_predictions[:3] if top_predictions else [{"category": non_food_reason, "probability": conf}],
                     "is_match": False,
                     "verification_message": f"⚠️ NON-FOOD DETECTED: Image contains '{non_food_reason}' and no edible food or packaged groceries. Please take a clear photo of actual food or packaged items.",
@@ -543,7 +571,7 @@ class FoodImagePredictor:
             # Map the category for Cooked / Raw / Bakery / Dairy
             if is_cooked_meal:
                 mapped_category = "Cooked Meals"
-                primary_item_name = "Cooked Rice / Biryani / Pulao" if color_traits["speckles_spices"] >= 0.005 else "Prepared Cooked Meal"
+                primary_item_name = "Cooked Rice / Biryani / Pulao" if (color_traits["speckles_spices"] >= 0.005 or "rice" in norm_decl or "biryani" in norm_decl) else "Prepared Cooked Meal"
                 confidence = 0.94
             elif food_found_category:
                 mapped_category = food_found_category
