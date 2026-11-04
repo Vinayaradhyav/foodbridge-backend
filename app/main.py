@@ -1,3 +1,5 @@
+import asyncio
+import httpx
 import time
 import uuid
 import logging
@@ -33,11 +35,27 @@ _ip_timestamps = {
 # In-memory recent error trace buffer (Item 15)
 _recent_error_logs = []
 
+# ==================== 24/7 RENDER KEEP-ALIVE WATCHDOG ====================
+async def _keep_alive_watchdog():
+    """Keeps the Render cloud service awake 24/7 by pinging its public endpoint every 8 minutes."""
+    await asyncio.sleep(45)
+    logger.info("[24/7 Keep-Alive] Watchdog active for Render cloud persistence.")
+    async with httpx.AsyncClient(timeout=30.0) as client:
+        while True:
+            try:
+                resp = await client.get("https://foodbridge-api-ccde.onrender.com/api/health")
+                logger.info(f"[24/7 Keep-Alive] Heartbeat ping acknowledged: status={resp.status_code}")
+            except Exception as ex:
+                logger.warning(f"[24/7 Keep-Alive] Heartbeat ping note: {ex}")
+            await asyncio.sleep(480)
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await connect_to_mongo()
     initialize_firebase()
+    watchdog_task = asyncio.create_task(_keep_alive_watchdog())
     yield
+    watchdog_task.cancel()
     await close_mongo_connection()
 
 app = FastAPI(
