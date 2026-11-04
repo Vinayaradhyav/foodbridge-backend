@@ -64,15 +64,20 @@ CATEGORY_KEYWORDS = {
 
 # Definite non-food items that MUST trigger rejection if detected with high confidence
 DEFINITE_NON_FOOD = [
+    # Digital Displays, Screens, Software & Websites
+    "web_site", "website", "menu", "screen", "monitor", "display", "television", "tv",
+    "laptop", "cellular_telephone", "cellphone", "mobile_phone", "telephone",
+    "hand-held_computer", "notebook", "desktop_computer", "modem", "keyboard", "mouse",
+    "printer", "speaker", "headphone", "earphone", "remote_control", "ipod",
+    "joystick", "loudspeaker", "microphone", "camera", "tripod", "oscilloscope",
+    # Documents, Books, Paper & Stationery
+    "book_jacket", "comic_book", "binder", "envelope", "packet", "paper_towel",
+    "toilet_tissue", "crossword_puzzle", "jigsaw_puzzle", "rubber_eraser",
+    "pencil_box", "pencil_sharpener", "quill", "ballpoint", "fountain_pen", "ruler", "rule", "scoreboard",
     # People, Portraits & Human Faces (Pure portraits with zero food)
     "person", "face", "man", "woman", "boy", "girl", "child", "baby",
     "portrait", "selfie", "hair", "wig", "groom", "scuba_diver", "clothing",
     "sleeper", "pajama", "nightshirt",
-    # Electronics, Gadgets & Hardware
-    "television", "tv", "laptop", "cellular_telephone", "cellphone", "mobile_phone", "telephone",
-    "modem", "keyboard", "mouse", "printer", "speaker", "headphone", "earphone",
-    "remote_control", "ipod", "desktop_computer", "smartphone", "hand-held_computer",
-    "screen", "monitor", "joystick", "loudspeaker", "microphone", "camera", "tripod", "oscilloscope",
     # Household Appliances & Machinery (Not Food)
     "dishwasher", "washing_machine", "refrigerator", "vacuum", "iron", "sewing_machine", "hair_dryer",
     # Apparel, Footwear & Accessories
@@ -86,10 +91,10 @@ DEFINITE_NON_FOOD = [
     # Household Furniture & Structures
     "chair", "armchair", "folding_chair", "desk", "table_lamp", "lamp", "sofa", "couch",
     "bed", "wardrobe", "bookcase", "door", "window", "toilet", "bathtub", "washbasin", "sink",
-    "pillow", "quilt", "rug", "carpet",
+    "pillow", "quilt", "rug", "carpet", "curtain", "tile", "wall",
     # Metal Tools & Money
     "coin", "money", "cash", "banknote", "credit_card", "safe", "hammer", "wrench", "screwdriver",
-    "pliers", "axe", "saw", "drill", "nail", "screw", "padlock", "ruler", "rule", "scissors",
+    "pliers", "axe", "saw", "drill", "nail", "screw", "padlock", "scissors", "chain",
     # Animals & Pets
     "dog", "cat", "puppy", "kitten", "horse", "bird", "parrot", "pigeon", "rodent", "hamster",
     "rabbit", "mouse", "rat", "lizard", "snake", "insect", "spider"
@@ -403,11 +408,11 @@ class FoodImagePredictor:
 
             # Packaged Food Specific Detection
             packaged_types = {
-                "Canned Goods / Tins": ["can", "tin", "canned", "tin_can", "canister"],
-                "Carton & Tetra Pak (Milk / Juices)": ["carton", "tetra_pak", "juice_box", "milk_carton"],
-                "Sealed Snack & Biscuit Packets": ["packet", "biscuit", "cookie", "chips", "pretzel", "cracker", "namkeen", "snack"],
-                "Packaged Dry Staples & Grains": ["bag", "sack", "flour", "grain", "rice", "dal", "lentil", "pasta", "atta", "cereal", "sugar"],
-                "Bottled Beverages & Liquids": ["bottle", "water_bottle", "pop_bottle", "beer_bottle", "wine_bottle", "jug"],
+                "Canned Goods / Tins": ["can", "canned", "tin_can", "canister"],
+                "Carton & Tetra Pak (Milk / Juices)": ["tetra_pak", "juice_box", "milk_carton"],
+                "Sealed Snack & Biscuit Packets": ["biscuit", "cookie", "chips", "pretzel", "cracker", "namkeen", "snack"],
+                "Packaged Dry Staples & Groceries": ["plastic_bag", "sack", "flour", "grain", "rice", "dal", "lentil", "pasta", "atta", "cereal", "sugar", "salt"],
+                "Bottled Beverages & Liquids": ["water_bottle", "pop_bottle", "beer_bottle", "wine_bottle", "jug"],
                 "Jars & Preserves": ["jar", "preserve", "jam", "honey", "pickle", "sauce"]
             }
 
@@ -474,15 +479,12 @@ class FoodImagePredictor:
 
             # Check if packaged food / groceries are detected
             is_packaged = False
-            if detected_package_type:
+            if detected_package_type and not is_definite_non_food:
                 is_packaged = True
-            elif not is_cooked_meal and ((color_traits["glare"] > 0.40 and color_traits["speckles_spices"] < 0.006) or color_traits["light_grains"] > 0.45):
-                # Translucent bag of grains, sugar, pulses, or sealed groceries
-                is_packaged = True
-                detected_package_type = "Packaged Dry Staples & Groceries"
-            elif any(w in norm_decl for w in ["package", "pack", "canned", "tin", "biscuit", "box", "tetra", "bottle", "carton", "grocery", "grain", "sugar", "atta", "flour"]):
-                is_packaged = True
-                detected_package_type = "Packaged Essentials & Groceries"
+            elif any(w in norm_decl for w in ["package", "pack", "canned", "tin", "biscuit", "box", "tetra", "bottle", "carton", "grocery", "grain", "sugar", "atta", "flour", "salt", "snack"]):
+                if not is_definite_non_food:
+                    is_packaged = True
+                    detected_package_type = "Packaged Essentials & Groceries"
 
             # Check declared category
             declared_cat = None
