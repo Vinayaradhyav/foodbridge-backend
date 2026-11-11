@@ -15,18 +15,32 @@ async def get_assignment_collection():
 async def create_assignment(data: AssignmentCreate):
     collection = await get_assignment_collection()
     new_assignment = AssignmentModel.create_new_assignment(data.model_dump())
+
+    # Synchronize assignment OTP and Food Order ID from parent donation so all roles see one unified OTP
+    donation_col = await get_donation_collection()
+    donation = None
+    try:
+        donation = await donation_col.find_one({"_id": ObjectId(data.donation_id)})
+    except Exception:
+        donation = await donation_col.find_one({"$or": [{"donation_id": data.donation_id}, {"food_order_id": data.donation_id}]})
+    if donation:
+        from app.services.donation_service import _derive_canonical_order_and_otp
+        canonical_order, canonical_otp = _derive_canonical_order_and_otp(donation)
+        new_assignment["food_order_id"] = canonical_order
+        new_assignment["pickup_otp"] = canonical_otp
+        new_assignment["delivery_otp"] = canonical_otp
+        new_assignment["handover_otp"] = canonical_otp
+
     result = await collection.insert_one(new_assignment)
     
     # Sync Donation Status
-    donation_col = await get_donation_collection()
-    donation = await donation_col.find_one({"_id": ObjectId(data.donation_id)})
     if donation:
         old_status = donation.get("status")
         await donation_col.update_one(
-            {"_id": ObjectId(data.donation_id)},
-            {"$set": {"status": "ASSIGNED", "updated_at": datetime.now(timezone.utc)}}
+            {"_id": donation["_id"]},
+            {"$set": {"status": "ASSIGNED", "assigned_volunteer_id": data.volunteer_id, "updated_at": datetime.now(timezone.utc)}}
         )
-        await log_audit("Donation", data.donation_id, "Assigned to Volunteer", "system", old_status, "ASSIGNED")
+        await log_audit("Donation", str(donation["_id"]), "Assigned to Volunteer", "system", old_status, "ASSIGNED")
         
     created = await collection.find_one({"_id": result.inserted_id})
     

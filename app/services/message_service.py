@@ -196,16 +196,141 @@ class MessageService:
         return report_doc
 
     @staticmethod
-    async def get_history(user_a: str, user_b: str, limit: int = 50) -> List[Dict[str, Any]]:
+    async def get_history(user_a: str, user_b: str, limit: int = 50, context_id: Optional[str] = None) -> List[Dict[str, Any]]:
         db = get_database()
         u1, u2 = user_a.strip().lower(), user_b.strip().lower()
-        query = {
+        participant_query = {
             "$or": [
                 {"sender_id": {"$in": [u1, user_a]}, "recipient_id": {"$in": [u2, user_b]}},
                 {"sender_id": {"$in": [u2, user_b]}, "recipient_id": {"$in": [u1, user_a]}},
                 {"conversation_id": {"$regex": f"({u1}.*{u2}|{u2}.*{u1})", "$options": "i"}}
             ]
         }
+        if context_id:
+            clean_ctx = context_id.strip()
+            query = {
+                "$and": [
+                    participant_query,
+                    {"$or": [{"context_id": clean_ctx}, {"conversation_id": {"$regex": clean_ctx, "$options": "i"}}]}
+                ]
+            }
+        else:
+            query = participant_query
+        cursor = db.messages.find(query).sort("timestamp", 1).limit(limit)
+        messages = []
+        async for doc in cursor:
+            doc["id"] = str(doc.get("_id", ""))
+            if "_id" in doc:
+                del doc["_id"]
+            doc.setdefault("message_id", doc["id"])
+            doc["content"] = doc.get("text", "")
+            ts = doc.get("timestamp")
+            doc["created_at"] = ts.isoformat() if hasattr(ts, "isoformat") else str(ts or "")
+            messages.append(doc)
+        return messages
+
+    @staticmethod
+    async def get_donation_messages(
+        donation_id: str,
+        current_user_id: str,
+        other_user_id: Optional[str] = None,
+        limit: int = 100,
+    ) -> List[Dict[str, Any]]:
+        """
+        Return strictly private 1-on-1 messages scoped to a single donation between the
+        donor and the claiming NGO/receiver (or coordinator/volunteer).
+        """
+        db = get_database()
+        clean_id = donation_id.strip()
+        don = None
+        try:
+            don = await db.donations.find_one({"_id": ObjectId(clean_id)})
+        except Exception:
+            pass
+        if not don:
+            don = await db.donations.find_one({
+                "$or": [{"food_order_id": clean_id}, {"donation_id": clean_id}, {"id": clean_id}]
+            })
+
+        context_keys = {clean_id}
+        if don:
+            context_keys.add(str(don["_id"]))
+            if don.get("food_order_id"):
+                context_keys.add(str(don["food_order_id"]))
+            if don.get("donation_id"):
+                context_keys.add(str(don["donation_id"]))
+
+        uid = current_user_id.strip()
+        uid_lower = uid.lower()
+        is_admin = uid_lower == "admin" or uid_lower.startswith("admin_")
+
+        # Privacy check: only donor, claiming receiver, assigned volunteer, or admin may read
+        if don and not is_admin:
+            allowed_uids = {
+                str(x).strip().lower()
+                for x in (
+                    don.get("donor_id"),
+                    don.get("donor_uid"),
+                    don.get("accepted_by"),
+                    don.get("accepted_by_ngo_id"),
+                    don.get("matched_receiver"),
+                    don.get("assigned_volunteer_id"),
+                )
+                if x
+            }
+            if allowed_uids and uid_lower not in allowed_uids:
+                # Allow if explicitly named sender/recipient in this context
+                pass_check = await db.messages.find_one({
+                    "context_id": {"$in": list(context_keys)},
+                    "$or": [{"sender_id": uid}, {"recipient_id": uid}],
+                })
+                if not pass_check:
+                    return []
+
+        or_filters: List[Dict[str, Any]] = [
+            {"context_id": {"$in": list(context_keys)}},
+        ]
+        for k in context_keys:
+            or_filters.append({"conversation_id": {"$regex": k, "$options": "i"}})
+
+        query: Dict[str, Any] = {"$or": or_filters}
+        if not is_admin:
+            participant_or: List[Dict[str, Any]] = [
+                {"sender_id": {"$in": [uid, uid_lower]}},
+                {"recipient_id": {"$in": [uid, uid_lower]}},
+            ]
+            if don and uid_lower in {
+                str(x).strip().lower()
+                for x in (
+                    don.get("donor_id"),
+                    don.get("donor_uid"),
+                    don.get("accepted_by"),
+                    don.get("accepted_by_ngo_id"),
+                    don.get("matched_receiver"),
+                    don.get("assigned_volunteer_id"),
+                )
+                if x
+            }:
+                participant_or.append({"recipient_id": {"$regex": "^pending_ngo_"}})
+
+            participant_clause: Dict[str, Any] = {"$or": participant_or}
+            if other_user_id and other_user_id.strip():
+                ou = other_user_id.strip()
+                ou_l = ou.lower()
+                pending_clause = (
+                    {"sender_id": {"$in": [uid, uid_lower, ou, ou_l]}, "recipient_id": {"$regex": "^pending_ngo_"}}
+                    if (don and don.get("accepted_by") and str(don.get("accepted_by")).strip().lower() in {uid_lower, ou_l})
+                    else {"_id": None}
+                )
+                participant_clause = {
+                    "$or": [
+                        {"sender_id": {"$in": [uid, uid_lower]}, "recipient_id": {"$in": [ou, ou_l]}},
+                        {"sender_id": {"$in": [ou, ou_l]}, "recipient_id": {"$in": [uid, uid_lower]}},
+                        pending_clause,
+                    ]
+                }
+            query = {"$and": [{"$or": or_filters}, participant_clause]}
+
         cursor = db.messages.find(query).sort("timestamp", 1).limit(limit)
         messages = []
         async for doc in cursor:

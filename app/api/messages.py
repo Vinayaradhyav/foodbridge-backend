@@ -36,11 +36,24 @@ async def send_message(
 async def get_message_history(
     other_user_id: str = Query(..., description="ID or role of other party (e.g. admin, donor_user)"),
     user_id: Optional[str] = Query(None, description="Current user ID (defaults to sender or donor_user)"),
+    context_id: Optional[str] = Query(None, description="Optional donation or emergency ID to scope private thread"),
     limit: int = Query(50, ge=1, le=500),
     current_user: Optional[dict] = Depends(get_optional_current_user)
 ) -> List[Dict[str, Any]]:
     uid = user_id or extract_uid(current_user, fallback="donor_user")
-    return await MessageService.get_history(user_a=uid, user_b=other_user_id, limit=limit)
+    return await MessageService.get_history(user_a=uid, user_b=other_user_id, limit=limit, context_id=context_id)
+
+@router.get("/donation/{donation_id}")
+async def get_donation_private_messages(
+    donation_id: str,
+    user_id: Optional[str] = Query(None),
+    other_user_id: Optional[str] = Query(None),
+    limit: int = Query(100, ge=1, le=500),
+    current_user: Optional[dict] = Depends(get_optional_current_user)
+) -> List[Dict[str, Any]]:
+    """Fetch private 1-on-1 messages scoped specifically to a single donation."""
+    uid = user_id or extract_uid(current_user, fallback="donor_user")
+    return await MessageService.get_donation_messages(donation_id=donation_id, current_user_id=uid, other_user_id=other_user_id, limit=limit)
 
 @router.get("/sync")
 async def sync_all_messages(

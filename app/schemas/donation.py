@@ -45,9 +45,19 @@ class DonationBase(BaseModel):
     packaging_type: Optional[str] = "Boxes"
     description: Optional[str] = ""
     food_image: Optional[str] = ""
+    category: Optional[str] = None
+    veg_nonveg: Optional[str] = None
+    ai_vision_status: Optional[str] = None
+    ai_spoilage_score: Optional[float] = None
+    safe_status: Optional[str] = None
+    hours_remaining: Optional[float] = None
+    storage_container: Optional[str] = None
+    temperature_c: Optional[float] = None
+    humidity_pct: Optional[float] = None
+    ai_risk_score: Optional[float] = None
 
 class DonationCreate(DonationBase):
-    pass
+    idempotency_key: Optional[str] = None
 
 class DonationUpdate(BaseModel):
     food_name: Optional[str] = None
@@ -68,6 +78,7 @@ class DonationUpdate(BaseModel):
     status: Optional[str] = None
     ngo_id: Optional[str] = None
     accepted_by: Optional[str] = None
+    accepted_by_name: Optional[str] = None
     assigned_volunteer_id: Optional[str] = None
     volunteer_name: Optional[str] = None
 
@@ -82,12 +93,12 @@ class DonationResponse(DonationBase):
     donor_name: Optional[str] = None
     ngo_id: Optional[str] = None
     accepted_by: Optional[str] = None
+    accepted_by_name: Optional[str] = None
     assigned_volunteer_id: Optional[str] = None
     volunteer_name: Optional[str] = None
-    category: Optional[str] = None
-    veg_nonveg: Optional[str] = None
     pickup_otp: Optional[str] = None
     delivery_otp: Optional[str] = None
+    handover_otp: Optional[str] = None
     rejected_by: Optional[list[str]] = []
 
     model_config = ConfigDict(from_attributes=True)

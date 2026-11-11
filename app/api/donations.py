@@ -1,5 +1,6 @@
-from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi import APIRouter, Body, HTTPException, status, Depends
 from typing import List, Optional
+from pydantic import BaseModel
 from app.schemas.donation import DonationCreate, DonationUpdate, DonationResponse
 from app.services import donation_service
 from app.services.workflow_service import WorkflowService
@@ -56,13 +57,25 @@ async def get_donation(donation_id: str):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Donation not found")
     return donation
 
+class AcceptDonationPayload(BaseModel):
+    volunteer_name: Optional[str] = None
+    status: Optional[str] = None
+    ngo_name: Optional[str] = None
+
 @router.post("/{donation_id}/accept", response_model=DonationResponse)
 async def accept_donation(
     donation_id: str,
+    payload: Optional[AcceptDonationPayload] = Body(default=None),
     current_user: dict = Depends(require_role(RECEIVER_ROLES))
 ):
-    """Accept a donation as an NGO or verified Relief Hub / Receiver."""
-    return await donation_service.accept_donation(donation_id, current_user["firebase_uid"])
+    """Accept a donation atomically (idempotent if retried by the same receiver)."""
+    return await donation_service.accept_donation(
+        donation_id,
+        current_user["firebase_uid"],
+        volunteer_name=payload.volunteer_name if payload else None,
+        target_status=payload.status if payload else None,
+        ngo_name=(payload.ngo_name if payload and payload.ngo_name else current_user.get("name")),
+    )
 
 @router.put("/{donation_id}/reject", response_model=DonationResponse)
 async def reject_donation(
