@@ -17,6 +17,8 @@ from app.core.security import (
 import hashlib
 import os
 import random
+import re
+from typing import Any
 from datetime import datetime, timezone, timedelta
 
 class AdminRegisterRequest(BaseModel):
@@ -48,8 +50,8 @@ async def register(user: UserCreate):
         import re
         from app.database.mongodb import get_database
         db = get_database()
-        clean_email = str(user.email or "").strip().lower()
-        clean_phone_digits = re.sub(r'\D', '', str(user.phone or ""))
+        clean_email = (user.email or "").strip().lower()
+        clean_phone_digits = re.sub(r'\D', '', user.phone or "")
         last10 = clean_phone_digits[-10:] if len(clean_phone_digits) >= 10 else clean_phone_digits
         ban_or = []
         if clean_email:
@@ -83,6 +85,11 @@ async def register(user: UserCreate):
         pass
     try:
         new_user = await create_user(user)
+        if not new_user:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Unable to create your account record."
+            )
         # Generate real JWT token
         token = create_access_token({"sub": new_user.get("firebase_uid", str(new_user.get("_id", ""))), "role": new_user.get("role")})
         new_user["access_token"] = token
@@ -111,9 +118,8 @@ async def login(credentials: LoginRequest):
         if credentials.firebase_uid:
             search_terms.append({"firebase_uid": credentials.firebase_uid})
         if credentials.email:
-            e_str = str(credentials.email).lower().strip()
+            e_str = credentials.email.lower().strip()
             search_terms.append({"email": e_str})
-            import re
             e_digits = re.sub(r'\D', '', e_str)
             if len(e_digits) >= 10:
                 search_terms.append({"phone": e_digits})
@@ -123,7 +129,6 @@ async def login(credentials: LoginRequest):
             clean_p = credentials.phone.strip()
             search_terms.append({"phone": clean_p})
             search_terms.append({"email": clean_p.lower()})
-            import re
             digits = re.sub(r'\D', '', clean_p)
             if digits:
                 last10 = digits[-10:] if len(digits) >= 10 else digits
@@ -142,7 +147,7 @@ async def login(credentials: LoginRequest):
         # Determine role filter when role is passed: Donor only uses Donor, Receiver uses Receiver, Volunteer uses Volunteer
         allowed_roles = None
         if credentials.role:
-            r_req = str(credentials.role).strip().lower()
+            r_req = credentials.role.strip().lower()
             if r_req == "donor":
                 allowed_roles = ["donor", "DONOR"]
             elif r_req in ["receiver", "ngo", "food_receiver", "relief_hub", "reliefhub"]:
@@ -240,6 +245,11 @@ async def login(credentials: LoginRequest):
         await update_last_login(uid)
         refreshed = await db.users.find_one({"_id": user["_id"]})
         formatted = UserModel.format_for_response(refreshed or user)
+        if not formatted:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Unable to format user session."
+            )
         
         # Issue real JWT Token
         token = create_access_token({"sub": uid, "role": formatted.get("role", "donor")})
@@ -267,13 +277,12 @@ async def logout(request: Request):
 @router.post("/forgot-password")
 async def forgot_password(req: ForgotPasswordRequest):
     """Generate and record a 6-digit password reset OTP with 15-minute expiry (supports email or 10-digit phone)."""
-    import re
     from app.database.mongodb import get_database
     db = get_database()
-    ident = str(req.email).strip()
+    ident = req.email.strip()
     ident_lower = ident.lower()
     digits = re.sub(r'\D', '', ident)
-    or_terms = [{"email": ident_lower}, {"phone": ident}]
+    or_terms: list[dict[str, Any]] = [{"email": ident_lower}, {"phone": ident}]
     if digits:
         last10 = digits[-10:] if len(digits) >= 10 else digits
         or_terms.extend([{"phone": digits}, {"phone": last10}, {"phone": {"$regex": f"{last10}$"}}])
@@ -308,10 +317,9 @@ async def forgot_password(req: ForgotPasswordRequest):
 @router.post("/reset-password")
 async def reset_password(req: ResetPasswordRequest):
     """Verify reset OTP and update password for matching email or phone account(s)."""
-    import re
     from app.database.mongodb import get_database
     db = get_database()
-    ident = str(req.email).strip()
+    ident = req.email.strip()
     ident_lower = ident.lower()
     digits = re.sub(r'\D', '', ident)
 
@@ -336,7 +344,7 @@ async def reset_password(req: ResetPasswordRequest):
 
     hashed = hash_password(req.new_password.strip())
     now = datetime.now(timezone.utc)
-    or_terms = [{"email": ident_lower}, {"phone": ident}]
+    or_terms: list[dict[str, Any]] = [{"email": ident_lower}, {"phone": ident}]
     if digits:
         last10 = digits[-10:] if len(digits) >= 10 else digits
         or_terms.extend([{"phone": digits}, {"phone": last10}, {"phone": {"$regex": f"{last10}$"}}])
@@ -358,7 +366,7 @@ async def send_verification_email(req: SendVerificationEmailRequest):
     """Generate and dispatch email verification code."""
     from app.database.mongodb import get_database
     db = get_database()
-    email_clean = str(req.email).lower().strip()
+    email_clean = req.email.lower().strip()
     user = await db.users.find_one({"email": email_clean})
     if not user:
         raise HTTPException(status_code=404, detail="User account not found.")
@@ -390,7 +398,7 @@ async def verify_email(req: VerifyEmailRequest):
     """Verify email with code."""
     from app.database.mongodb import get_database
     db = get_database()
-    email_clean = str(req.email).lower().strip()
+    email_clean = req.email.lower().strip()
 
     record = await db.email_verifications.find_one({"email": email_clean, "verified": False})
     if not record:
@@ -440,6 +448,8 @@ async def admin_register(req: AdminRegisterRequest):
         )
         updated = await collection.find_one({"_id": existing_email["_id"]})
         formatted = UserModel.format_for_response(updated)
+        if not formatted:
+            raise HTTPException(status_code=500, detail="Failed to format admin profile.")
         token = create_access_token({"sub": formatted["firebase_uid"], "role": "admin"})
         formatted["access_token"] = token
         formatted["token_type"] = "bearer"
@@ -462,6 +472,8 @@ async def admin_register(req: AdminRegisterRequest):
     result = await collection.insert_one(new_user)
     created_user = await collection.find_one({"_id": result.inserted_id})
     formatted = UserModel.format_for_response(created_user)
+    if not formatted:
+        raise HTTPException(status_code=500, detail="Failed to format admin profile.")
     token = create_access_token({"sub": formatted["firebase_uid"], "role": "admin"})
     formatted["access_token"] = token
     formatted["token_type"] = "bearer"
@@ -506,6 +518,8 @@ async def admin_login(req: AdminLoginRequest):
     await update_last_login(user["firebase_uid"])
     user = await get_user_by_firebase_uid(user["firebase_uid"])
     formatted = UserModel.format_for_response(user)
+    if not formatted:
+        raise HTTPException(status_code=500, detail="Failed to format admin session.")
     token = create_access_token({"sub": formatted["firebase_uid"], "role": "admin"})
     formatted["access_token"] = token
     formatted["token_type"] = "bearer"

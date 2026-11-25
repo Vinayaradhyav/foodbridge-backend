@@ -193,11 +193,12 @@ class EmergencyService:
 
     @staticmethod
     async def get_emergency_by_id(request_id: str) -> Optional[EmergencyRequestResponse]:
-        query = {"$or": [{"request_id": request_id}]}
+        or_list: list[dict[str, Any]] = [{"request_id": request_id}]
         try:
-            query["$or"].append({"_id": ObjectId(request_id)})
+            or_list.append({"_id": ObjectId(request_id)})
         except Exception:
             pass
+        query = {"$or": or_list}
 
         e = await mongodb.db.emergencies.find_one(query) or await mongodb.db.emergency_requests.find_one(query)
         if e:
@@ -221,16 +222,17 @@ class EmergencyService:
         Phase 7: Backend-side Atomic Assignment with MongoDB Conditional Locking.
         Guarantees that once a donor accepts an emergency request, other donors are blocked with HTTP 409 Conflict.
         """
+        or_conditions: list[dict[str, Any]] = [{"request_id": request_id}]
+        try:
+            or_conditions.append({"_id": ObjectId(request_id)})
+        except Exception:
+            pass
         query_filter = {
             "$and": [
-                {"$or": [{"request_id": request_id}]},
+                {"$or": or_conditions},
                 {"status": {"$in": ["OPEN", "AVAILABLE", "BROADCAST", "ACTIVE", "MATCHING", "CREATED"]}}
             ]
         }
-        try:
-            query_filter["$and"][0]["$or"].append({"_id": ObjectId(request_id)})
-        except Exception:
-            pass
 
         doc = await mongodb.db.emergencies.find_one(query_filter["$and"][0])
         if not doc:
@@ -308,11 +310,12 @@ class EmergencyService:
         Releases the assignment, reverts status back to AVAILABLE/OPEN, records reason in history,
         and broadcasts notification to eligible donors.
         """
-        target_q = {"$or": [{"request_id": request_id}]}
+        target_list: list[dict[str, Any]] = [{"request_id": request_id}]
         try:
-            target_q["$or"].append({"_id": ObjectId(request_id)})
+            target_list.append({"_id": ObjectId(request_id)})
         except Exception:
             pass
+        target_q = {"$or": target_list}
 
         doc = await mongodb.db.emergencies.find_one(target_q) or await mongodb.db.emergency_requests.find_one(target_q)
         if not doc:
@@ -377,11 +380,12 @@ class EmergencyService:
 
     @staticmethod
     async def update_emergency(request_id: str, update_data: EmergencyRequestUpdate) -> Optional[EmergencyRequestResponse]:
-        query = {"$or": [{"request_id": request_id}]}
+        or_list: list[dict[str, Any]] = [{"request_id": request_id}]
         try:
-            query["$or"].append({"_id": ObjectId(request_id)})
+            or_list.append({"_id": ObjectId(request_id)})
         except Exception:
             pass
+        query = {"$or": or_list}
 
         e = await mongodb.db.emergencies.find_one(query) or await mongodb.db.emergency_requests.find_one(query)
         if not e:
@@ -409,11 +413,12 @@ class EmergencyService:
 
     @staticmethod
     async def delete_emergency(request_id: str) -> bool:
-        query = {"$or": [{"request_id": request_id}]}
+        del_list: list[dict[str, Any]] = [{"request_id": request_id}]
         try:
-            query["$or"].append({"_id": ObjectId(request_id)})
+            del_list.append({"_id": ObjectId(request_id)})
         except Exception:
             pass
+        query = {"$or": del_list}
         r1 = await mongodb.db.emergencies.delete_many(query)
         r2 = await mongodb.db.emergency_requests.delete_many(query)
         return (r1.deleted_count > 0 or r2.deleted_count > 0)

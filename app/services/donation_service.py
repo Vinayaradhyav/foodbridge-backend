@@ -4,13 +4,13 @@ import re
 import secrets
 import base64
 import io
-from typing import Optional
+from typing import Optional, Any
 from datetime import datetime, timezone, timedelta
 from bson import ObjectId
 from PIL import Image
 from app.database.mongodb import mongodb
 from app.schemas.donation import DonationCreate, DonationUpdate
-from fastapi import HTTPException
+from fastapi import HTTPException, status
 from app.services.workflow_service import log_audit
 from app.services.notification_service import create_notification
 from app.schemas.notification import NotificationCreate
@@ -127,7 +127,7 @@ def _dedupe_donation_docs(docs: list[dict]) -> list[dict]:
 
 
 async def _find_donation_doc(donation_id: str):
-    clean_id = str(donation_id).strip()
+    clean_id = donation_id.strip()
     digits = "".join(filter(str.isdigit, clean_id))
     four_digits = digits[-4:] if len(digits) >= 4 else None
 
@@ -172,7 +172,7 @@ async def _find_donation_doc(donation_id: str):
 def _extract_four_digits(value: str | None) -> str | None:
     if not value:
         return None
-    digits = "".join(filter(str.isdigit, str(value)))
+    digits = "".join(filter(str.isdigit, value))
     return digits[-4:] if len(digits) >= 4 else None
 
 
@@ -322,7 +322,7 @@ def _resolve_address_coordinates(pickup_location: Optional[str], lat: Optional[f
         (cur_lat == 0.0 and cur_lng == 0.0)
         or (abs(cur_lat - 12.9716) < 0.0005 and abs(cur_lng - 77.5946) < 0.0005)
     )
-    addr = str(pickup_location or "").lower().strip()
+    addr = (pickup_location or "").lower().strip()
     if is_missing_or_default and addr:
         for keywords, coords in _KNOWN_LOCATION_COORDS:
             if any(k in addr for k in keywords):
@@ -500,7 +500,7 @@ async def create_donation(donor_id: str, donation) -> dict:
     # Normalize number_of_meals so it is never 0 when quantity > 0
     if not doc.get("number_of_meals") or int(doc.get("number_of_meals") or 0) <= 0:
         if qty_val > 0:
-            doc["number_of_meals"] = max(1, int(round(qty_val)))
+            doc["number_of_meals"] = max(1, round(qty_val))
 
     # Generate unique 4-digit code (Zomato delivery model: FB-XXXX & OTP XXXX)
     food_order_id, handover_otp = await _generate_unique_order_and_otp()
@@ -549,7 +549,7 @@ def _format_donation_response(doc: dict) -> dict:
         try:
             qty = float(doc.get("quantity") or 0)
             if qty > 0:
-                meals = max(1, int(round(qty)))
+                meals = max(1, round(qty))
         except Exception:
             meals = 0
     doc["number_of_meals"] = meals
@@ -566,7 +566,7 @@ def _format_donation_response(doc: dict) -> dict:
     doc["longitude"] = lng
     return doc
 
-async def get_donations(status: str = None, donor_id: str = None, skip: int = 0, limit: int = 100) -> list:
+async def get_donations(status: str | None = None, donor_id: str | None = None, skip: int = 0, limit: int = 100) -> list:
     query = {}
     if status and status.upper() != "ALL":
         query["status"] = {"$regex": f"^{status}$", "$options": "i"}
@@ -603,7 +603,7 @@ async def get_ngo_history(ngo_id: str, skip: int = 0, limit: int = 100) -> list:
     docs = await cursor.to_list(length=limit)
     return await _enrich_donation_names(_dedupe_donation_docs(docs))
 
-async def get_donation_by_id(donation_id: str) -> dict:
+async def get_donation_by_id(donation_id: str) -> dict | None:
     doc = await _find_donation_doc(donation_id)
     if not doc:
         return None
@@ -613,9 +613,9 @@ async def get_donation_by_id(donation_id: str) -> dict:
 async def accept_donation(
     donation_id: str,
     ngo_id: str,
-    volunteer_name: str = None,
-    target_status: str = None,
-    ngo_name: str = None,
+    volunteer_name: str | None = None,
+    target_status: str | None = None,
+    ngo_name: str | None = None,
 ) -> dict:
     doc = await _find_donation_doc(donation_id)
     if not doc:
@@ -645,7 +645,7 @@ async def accept_donation(
     }
     if current_status in _ACTIVE_ACCEPTED_STATUSES:
         if ngo_id in existing_accepters:
-            update_retry = {"updated_at": datetime.now(timezone.utc)}
+            update_retry: dict[str, Any] = {"updated_at": datetime.now(timezone.utc)}
             if desired_status == "IN_TRANSIT" and current_status in {"MATCHED", "ACCEPTED"}:
                 update_retry["status"] = "IN_TRANSIT"
             if volunteer_name and not doc.get("volunteer_name"):
