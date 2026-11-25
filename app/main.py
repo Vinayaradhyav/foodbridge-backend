@@ -307,6 +307,8 @@ from app.api.audit import router as audit_router
 from app.api.messages import router as messages_router
 from app.api.caption_checker import router as caption_checker_router
 from app.api.backup import router as backup_router
+from app.api.stt import router as stt_router
+
 
 
 
@@ -336,6 +338,8 @@ app.include_router(analytics_router, prefix="/api/analytics")
 app.include_router(analytics_router, prefix="/api/ai/analytics")
 app.include_router(audit_router, prefix="/api")
 app.include_router(backup_router, prefix="/api")
+app.include_router(stt_router, prefix="/api")
+app.include_router(stt_router, prefix="/api/v1")
 
 # ==================== STATIC FILE MOUNT (Permanent Uploaded Donation Photos) ====================
 import os
