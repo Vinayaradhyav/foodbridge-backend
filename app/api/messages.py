@@ -1,10 +1,48 @@
-from fastapi import APIRouter, Depends, HTTPException, Query, status
-from typing import List, Optional, Dict, Any
+from fastapi import APIRouter, Depends, HTTPException, Query, status, WebSocket, WebSocketDisconnect
+from typing import List, Optional, Dict, Any, Set
 from app.core.security import get_current_user, get_optional_current_user
 from app.schemas.message import MessageCreate, MessageResponse, ConversationResponse, MarkReadRequest, ReportMessageRequest
 from app.services.message_service import MessageService
 
 router = APIRouter(prefix="/messages", tags=["Messages"])
+
+class WebSocketConnectionManager:
+    def __init__(self):
+        self.active_connections: Dict[str, Set[WebSocket]] = {}
+
+    async def connect(self, websocket: WebSocket, client_id: str):
+        await websocket.accept()
+        key = client_id.strip().lower()
+        if key not in self.active_connections:
+            self.active_connections[key] = set()
+        self.active_connections[key].add(websocket)
+
+    def disconnect(self, websocket: WebSocket, client_id: str):
+        key = client_id.strip().lower()
+        if key in self.active_connections:
+            self.active_connections[key].discard(websocket)
+            if not self.active_connections[key]:
+                del self.active_connections[key]
+
+    async def broadcast_message(self, message: dict, sender_id: str, recipient_id: str):
+        target_keys = {
+            sender_id.strip().lower(),
+            recipient_id.strip().lower(),
+            "admin",
+            "admin_broadcast"
+        }
+        for k in target_keys:
+            if k in self.active_connections:
+                stale = []
+                for ws in self.active_connections[k]:
+                    try:
+                        await ws.send_json(message)
+                    except Exception:
+                        stale.append(ws)
+                for s in stale:
+                    self.active_connections[k].discard(s)
+
+ws_manager = WebSocketConnectionManager()
 
 def extract_uid(current_user: Optional[dict], fallback: str = "donor_user") -> str:
     if not current_user:
@@ -30,7 +68,40 @@ async def send_message(
         sender_name=sender_name,
         payload=payload
     )
+    # Broadcast in real-time to active WebSocket clients
+    try:
+        await ws_manager.broadcast_message(msg, sender_id, payload.recipient_id)
+    except Exception:
+        pass
     return msg
+
+@router.websocket("/ws/{client_id}")
+async def websocket_messaging_endpoint(websocket: WebSocket, client_id: str):
+    await ws_manager.connect(websocket, client_id)
+    try:
+        while True:
+            data = await websocket.receive_json()
+            if isinstance(data, dict) and "text" in data and "recipient_id" in data:
+                payload = MessageCreate(
+                    recipient_id=data["recipient_id"],
+                    text=data["text"],
+                    sender_id=client_id,
+                    sender_name=data.get("sender_name", client_id),
+                    recipient_name=data.get("recipient_name"),
+                    context_type=data.get("context_type", "GENERAL"),
+                    context_id=data.get("context_id"),
+                    conversation_id=data.get("conversation_id"),
+                )
+                msg = await MessageService.send_message(
+                    sender_id=client_id,
+                    sender_name=data.get("sender_name", client_id),
+                    payload=payload
+                )
+                await ws_manager.broadcast_message(msg, client_id, data["recipient_id"])
+    except WebSocketDisconnect:
+        ws_manager.disconnect(websocket, client_id)
+    except Exception:
+        ws_manager.disconnect(websocket, client_id)
 
 @router.get("/history")
 async def get_message_history(

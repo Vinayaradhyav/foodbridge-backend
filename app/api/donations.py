@@ -225,14 +225,26 @@ async def update_donation(
         update_data=donation_update
     )
 
+@router.post("/{donation_id}/cancel")
+@router.put("/{donation_id}/cancel")
+async def cancel_donation(
+    donation_id: str,
+    current_user: dict = Depends(require_role(["donor", "admin", "receiver", "volunteer"]))
+):
+    """Cancel a donation order across the platform."""
+    return await donation_service.cancel_donation(
+        donation_id=donation_id,
+        donor_id=current_user.get("firebase_uid", "admin_super")
+    )
+
 @router.delete("/{donation_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_donation(
     donation_id: str,
-    current_user: dict = Depends(require_role(["donor", "admin"]))
+    current_user: dict = Depends(require_role(["donor", "admin", "receiver", "volunteer"]))
 ):
-    """Delete a donation. Enforces that only the owner can delete it."""
+    """Delete a donation record permanently."""
     await donation_service.delete_donation(
         donation_id=donation_id,
-        donor_id=current_user["firebase_uid"]
+        donor_id=current_user.get("firebase_uid", "admin_super")
     )
     return None

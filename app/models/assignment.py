@@ -1,4 +1,4 @@
-import random
+import secrets
 from datetime import datetime, timezone
 from typing import Dict, Any
 
@@ -8,13 +8,16 @@ class AssignmentModel:
         """
         Create a new assignment document for MongoDB.
         """
+        fallback_otp = str(secrets.randbelow(9000) + 1000)
         return {
             "donation_id": assignment_data.get("donation_id"),
             "volunteer_id": assignment_data.get("volunteer_id"),
             "pickup_location": assignment_data.get("pickup_location"),
             "delivery_location": assignment_data.get("delivery_location"),
             "status": "PENDING",
-            "pickup_otp": str(random.randint(1000, 9999)),
+            "pickup_otp": fallback_otp,
+            "delivery_otp": fallback_otp,
+            "handover_otp": fallback_otp,
             "assigned_at": datetime.now(timezone.utc),
             "accepted_at": None,
             "completed_at": None

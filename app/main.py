@@ -293,6 +293,7 @@ from app.api.assignments import router as assignments_router
 from app.api.notifications import router as notifications_router
 from app.api.emergencies import router as emergencies_router
 from app.api.ai_emergency import router as ai_emergency_router
+from app.api.nlp import router as nlp_router
 from app.api.ai import router as ai_router
 from app.api.priority import router as priority_router
 from app.api.matching import router as matching_router
@@ -307,13 +308,7 @@ from app.api.messages import router as messages_router
 from app.api.caption_checker import router as caption_checker_router
 from app.api.backup import router as backup_router
 
-from app.api.v1.auth_routes import router as auth_v1_router
-from app.api.v1.ngo_routes import router as ngo_v1_router
-from app.api.v1.donation_routes import router as donation_v1_router
 
-app.include_router(auth_v1_router, prefix="/api/v1")
-app.include_router(ngo_v1_router, prefix="/api/v1")
-app.include_router(donation_v1_router, prefix="/api/v1")
 
 app.include_router(auth_router, prefix="/api")
 app.include_router(users_router, prefix="/api")
@@ -322,7 +317,9 @@ app.include_router(assignments_router, prefix="/api")
 app.include_router(notifications_router, prefix="/api")
 app.include_router(messages_router, prefix="/api")
 app.include_router(emergencies_router, prefix="/api")
+app.include_router(emergencies_router, prefix="/api/v1")
 app.include_router(ai_emergency_router, prefix="/api")
+app.include_router(nlp_router, prefix="/api")
 app.include_router(ai_router, prefix="/api")
 app.include_router(priority_router, prefix="/api")
 app.include_router(matching_router, prefix="/api/matching")
@@ -339,3 +336,12 @@ app.include_router(analytics_router, prefix="/api/analytics")
 app.include_router(analytics_router, prefix="/api/ai/analytics")
 app.include_router(audit_router, prefix="/api")
 app.include_router(backup_router, prefix="/api")
+
+# ==================== STATIC FILE MOUNT (Permanent Uploaded Donation Photos) ====================
+import os
+from fastapi.staticfiles import StaticFiles
+
+uploads_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "uploads")
+os.makedirs(os.path.join(uploads_dir, "donations"), exist_ok=True)
+app.mount("/uploads", StaticFiles(directory=uploads_dir), name="uploads")
+

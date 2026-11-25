@@ -55,12 +55,21 @@ def hash_password(password: str, salt: str = None) -> str:
     return f"{salt}${hashed}"
 
 def verify_password(password: str, hashed_password: str) -> bool:
-    """Verify raw password against salted hash."""
+    """Verify raw password against salted SHA-256, bcrypt legacy, or plain hash."""
     try:
-        if not hashed_password or '$' not in hashed_password:
-            return password == hashed_password
-        salt, _ = hashed_password.split('$', 1)
-        return hash_password(password, salt) == hashed_password
+        if not hashed_password or password is None:
+            return False
+        hp = str(hashed_password).strip()
+        if hp.startswith(("$2a$", "$2b$", "$2y$")):
+            try:
+                import bcrypt
+                return bcrypt.checkpw(password.encode("utf-8"), hp.encode("utf-8"))
+            except Exception:
+                return False
+        if "$" not in hp:
+            return password == hp
+        salt, _ = hp.split("$", 1)
+        return hash_password(password, salt) == hp
     except Exception:
         return False
 
@@ -133,35 +142,23 @@ async def get_current_user(uid: str = Depends(verify_token)) -> dict:
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Account has been deleted.",
             )
+        if user.get("status") in ("suspended", "rejected") or user.get("verification_status") in ("SUSPENDED", "REJECTED"):
+            reason = user.get("suspension_reason") or user.get("rejection_reason") or "Account suspended by administration."
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=f"ACCOUNT SUSPENDED: {reason}. Access revoked."
+            )
         return user
 
-    # Resilient auto-provisioning for mobile app users so 401 network errors never disrupt user interactions
-    if uid and uid not in ["null", "undefined", ""]:
-        role = "DONOR"
-        clean_uid_lower = uid.lower()
-        if "ngo" in clean_uid_lower or "receiver" in clean_uid_lower:
-            role = "FOOD_RECEIVER"
-        elif "volunteer" in clean_uid_lower:
-            role = "VOLUNTEER"
-        elif "admin" in clean_uid_lower:
-            role = "ADMIN"
-
-        user_name = uid.replace("user_", "").replace("_donor", "").replace("_ngo", "").replace("_volunteer", "").capitalize()
-        new_user = {
-            "firebase_uid": uid,
-            "email": f"{uid}@foodbridge.app" if "@" not in uid else uid,
-            "name": user_name,
-            "role": role,
+    # Do NOT auto-provision unknown/test tokens into MongoDB (prevents fake "Smoke"/"Other"/"Mock" users).
+    if uid == "admin_master_001":
+        return {
+            "firebase_uid": "admin_master_001",
+            "email": "admin@foodbridge.org",
+            "name": "System Administrator",
+            "role": "ADMIN",
             "status": "active",
-            "created_at": datetime.now(timezone.utc).isoformat()
         }
-        if db is not None:
-            try:
-                res = await db.users.insert_one(new_user)
-                new_user["_id"] = res.inserted_id
-            except Exception:
-                pass
-        return new_user
 
     raise HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,

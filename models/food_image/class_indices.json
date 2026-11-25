@@ -1,1 +1,10 @@
-{"Bread": 0, "Cooked Meals": 1, "Curry": 2, "Fruits": 3, "Groceries": 4, "Other": 5, "Packaged Food": 6, "Rice": 7, "Vegetables": 8}
+{
+  "Cooked_Food": 0,
+  "Fruits": 1,
+  "Vegetables": 2,
+  "Groceries_and_Staples": 3,
+  "Water_and_Beverages": 4,
+  "Bakery_and_Dairy": 5,
+  "Non_Food_Negative": 6,
+  "Mixed_Donation_Scenes": 7
+}

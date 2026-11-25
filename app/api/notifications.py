@@ -3,7 +3,9 @@ from typing import List
 from app.services.notification_service import (
     get_user_notifications,
     mark_as_read,
-    mark_all_as_read
+    mark_all_as_read,
+    delete_notification,
+    clear_all_notifications
 )
 from app.schemas.notification import NotificationResponse
 from app.core.security import get_current_user
@@ -30,9 +32,20 @@ async def fetch_admin_notifications(current_user: dict = Depends(get_current_use
     from datetime import datetime, timezone, timedelta
     import uuid
     
-    # 1. Sync recent important events as admin notifications
+    # 1. Sync recent important events as admin notifications (strictly respecting admin Clear-All watermark!)
     now = datetime.now(timezone.utc)
-    recent_threshold = now - timedelta(hours=24) # Only sync last 24h for MVP
+    recent_threshold = now - timedelta(hours=24)
+    try:
+        wm_doc = await mongodb.db.system_settings.find_one({"key": "admin_notifications_cleared_at"})
+        if wm_doc and wm_doc.get("timestamp"):
+            wm_ts = wm_doc["timestamp"]
+            if isinstance(wm_ts, datetime):
+                if wm_ts.tzinfo is None:
+                    wm_ts = wm_ts.replace(tzinfo=timezone.utc)
+                if wm_ts > recent_threshold:
+                    recent_threshold = wm_ts
+    except Exception:
+        pass
     
     # Sync Emergency Requests
     em_cursor = mongodb.db.emergencies.find({"created_at": {"$gte": recent_threshold}})
@@ -142,16 +155,38 @@ async def fetch_admin_notifications(current_user: dict = Depends(get_current_use
 
 @router.put("/{notification_id}/read", status_code=status.HTTP_204_NO_CONTENT)
 async def read_notification(notification_id: str, current_user: dict = Depends(get_current_user)):
-    target_user_id = current_user.get("firebase_uid")
-    if current_user.get("role", "").upper() == "ADMIN":
-        target_user_id = "admin_broadcast"
+    target_user_id: str = "admin_broadcast" if current_user.get("role", "").upper() == "ADMIN" else str(current_user.get("firebase_uid") or current_user.get("_id") or "user")
     await mark_as_read(notification_id, target_user_id)
     return
 
 @router.put("/read-all", status_code=status.HTTP_204_NO_CONTENT)
 async def read_all_notifications(current_user: dict = Depends(get_current_user)):
-    target_user_id = current_user.get("firebase_uid")
-    if current_user.get("role", "").upper() == "ADMIN":
-        target_user_id = "admin_broadcast"
+    target_user_id: str = "admin_broadcast" if current_user.get("role", "").upper() == "ADMIN" else str(current_user.get("firebase_uid") or current_user.get("_id") or "user")
     await mark_all_as_read(target_user_id)
     return
+
+@router.delete("/clear-all", status_code=status.HTTP_200_OK)
+async def clear_all(current_user: dict = Depends(get_current_user)):
+    from app.database.mongodb import mongodb
+    from datetime import datetime, timezone
+    target_user_id = current_user.get("firebase_uid") or str(current_user.get("_id", "user"))
+    if current_user.get("role", "").upper() == "ADMIN":
+        try:
+            await mongodb.db.system_settings.update_one(
+                {"key": "admin_notifications_cleared_at"},
+                {"$set": {"key": "admin_notifications_cleared_at", "timestamp": datetime.now(timezone.utc)}},
+                upsert=True,
+            )
+        except Exception:
+            pass
+        target_user_id = "admin_broadcast"
+    deleted = await clear_all_notifications(target_user_id)
+    return {"status": "success", "deleted_count": deleted}
+
+@router.delete("/{notification_id}", status_code=status.HTTP_200_OK)
+async def delete_single_notification(notification_id: str, current_user: dict = Depends(get_current_user)):
+    target_user_id = current_user.get("firebase_uid") or str(current_user.get("_id", "user"))
+    if current_user.get("role", "").upper() == "ADMIN":
+        target_user_id = "admin_broadcast"
+    await delete_notification(notification_id, target_user_id)
+    return {"status": "success", "notification_id": notification_id}

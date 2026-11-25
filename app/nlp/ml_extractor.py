@@ -1,22 +1,18 @@
 from typing import Dict, Any
 from datetime import datetime, timezone, timedelta
 from app.nlp.base import BaseEmergencyExtractor
-from app.ai.chatbot.multilingual_nlp import multilingual_nlp_engine
+from app.ai.chatbot.indic_nlp_engine import indic_nlp_engine
 
 class MultilingualMLEmergencyExtractor(BaseEmergencyExtractor):
     """
-    AI Module 5 Supervised Multilingual Machine Learning Extractor.
-    Extracts structured relief requirements across English, Kannada, Hindi, Tamil, and Telugu.
+    AI Module: Supervised Multilingual Machine Learning Extractor.
+    Extracts structured relief requirements across English, Kannada, Hindi, and Code-Mixed text.
     """
 
     def extract(self, text: str) -> Dict[str, Any]:
-        lang = multilingual_nlp_engine.detect_language(text)
-        intent, confidence = multilingual_nlp_engine.classify_intent(text, lang)
-        entities = multilingual_nlp_engine.extract_entities(text)
+        data = indic_nlp_engine.extract_entities(text)
 
-        urgency_str = entities.get("urgency", "MEDIUM")
-        
-        # Calculate intelligent deadline based on extracted urgency
+        urgency_str = str(data.get("urgency_level") or data.get("urgency") or "HIGH").upper()
         now = datetime.now(timezone.utc)
         if urgency_str == "CRITICAL":
             deadline = now + timedelta(hours=3)
@@ -25,13 +21,11 @@ class MultilingualMLEmergencyExtractor(BaseEmergencyExtractor):
         else:
             deadline = now + timedelta(hours=24)
 
-        return {
-            "food_type": entities.get("food_type", "Assorted Meals"),
-            "quantity": entities.get("quantity", 50),
-            "number_of_people": entities.get("number_of_people", 30),
-            "location": entities.get("location", "Bangalore"),
-            "emergency_type": entities.get("disaster_type", "Flood Relief"),
-            "urgency": urgency_str,
-            "deadline": deadline.isoformat(),
-            "confidence": round(confidence, 3)
-        }
+        data["deadline"] = deadline.isoformat()
+        if not data.get("food_type"):
+            data["food_type"] = data.get("food_name") or data.get("food_category") or "Cooked Meals"
+        data["location"] = data.get("delivery_location")
+        if data.get("delivery_coordinates"):
+            data["delivery_coordinates"] = list(data["delivery_coordinates"])
+
+        return data

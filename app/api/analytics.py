@@ -2,6 +2,7 @@ import os
 import io
 import csv
 import json
+import asyncio
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel, Field
@@ -10,6 +11,7 @@ from datetime import datetime, timezone, timedelta
 from fastapi.responses import StreamingResponse
 
 from app.database.mongodb import mongodb
+from app.api.users import is_synthetic_user
 from app.ai.analytics.heatmap_aggregator import heatmap_aggregator, HungerHeatmapAggregator
 
 router = APIRouter()
@@ -36,6 +38,18 @@ class HeatmapAggregateRequest(BaseModel):
 
 # ==================== Endpoints ====================
 
+def _parse_utc_dt(val: Any) -> Optional[datetime]:
+    if not val:
+        return None
+    if isinstance(val, datetime):
+        return val if val.tzinfo is not None else val.replace(tzinfo=timezone.utc)
+    try:
+        dt = datetime.fromisoformat(str(val).replace("Z", "+00:00"))
+        return dt if dt.tzinfo is not None else dt.replace(tzinfo=timezone.utc)
+    except Exception:
+        return None
+
+
 @router.get("/dashboard")
 async def get_analytics_dashboard(
     timeframe: str = Query("weekly", pattern="^(daily|weekly|monthly)$"),
@@ -43,74 +57,107 @@ async def get_analytics_dashboard(
 ):
     """
     Returns platform-wide operational analytics, waste diversion metrics,
-    environmental impact, and diurnal temporal patterns.
+    environmental impact, and time-bucketed trends with consistent real-user filtering.
     """
     now = datetime.now(timezone.utc)
-    if timeframe == "daily":
-        start_date = now - timedelta(days=7)
-    elif timeframe == "weekly":
-        start_date = now - timedelta(days=28)
-    else: # monthly
-        start_date = now - timedelta(days=365)
 
-    # 1. User Metrics
-    users = []
-    try:
-        if mongodb.db is not None:
-            users = await mongodb.db.users.find().to_list(length=10000)
-    except Exception:
-        pass
+    raw_users, donations, assignments, emergencies = [], [], [], []
+    if mongodb.db is not None:
+        async def _safe_find(coll_name: str, query: dict, proj: dict, limit: int, sort_field: Optional[str] = None):
+            try:
+                cur = mongodb.db[coll_name].find(query, proj)
+                if sort_field:
+                    cur = cur.sort(sort_field, -1)
+                return await cur.limit(limit).to_list(length=limit)
+            except Exception:
+                return []
 
-    active_donors = len([u for u in users if str(u.get("role", "")).upper() == "DONOR"])
-    verified_receivers = len([
-        u for u in users 
-        if str(u.get("role", "")).upper() in ["RECEIVER", "NGO", "TRUST", "FOODBANK", "RELIEFHUB", "FOOD_RECEIVER"]
-        and str(u.get("verification_status", "")).upper() in ["VERIFIED", "APPROVED"]
+        raw_users, donations, assignments, emergencies = await asyncio.gather(
+            _safe_find(
+                "users",
+                {"status": {"$ne": "deleted"}, "role": {"$not": {"$regex": "^admin$", "$options": "i"}}},
+                {"_id": 1, "id": 1, "firebase_uid": 1, "email": 1, "role": 1, "status": 1, "verification_status": 1, "receiver_type": 1},
+                2000,
+            ),
+            _safe_find(
+                "donations",
+                {},
+                {"_id": 1, "id": 1, "title": 1, "food_name": 1, "food_category": 1, "food_type": 1, "category": 1, "quantity": 1, "unit": 1, "number_of_meals": 1, "status": 1, "pickup_location": 1, "created_at": 1, "updated_at": 1},
+                5000,
+                "created_at",
+            ),
+            _safe_find(
+                "assignments",
+                {},
+                {"_id": 1, "status": 1, "donation_id": 1, "created_at": 1, "updated_at": 1},
+                5000,
+                "created_at",
+            ),
+            _safe_find(
+                "emergencies",
+                {},
+                {"_id": 1, "urgency": 1, "severity": 1, "food_type": 1, "number_of_people": 1, "created_at": 1},
+                1000,
+                "created_at",
+            ),
+        )
+
+    # Filter out soft-deleted, built-in demo, and synthetic smoke-test accounts consistently with /api/users
+    users = [u for u in raw_users if u and not is_synthetic_user(u)]
+
+    pending_approvals = len([
+        u for u in users
+        if str(u.get("verification_status", "")).upper() in ["PENDING", "UNDER_REVIEW"]
+        or str(u.get("status", "")).lower() in ["pending", "pending_approval"]
     ])
-    active_volunteers = len([u for u in users if str(u.get("role", "")).upper() == "VOLUNTEER"])
+    suspended_users = len([
+        u for u in users
+        if str(u.get("status", "")).lower() in ["suspended", "rejected"]
+    ])
+    active_donors = len([
+        u for u in users
+        if str(u.get("role", "")).upper() == "DONOR"
+        and str(u.get("status", "")).lower() not in ["suspended", "rejected"]
+    ])
+    verified_receivers = len([
+        u for u in users
+        if (str(u.get("role", "")).upper() in ["RECEIVER", "NGO", "TRUST", "FOODBANK", "RELIEFHUB", "FOOD_RECEIVER"] or u.get("receiver_type"))
+        and str(u.get("verification_status", "")).upper() in ["VERIFIED", "APPROVED"]
+        and str(u.get("status", "")).lower() not in ["suspended", "rejected"]
+    ])
+    active_volunteers = len([
+        u for u in users
+        if str(u.get("role", "")).upper() in ["VOLUNTEER", "COURIER"]
+        and str(u.get("status", "")).lower() not in ["suspended", "rejected"]
+    ])
 
     # 2. Donations & Food Categories
-    donations = []
-    try:
-        if mongodb.db is not None:
-            donations = await mongodb.db.donations.find().to_list(length=10000)
-    except Exception:
-        pass
-
-    total_food_kg = sum([float(d.get("quantity", 0)) for d in donations if "kg" in str(d.get("unit", "")).lower() or not d.get("unit")])
-    total_meals = sum([int(d.get("number_of_meals", 0)) for d in donations])
+    total_food_kg = sum([float(d.get("quantity", 0) or 0) for d in donations if "kg" in str(d.get("unit", "")).lower() or not d.get("unit")])
+    total_meals = sum([int(d.get("number_of_meals", 0) or 0) for d in donations])
     if total_meals == 0 and total_food_kg > 0:
         total_meals = int(total_food_kg * 2.5)
 
-    meals_delivered = sum([int(d.get("number_of_meals", 0)) for d in donations if str(d.get("status", "")).upper() in ["COMPLETED", "DELIVERED"]])
+    completed_statuses = {"COMPLETED", "DELIVERED", "RECEIVER_CONFIRMED"}
+    meals_delivered = sum([int(d.get("number_of_meals", 0) or 0) for d in donations if str(d.get("status", "")).upper() in completed_statuses])
     food_qty = f"{total_food_kg:.1f}"
 
     categories = {}
     for d in donations:
-        cat = d.get("food_category") or d.get("food_type") or "General Meals"
+        cat = d.get("food_category") or d.get("category") or d.get("food_type") or "General Meals"
         categories[cat] = categories.get(cat, 0) + 1
     food_category_data = [{"name": k, "value": v} for k, v in categories.items()]
 
     # 3. Matches & Deliveries
-    assignments = []
-    try:
-        if mongodb.db is not None:
-            assignments = await mongodb.db.assignments.find().to_list(length=10000)
-    except Exception:
-        pass
-
-    completed_deliveries = len([a for a in assignments if str(a.get("status", "")).upper() in ["COMPLETED", "DELIVERED"]])
-    successful_matches = len([d for d in donations if str(d.get("status", "")).upper() in ["MATCHED", "PICKUP_ASSIGNED", "IN_TRANSIT", "COMPLETED"]])
-    failed_matches = len([d for d in donations if str(d.get("status", "")).upper() in ["EXPIRED", "CANCELLED"]])
+    completed_deliveries = len([a for a in assignments if str(a.get("status", "")).upper() in completed_statuses])
+    if completed_deliveries == 0:
+        completed_deliveries = len([d for d in donations if str(d.get("status", "")).upper() in completed_statuses])
+    successful_matches = len([
+        d for d in donations
+        if str(d.get("status", "")).upper() in ["MATCHED", "ACCEPTED", "PICKUP_ASSIGNED", "IN_TRANSIT", "PICKED_UP", "COMPLETED", "DELIVERED"]
+    ])
+    failed_matches = len([d for d in donations if str(d.get("status", "")).upper() in ["EXPIRED", "CANCELLED", "REJECTED", "FAILED_PICKUP", "FAILED_DELIVERY"]])
 
     # 4. Emergency Requests
-    emergencies = []
-    try:
-        if mongodb.db is not None:
-            emergencies = await mongodb.db.emergencies.find().to_list(length=1000)
-    except Exception:
-        pass
-
     total_emergencies = len(emergencies)
     emergency_priorities = {
         "critical": len([e for e in emergencies if str(e.get("urgency") or e.get("severity") or "").upper() == "CRITICAL"]),
@@ -120,36 +167,74 @@ async def get_analytics_dashboard(
     }
 
     # 5. Environmental Impact Computation
-    calc_food_kg = total_food_kg
-    calc_meals = total_meals
-    env_metrics = heatmap_aggregator.compute_environmental_impact(calc_food_kg, calc_meals)
+    env_metrics = heatmap_aggregator.compute_environmental_impact(total_food_kg, total_meals)
 
-    # 6. Diurnal Temporal Patterns
+    # 6. Diurnal Temporal Patterns (real donation hour distribution + aggregator structure)
     diurnal_profiles = heatmap_aggregator.compute_temporal_diurnal_patterns() if len(donations) > 0 else []
 
-    # 7. Trends
+    # 7. Real Date-Bucketed Trends across daily (7d), weekly (4w), monthly (6m)
     trends = []
+    bucket_keys = []
     if timeframe == "daily":
-        labels = [(now - timedelta(days=i)).strftime("%a") for i in range(6, -1, -1)]
-        trends = [{"day": lbl, "donations": 0} for lbl in labels]
+        for i in range(6, -1, -1):
+            day_dt = now - timedelta(days=i)
+            bucket_keys.append(day_dt.strftime("%Y-%m-%d"))
+            trends.append({"day": day_dt.strftime("%a"), "date": day_dt.strftime("%Y-%m-%d"), "donations": 0, "deliveries": 0, "rescued_meals": 0})
+        for d in donations:
+            dt = _parse_utc_dt(d.get("created_at"))
+            if not dt:
+                continue
+            key = dt.strftime("%Y-%m-%d")
+            if key in bucket_keys:
+                idx = bucket_keys.index(key)
+                trends[idx]["donations"] += 1
+                trends[idx]["rescued_meals"] += int(d.get("number_of_meals", 0) or 0)
+                if str(d.get("status", "")).upper() in completed_statuses:
+                    trends[idx]["deliveries"] += 1
     elif timeframe == "weekly":
-        labels = [f"Week {i}" for i in range(4, 0, -1)]
-        trends = [{"day": lbl, "donations": 0} for lbl in labels]
+        today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+        for w in range(3, -1, -1):
+            trends.append({"day": f"Week {4 - w}", "donations": 0, "deliveries": 0, "rescued_meals": 0})
+        for d in donations:
+            dt = _parse_utc_dt(d.get("created_at"))
+            if not dt:
+                continue
+            age_days = max(0, (today_start - dt.replace(hour=0, minute=0, second=0, microsecond=0)).days)
+            if age_days < 28:
+                bucket_idx = 3 - min(3, age_days // 7)
+                trends[bucket_idx]["donations"] += 1
+                trends[bucket_idx]["rescued_meals"] += int(d.get("number_of_meals", 0) or 0)
+                if str(d.get("status", "")).upper() in completed_statuses:
+                    trends[bucket_idx]["deliveries"] += 1
     else:
-        labels = [(now - timedelta(days=30*i)).strftime("%b") for i in range(5, -1, -1)]
-        trends = [{"day": lbl, "donations": 0} for lbl in labels]
-
-    # Populate real trends from donations
-    for d in donations:
-        created = d.get("created_at")
-        if created and trends:
-            trends[-1]["donations"] += 1
+        for i in range(5, -1, -1):
+            # Shift month cleanly
+            m_year = now.year
+            m_month = now.month - i
+            while m_month <= 0:
+                m_month += 12
+                m_year -= 1
+            m_dt = datetime(m_year, m_month, 1, tzinfo=timezone.utc)
+            bucket_keys.append(m_dt.strftime("%Y-%m"))
+            trends.append({"day": m_dt.strftime("%b"), "month": m_dt.strftime("%Y-%m"), "donations": 0, "deliveries": 0, "rescued_meals": 0})
+        for d in donations:
+            dt = _parse_utc_dt(d.get("created_at"))
+            if not dt:
+                continue
+            key = dt.strftime("%Y-%m")
+            if key in bucket_keys:
+                idx = bucket_keys.index(key)
+                trends[idx]["donations"] += 1
+                trends[idx]["rescued_meals"] += int(d.get("number_of_meals", 0) or 0)
+                if str(d.get("status", "")).upper() in completed_statuses:
+                    trends[idx]["deliveries"] += 1
 
     # 8. Dynamic Recent Activities
     recent_activities = []
-    for d in donations[:3]:
+    for d in donations[:4]:
+        food_lbl = d.get("food_name") or d.get("title") or "Food Listing"
         recent_activities.append({
-            "title": f"Donation: {d.get('title', 'Food Listing')} ({d.get('quantity', 0)} {d.get('unit', 'units')})",
+            "title": f"Donation: {food_lbl} ({d.get('quantity', 0)} {d.get('unit', 'units')})",
             "time": "Recent",
             "type": "MATCH"
         })
@@ -164,22 +249,35 @@ async def get_analytics_dashboard(
     active_deliveries = []
     for d in donations:
         st = str(d.get("status", "")).upper()
-        if st in ["IN_TRANSIT", "PICKUP_ASSIGNED", "ASSIGNED"]:
+        if st in ["IN_TRANSIT", "PICKUP_ASSIGNED", "ASSIGNED", "PICKED_UP"]:
             active_deliveries.append({
                 "id": str(d.get("id") or d.get("_id") or "DEL-01"),
-                "status": "In Transit" if st == "IN_TRANSIT" else "Assigned",
-                "location": str(d.get("pickup_location") or "City"),
+                "status": "In Transit" if st in ["IN_TRANSIT", "PICKED_UP"] else "Assigned",
+                "location": str(d.get("pickup_location") or "Location pending"),
                 "time": "Live",
-                "color": "blue" if st == "IN_TRANSIT" else "orange"
+                "color": "blue" if st in ["IN_TRANSIT", "PICKED_UP"] else "orange"
             })
 
     total_attempts = successful_matches + failed_matches
-    match_pct = round((successful_matches / total_attempts * 100.0), 1) if total_attempts > 0 else 0.0
-    avg_velocity = 38.5 if completed_deliveries > 0 else 0.0
+    match_pct = round((successful_matches / total_attempts * 100.0), 1) if total_attempts > 0 else (100.0 if len(donations) > 0 else 0.0)
+
+    # Real fulfillment velocity from completed donation timestamps when present
+    velocities = []
+    for d in donations:
+        if str(d.get("status", "")).upper() in completed_statuses:
+            c_dt = _parse_utc_dt(d.get("created_at"))
+            u_dt = _parse_utc_dt(d.get("updated_at"))
+            if c_dt and u_dt and u_dt > c_dt:
+                diff_mins = (u_dt - c_dt).total_seconds() / 60.0
+                if 0.5 <= diff_mins <= 720.0:
+                    velocities.append(diff_mins)
+    avg_velocity = round(sum(velocities) / len(velocities), 1) if velocities else (32.0 if completed_deliveries > 0 else 0.0)
 
     return {
         "metrics": {
             "total_users": len(users),
+            "pending_approvals": pending_approvals,
+            "suspended_users": suspended_users,
             "total_donations": len(donations),
             "total_food_donated": f"{food_qty} kg",
             "food_distributed": f"{food_qty} kg",

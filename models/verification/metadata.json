@@ -1,0 +1,36 @@
+{
+  "model_type": "RandomForestClassifier (150 trees, max_depth=8, Gini impurity)",
+  "features": [
+    "reg_id_official_match",
+    "reg_id_len",
+    "reg_id_unique_ratio",
+    "org_name_word_count",
+    "org_has_relief_keyword",
+    "signatory_word_count",
+    "phone_valid_indian",
+    "phone_unique_digits",
+    "email_domain_valid",
+    "has_valid_6digit_pin",
+    "address_word_count",
+    "fleet_per_100_meals"
+  ],
+  "dataset_size": 6000,
+  "train_samples": 4800,
+  "test_samples": 1200,
+  "test_accuracy": 1.0,
+  "roc_auc": 1.0,
+  "feature_importances": {
+    "reg_id_official_match": 0.0047,
+    "reg_id_len": 0.1305,
+    "reg_id_unique_ratio": 0.0718,
+    "org_name_word_count": 0.014,
+    "org_has_relief_keyword": 0.0388,
+    "signatory_word_count": 0.058,
+    "phone_valid_indian": 0.0004,
+    "phone_unique_digits": 0.2509,
+    "email_domain_valid": 0.0006,
+    "has_valid_6digit_pin": 0.0024,
+    "address_word_count": 0.1263,
+    "fleet_per_100_meals": 0.3016
+  }
+}

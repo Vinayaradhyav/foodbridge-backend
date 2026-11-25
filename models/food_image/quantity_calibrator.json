@@ -1,0 +1,12 @@
+{
+  "standard_water_bottle_liters": 1.0,
+  "standard_water_can_liters": 20.0,
+  "standard_energy_drink_liters": 0.35,
+  "standard_atta_sack_kg": 10.0,
+  "standard_rice_bag_kg": 25.0,
+  "standard_milk_pouch_liters": 0.5,
+  "standard_cooked_meal_serving_kg": 0.4,
+  "standard_thali_serving_kg": 0.85,
+  "standard_taco_serving_kg": 0.2,
+  "requires_donor_confirmation_default": true
+}

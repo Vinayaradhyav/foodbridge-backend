@@ -11,7 +11,7 @@ class UserModel:
         phone: str, 
         role: str,
         location: str = "",
-        receiver_type: str = None
+        receiver_type: Optional[str] = None
     ) -> Dict[str, Any]:
         """
         Create a new user document for MongoDB.
@@ -33,7 +33,7 @@ class UserModel:
         }
     
     @staticmethod
-    def format_for_response(user_doc: Dict[str, Any]) -> Dict[str, Any]:
+    def format_for_response(user_doc: Optional[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
         """Convert MongoDB document to Pydantic response format"""
         if not user_doc:
             return None
@@ -47,5 +47,28 @@ class UserModel:
             del response["hashed_password"]
         if "password" in response:
             del response["password"]
+
+        # Ensure required fields for UserResponse schema are never None/missing
+        if not response.get("firebase_uid"):
+            response["firebase_uid"] = response.get("id") or str(user_doc.get("_id", "unknown_uid"))
+        raw_phone = str(response.get("phone", "")).strip()
+        if not raw_phone or len(raw_phone) < 4:
+            response["phone"] = "0000000000"
+        if not response.get("name"):
+            response["name"] = response.get("organization_name") or str(response.get("email", "FoodBridge User")).split("@")[0]
+        if not response.get("role"):
+            response["role"] = "DONOR"
+        if not response.get("status"):
+            response["status"] = "active"
+        if not response.get("location"):
+            response["location"] = ""
+
+        # Normalize profile image URLs
+        img_url = response.get("profile_image_url") or response.get("avatar_url") or response.get("profile_image")
+        if img_url:
+            response["profile_image_url"] = img_url
+            response["avatar_url"] = img_url
+            response["profile_image"] = img_url
+
         return response
 

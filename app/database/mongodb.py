@@ -83,7 +83,7 @@ class MongoDBConnectionManager:
         logger.info(f"[DatabaseManager] Initializing connection to database: {settings.DATABASE_NAME}...")
 
         try:
-            self.client = AsyncIOMotorClient(
+            client = AsyncIOMotorClient(
                 settings.MONGODB_URL,
                 maxPoolSize=50,
                 minPoolSize=5,
@@ -94,11 +94,12 @@ class MongoDBConnectionManager:
                 socketTimeoutMS=30000,
                 retryWrites=True
             )
-            self.db = self.client[settings.DATABASE_NAME]
+            self.client = client
+            self.db = client[settings.DATABASE_NAME]
             
             # Execute active ping probe
             start_t = time.perf_counter()
-            await asyncio.wait_for(self.client.admin.command('ping'), timeout=3.0)
+            await asyncio.wait_for(client.admin.command('ping'), timeout=8.0)
             latency = (time.perf_counter() - start_t) * 1000.0
             
             self.last_latency_ms = round(latency, 2)
@@ -108,6 +109,7 @@ class MongoDBConnectionManager:
             self.consecutive_failures = 0
             
             logger.info(f"[DatabaseManager] Connected successfully to MongoDB! (Latency: {self.last_latency_ms} ms)")
+            asyncio.create_task(self.ensure_indexes())
             
             # Start background connection monitor
             if self._monitor_task is None or self._monitor_task.done():
@@ -127,11 +129,18 @@ class MongoDBConnectionManager:
         logger.info("[DatabaseManager] Background connection watchdog started.")
         while not self._is_shutting_down:
             try:
-                if self.status == "HEALTHY":
+                client = self.client
+                if self.status == "HEALTHY" and client is not None:
                     # Periodic lightweight ping probe every 30 seconds
                     await asyncio.sleep(30)
+                    if self._is_shutting_down:
+                        break
+                    client = self.client
+                    if client is None:
+                        self.status = "DEGRADED"
+                        continue
                     start_t = time.perf_counter()
-                    await asyncio.wait_for(self.client.admin.command('ping'), timeout=10.0)
+                    await asyncio.wait_for(client.admin.command('ping'), timeout=10.0)
                     self.last_latency_ms = round((time.perf_counter() - start_t) * 1000.0, 2)
                     self.last_ping_time = datetime.now(timezone.utc)
                     self.consecutive_failures = 0
@@ -155,12 +164,12 @@ class MongoDBConnectionManager:
     async def _attempt_reconnect(self) -> bool:
         """Internal safe reconnection routine."""
         try:
-            if self.client:
+            if self.client is not None:
                 try:
                     self.client.close()
                 except Exception:
                     pass
-            self.client = AsyncIOMotorClient(
+            client = AsyncIOMotorClient(
                 settings.MONGODB_URL,
                 maxPoolSize=50,
                 minPoolSize=5,
@@ -168,18 +177,47 @@ class MongoDBConnectionManager:
                 connectTimeoutMS=15000,
                 socketTimeoutMS=30000
             )
-            self.db = self.client[settings.DATABASE_NAME]
+            self.client = client
+            self.db = client[settings.DATABASE_NAME]
             start_t = time.perf_counter()
-            await asyncio.wait_for(self.client.admin.command('ping'), timeout=10.0)
+            await asyncio.wait_for(client.admin.command('ping'), timeout=10.0)
             self.last_latency_ms = round((time.perf_counter() - start_t) * 1000.0, 2)
             self.status = "HEALTHY"
             self.last_ping_time = datetime.now(timezone.utc)
             self.consecutive_failures = 0
+            asyncio.create_task(self.ensure_indexes())
             return True
         except Exception as e:
             self.consecutive_failures += 1
             self.status = "DEGRADED"
             return False
+
+    async def ensure_indexes(self):
+        """Creates idempotent MongoDB indexes so admin & user queries stay fast."""
+        if self.db is None:
+            return
+        index_specs = [
+            ("users", [("firebase_uid", 1)], {"background": True}),
+            ("users", [("email", 1)], {"background": True}),
+            ("users", [("phone", 1)], {"background": True}),
+            ("users", [("role", 1), ("status", 1)], {"background": True}),
+            ("users", [("verification_status", 1)], {"background": True}),
+            ("users", [("created_at", -1)], {"background": True}),
+            ("donations", [("status", 1), ("created_at", -1)], {"background": True}),
+            ("donations", [("donor_id", 1), ("created_at", -1)], {"background": True}),
+            ("donations", [("accepted_by", 1)], {"background": True}),
+            ("donations", [("food_order_id", 1)], {"background": True}),
+            ("donations", [("idempotency_key", 1)], {"background": True}),
+            ("emergencies", [("status", 1), ("created_at", -1)], {"background": True}),
+            ("assignments", [("status", 1), ("donation_id", 1)], {"background": True}),
+            ("messages", [("conversation_id", 1), ("created_at", 1)], {"background": True}),
+            ("messages", [("donation_id", 1), ("created_at", 1)], {"background": True}),
+        ]
+        for coll_name, keys, opts in index_specs:
+            try:
+                await self.db[coll_name].create_index(keys, **opts)
+            except Exception as idx_err:
+                logger.debug(f"[DatabaseManager] Index skip {coll_name}.{keys}: {idx_err}")
 
     async def check_health(self) -> Dict[str, Any]:
         """Provides non-sensitive telemetry on database health and read/write availability."""
@@ -228,9 +266,11 @@ class MongoDBConnectionManager:
                 await self._monitor_task
             except asyncio.CancelledError:
                 pass
-        if self.client:
+        client = self.client
+        if client is not None:
             logger.info("[DatabaseManager] Terminating MongoDB connection pool...")
-            self.client.close()
+            client.close()
+            self.client = None
             self.status = "DISCONNECTED"
             logger.info("[DatabaseManager] MongoDB pool closed cleanly.")
 

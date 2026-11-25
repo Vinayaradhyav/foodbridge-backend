@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+from typing import Any
 from bson import ObjectId
 from app.database.mongodb import get_database
 from app.models.audit_log import AuditLogModel
@@ -16,7 +17,16 @@ async def get_assignment_collection():
 async def get_donation_collection():
     return get_database().donations
 
-async def log_audit(entity_type: str, entity_id: str, action: str, user_id: str, old_status: str = None, new_status: str = None, reason: str = None, metadata: dict = None):
+async def log_audit(
+    entity_type: str,
+    entity_id: str,
+    action: str,
+    user_id: str,
+    old_status: str | None = None,
+    new_status: str | None = None,
+    reason: str | None = None,
+    metadata: dict[str, Any] | None = None
+):
     collection = await get_audit_collection()
     log_data = AuditLogCreate(
         entity_type=entity_type,
@@ -110,22 +120,23 @@ class WorkflowService:
         elif new_status in ["DELIVERED", "RECEIVER_CONFIRMED", "COMPLETED"]:
             donation_update = "DELIVERED"
             
-        if donation_update and donation_id:
+        donation = None
+        if donation_id:
             try:
                 don_filter = {"_id": ObjectId(donation_id)}
             except Exception:
                 don_filter = {"$or": [{"donation_id": donation_id}, {"id": donation_id}]}
             donation = await donation_col.find_one(don_filter)
-            if donation:
-                old_don_status = donation.get("status")
-                await donation_col.update_one(
-                    {"_id": donation["_id"]},
-                    {"$set": {"status": donation_update, "updated_at": datetime.now(timezone.utc)}}
-                )
-                await log_audit("Donation", str(donation["_id"]), f"Auto-sync from Assignment {new_status}", volunteer_id, old_don_status, donation_update)
+
+        if donation_update and donation:
+            old_don_status = donation.get("status")
+            await donation_col.update_one(
+                {"_id": donation["_id"]},
+                {"$set": {"status": donation_update, "updated_at": datetime.now(timezone.utc)}}
+            )
+            await log_audit("Donation", str(donation["_id"]), f"Auto-sync from Assignment {new_status}", volunteer_id, old_don_status, donation_update)
             
         # Trigger Notifications
-        donation = await donation_col.find_one({"_id": ObjectId(donation_id)}) if 'donation' not in locals() else donation
         if donation:
             if new_status == "VOLUNTEER_ON_THE_WAY":
                 # Notify Donor
@@ -175,7 +186,7 @@ class WorkflowService:
         return await assignment_col.find_one({"_id": ObjectId(assignment_id)})
 
     @staticmethod
-    async def verify_pickup_otp(assignment_id: str, volunteer_id: str, otp: str, photo_url: str = None):
+    async def verify_pickup_otp(assignment_id: str, volunteer_id: str, otp: str, photo_url: str | None = None):
         assignment_col = await get_assignment_collection()
         try:
             filter_q = {"_id": ObjectId(assignment_id)}
@@ -263,7 +274,7 @@ class WorkflowService:
         return await assignment_col.find_one(assign_filter)
 
     @staticmethod
-    async def verify_delivery_otp(assignment_id: str, volunteer_id: str, otp: str, proof_url: str = None):
+    async def verify_delivery_otp(assignment_id: str, volunteer_id: str, otp: str, proof_url: str | None = None):
         assignment_col = await get_assignment_collection()
         try:
             assignment = await assignment_col.find_one({"_id": ObjectId(assignment_id)})
@@ -313,9 +324,9 @@ class WorkflowService:
         donation_id: str,
         user_id: str,
         otp: str,
-        proof_image: str = None,
-        signature_base64: str = None,
-        signer_name: str = None,
+        proof_image: str | None = None,
+        signature_base64: str | None = None,
+        signer_name: str | None = None,
         quantity_confirmed: bool = True,
         condition_good: bool = True
     ) -> dict:
@@ -338,20 +349,22 @@ class WorkflowService:
         if not donation:
             raise HTTPException(status_code=404, detail="Donation record not found")
 
-        # Validate 4-digit numeric OTP (Zomato delivery model: matches stored OTP or last 4 digits of food order ID)
-        stored_otp = str(donation.get("handover_otp") or donation.get("delivery_otp") or donation.get("pickup_otp") or "").strip()
+        # Validate 4-digit numeric OTP strictly against the authentic donation delivery OTP
+        stored_otp = str(donation.get("handover_otp") or donation.get("delivery_otp") or donation.get("otp_delivery") or donation.get("otp") or "").strip()
         order_id = str(donation.get("food_order_id") or donation.get("donation_id") or "").strip()
         order_digits = "".join(filter(str.isdigit, order_id))
         order_otp = order_digits[-4:] if len(order_digits) >= 4 else ""
-        clean_otp = str(otp).strip()
+        clean_otp = otp.strip()
 
         is_valid = (
             (stored_otp and clean_otp == stored_otp) or
-            (order_otp and clean_otp == order_otp) or
-            clean_otp in ["1234", "0000"]
+            (order_otp and clean_otp == order_otp)
         )
         if not is_valid:
-            raise HTTPException(status_code=400, detail="Invalid 4-digit handover OTP provided. Please match the last 4 digits of the food order ID.")
+            raise HTTPException(
+                status_code=400,
+                detail=f"Invalid handover OTP. The code entered ({clean_otp}) does not match the 4-digit OTP provided by the receiver."
+            )
 
         # Persist completion and digital evidence in MongoDB
         update_data = {

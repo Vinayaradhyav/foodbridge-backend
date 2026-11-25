@@ -41,9 +41,12 @@ class MessageService:
             "conversation_id": conversation_id,
             "sender_id": sender_id,
             "sender_name": sender_name or "User",
+            "sender_role": payload.sender_role or "donor",
             "recipient_id": recipient_id,
             "recipient_name": recipient_name,
+            "recipient_role": payload.recipient_role or "admin",
             "text": payload.text.strip(),
+            "content": payload.text.strip(),
             "timestamp": now,
             "read": False,
             "context_type": payload.context_type or "GENERAL",
@@ -82,16 +85,27 @@ class MessageService:
             is_to_admin = "admin" in recipient_id.lower()
             notif_target = "admin_broadcast" if is_to_admin else recipient_id
             notif_id = f"notif_msg_{msg_id}"
-            await db.notifications.insert_one({
+            notif_doc = {
                 "notification_id": notif_id,
                 "user_id": notif_target,
                 "title": f"💬 New Message from {sender_name or 'User'}",
                 "message": payload.text.strip(),
+                "body": payload.text.strip(),
                 "type": "CHAT_MESSAGE",
                 "related_entity_id": conversation_id,
                 "read": False,
                 "created_at": now
-            })
+            }
+            await db.notifications.insert_one(notif_doc)
+
+            # Trigger live FCM push notification
+            try:
+                from app.services.notification_service import send_push_notification
+                from app.models.notification import NotificationModel
+                await send_push_notification(NotificationModel(**notif_doc))
+            except Exception as fcm_err:
+                print(f"[MessageService] FCM push trigger warning: {fcm_err}")
+
             if is_to_admin:
                 # Also create user_id='admin' copy so both queries find it
                 await db.notifications.insert_one({
@@ -99,6 +113,7 @@ class MessageService:
                     "user_id": "admin",
                     "title": f"💬 New Message from {sender_name or 'User'}",
                     "message": payload.text.strip(),
+                    "body": payload.text.strip(),
                     "type": "CHAT_MESSAGE",
                     "related_entity_id": conversation_id,
                     "read": False,
@@ -174,10 +189,23 @@ class MessageService:
     @staticmethod
     async def mark_read(conversation_id: str, user_id: str) -> int:
         db = get_database()
-        res = await db.messages.update_many(
-            {"conversation_id": conversation_id, "recipient_id": user_id, "read": False},
-            {"$set": {"read": True}}
-        )
+        u_clean = user_id.strip()
+        digits = "".join([c for c in u_clean if c.isdigit()])
+        query = {
+            "$and": [
+                {
+                    "$or": [
+                        {"conversation_id": conversation_id},
+                        {"conversation_id": {"$regex": u_clean, "$options": "i"}},
+                        {"recipient_id": u_clean},
+                        {"recipient_id": "admin"} if "admin" in u_clean.lower() else {"recipient_id": u_clean},
+                        {"recipient_id": {"$regex": digits}} if len(digits) >= 7 else {"recipient_id": u_clean}
+                    ]
+                },
+                {"read": False}
+            ]
+        }
+        res = await db.messages.update_many(query, {"$set": {"read": True}})
         return res.modified_count
 
     @staticmethod
@@ -198,12 +226,56 @@ class MessageService:
     @staticmethod
     async def get_history(user_a: str, user_b: str, limit: int = 50, context_id: Optional[str] = None) -> List[Dict[str, Any]]:
         db = get_database()
-        u1, u2 = user_a.strip().lower(), user_b.strip().lower()
+        
+        async def resolve_aliases(uid: str) -> List[str]:
+            clean = uid.strip()
+            aliases = {clean, clean.lower()}
+            if "admin" in clean.lower():
+                aliases.update(["admin", "admin_master_001", "admin_broadcast", "system administrator"])
+                return list(aliases)
+            
+            digits = "".join([c for c in clean if c.isdigit()])
+            if len(digits) >= 7:
+                aliases.add(digits)
+                if len(digits) == 10:
+                    aliases.add(f"+91{digits}")
+                    aliases.add(f"91{digits}")
+            
+            try:
+                doc = await db.users.find_one({
+                    "$or": [
+                        {"firebase_uid": clean},
+                        {"id": clean},
+                        {"email": clean},
+                        {"phone": clean},
+                        {"name": {"$regex": f"^{clean}$", "$options": "i"}},
+                        {"phone": {"$regex": digits}} if len(digits) >= 7 else {"firebase_uid": clean}
+                    ]
+                })
+                if doc:
+                    for k in ["firebase_uid", "id", "phone", "email", "name"]:
+                        val = doc.get(k)
+                        if val:
+                            aliases.add(str(val))
+                            aliases.add(str(val).lower())
+                    p = doc.get("phone")
+                    if p:
+                        p_digits = "".join([c for c in str(p) if c.isdigit()])
+                        if len(p_digits) >= 7:
+                            aliases.add(p_digits)
+                            aliases.add(f"+91{p_digits}")
+            except Exception:
+                pass
+            return list(aliases)
+
+        aliases_a = await resolve_aliases(user_a)
+        aliases_b = await resolve_aliases(user_b)
+
         participant_query = {
             "$or": [
-                {"sender_id": {"$in": [u1, user_a]}, "recipient_id": {"$in": [u2, user_b]}},
-                {"sender_id": {"$in": [u2, user_b]}, "recipient_id": {"$in": [u1, user_a]}},
-                {"conversation_id": {"$regex": f"({u1}.*{u2}|{u2}.*{u1})", "$options": "i"}}
+                {"sender_id": {"$in": aliases_a}, "recipient_id": {"$in": aliases_b}},
+                {"sender_id": {"$in": aliases_b}, "recipient_id": {"$in": aliases_a}},
+                {"conversation_id": {"$regex": f"({user_a}|{user_b})", "$options": "i"}}
             ]
         }
         if context_id:
@@ -211,7 +283,12 @@ class MessageService:
             query = {
                 "$and": [
                     participant_query,
-                    {"$or": [{"context_id": clean_ctx}, {"conversation_id": {"$regex": clean_ctx, "$options": "i"}}]}
+                    {"$or": [
+                        {"context_id": clean_ctx},
+                        {"donation_id": clean_ctx},
+                        {"emergency_id": clean_ctx},
+                        {"conversation_id": {"$regex": clean_ctx, "$options": "i"}}
+                    ]}
                 ]
             }
         else:
@@ -225,7 +302,13 @@ class MessageService:
             doc.setdefault("message_id", doc["id"])
             doc["content"] = doc.get("text", "")
             ts = doc.get("timestamp")
-            doc["created_at"] = ts.isoformat() if hasattr(ts, "isoformat") else str(ts or "")
+            if isinstance(ts, datetime):
+                if ts.tzinfo is None:
+                    ts = ts.replace(tzinfo=timezone.utc)
+                doc["created_at"] = ts.isoformat()
+                doc["timestamp"] = ts.isoformat()
+            else:
+                doc["created_at"] = str(ts or "")
             messages.append(doc)
         return messages
 
@@ -340,7 +423,13 @@ class MessageService:
             doc.setdefault("message_id", doc["id"])
             doc["content"] = doc.get("text", "")
             ts = doc.get("timestamp")
-            doc["created_at"] = ts.isoformat() if hasattr(ts, "isoformat") else str(ts or "")
+            if isinstance(ts, datetime):
+                if ts.tzinfo is None:
+                    ts = ts.replace(tzinfo=timezone.utc)
+                doc["created_at"] = ts.isoformat()
+                doc["timestamp"] = ts.isoformat()
+            else:
+                doc["created_at"] = str(ts or "")
             messages.append(doc)
         return messages
 
@@ -356,7 +445,13 @@ class MessageService:
             doc.setdefault("message_id", doc["id"])
             doc["content"] = doc.get("text", "")
             ts = doc.get("timestamp")
-            doc["created_at"] = ts.isoformat() if hasattr(ts, "isoformat") else str(ts or "")
+            if isinstance(ts, datetime):
+                if ts.tzinfo is None:
+                    ts = ts.replace(tzinfo=timezone.utc)
+                doc["created_at"] = ts.isoformat()
+                doc["timestamp"] = ts.isoformat()
+            else:
+                doc["created_at"] = str(ts or "")
             messages.append(doc)
         messages.reverse()
         return messages

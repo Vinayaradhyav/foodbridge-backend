@@ -45,6 +45,8 @@ class DonationBase(BaseModel):
     packaging_type: Optional[str] = "Boxes"
     description: Optional[str] = ""
     food_image: Optional[str] = ""
+    food_images: Optional[list[str]] = []
+    image_metadata: Optional[list[dict]] = []
     category: Optional[str] = None
     veg_nonveg: Optional[str] = None
     ai_vision_status: Optional[str] = None
@@ -75,6 +77,8 @@ class DonationUpdate(BaseModel):
     packaging_type: Optional[str] = None
     description: Optional[str] = None
     food_image: Optional[str] = None
+    food_images: Optional[list[str]] = None
+    image_metadata: Optional[list[dict]] = None
     status: Optional[str] = None
     ngo_id: Optional[str] = None
     accepted_by: Optional[str] = None

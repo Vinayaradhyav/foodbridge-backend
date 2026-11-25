@@ -31,9 +31,12 @@ class MessageResponse(BaseModel):
     conversation_id: str
     sender_id: str
     sender_name: str
+    sender_role: Optional[str] = None
     recipient_id: str
     recipient_name: str
+    recipient_role: Optional[str] = None
     text: str
+    content: Optional[str] = None
     timestamp: datetime
     read: bool = False
     context_type: str = "GENERAL"

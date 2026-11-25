@@ -4,14 +4,43 @@ from datetime import datetime
 import re
 
 class UserBase(BaseModel):
-    name: str = Field(..., min_length=2, max_length=100)
+    name: str = Field(..., min_length=1, max_length=100)
     email: EmailStr
-    phone: str = Field(..., min_length=4, max_length=25)
+    phone: Optional[str] = Field(default="0000000000", max_length=25)
     role: str = Field(..., description="Role must be one of: donor, FOOD_RECEIVER, volunteer, admin")
     location: Optional[str] = ""
     verification_status: Optional[str] = None
-    receiver_type: Optional[str] = Field(None, description="Type of receiver: NGO_TRUST, FOOD_BANK, RELIEF_HUB, COMMUNITY_ORGANIZATION, SHELTER_CARE_CENTER, OTHER_AUTHORIZED_ORGANIZATION")
+    receiver_type: Optional[str] = Field(None, description="Type of receiver: NGO_TRUST, FOOD_BANK, RELIEF_HUB, COMMUNITY_ORGANIZATION, SHELTER_CARE_CENTER, OTHER_AUTHORIZED_ORGANIZATION, NORMAL_INDIVIDUAL_RECEIVER")
     is_email_verified: Optional[bool] = False
+    
+    # Profile media persistence (Part A)
+    profile_image_url: Optional[str] = None
+    profile_image: Optional[str] = None
+    avatar_url: Optional[str] = None
+    profile_image_storage_path: Optional[str] = None
+    profile_image_updated_at: Optional[datetime] = None
+
+    # Government Identity & Organization Credentials (Part B & C)
+    darpan_id: Optional[str] = None
+    pan_number: Optional[str] = None
+    cin_number: Optional[str] = None
+    darpan_verification_status: Optional[str] = None
+    darpan_verified_at: Optional[datetime] = None
+    darpan_verification_method: Optional[str] = None
+    
+    # Normal Individual Receiver Specific Fields (Part B2)
+    id_proof_type: Optional[str] = None
+    id_proof_number_masked: Optional[str] = None
+    family_size: Optional[int] = None
+    dietary_needs: Optional[str] = None
+
+    # Fraud Detection & AI Trust Scoring (Part D)
+    fraud_risk_score: Optional[int] = None
+    fraud_risk_level: Optional[str] = None
+    fraud_indicators: Optional[List[str]] = None
+    rejection_reason: Optional[str] = None
+    suspension_reason: Optional[str] = None
+    permanent_ban: Optional[bool] = None
     
     # Receiver / NGO Specific Fields
     organization_id: Optional[str] = None
@@ -114,10 +143,10 @@ class LoginRequest(BaseModel):
     role: Optional[str] = None
 
 class ForgotPasswordRequest(BaseModel):
-    email: EmailStr
+    email: str
 
 class ResetPasswordRequest(BaseModel):
-    email: EmailStr
+    email: str
     otp: str
     new_password: str = Field(..., min_length=6)
 
