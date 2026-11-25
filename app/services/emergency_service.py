@@ -1,6 +1,7 @@
 from typing import List, Optional, Dict, Any
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 import uuid
+import re
 from fastapi import HTTPException
 from bson import ObjectId
 
@@ -74,6 +75,47 @@ class EmergencyService:
 
     @staticmethod
     async def create_emergency(data: EmergencyRequestCreate) -> EmergencyRequestResponse:
+        now = datetime.now(timezone.utc)
+        cutoff_spam = now - timedelta(minutes=15)
+        raw_loc = (getattr(data, "delivery_location", "") or "").strip()
+        raw_food = (getattr(data, "food_category", "") or getattr(data, "food_type", "") or "").strip()
+        ngo_id = getattr(data, "ngo_id", None) or getattr(data, "requester_id", None)
+
+        # Anti-Spam Duplicate Flood Gate (3+ consecutive identical requests from same user & location)
+        if ngo_id and raw_loc:
+            recent_count = await mongodb.db.emergencies.count_documents({
+                "$or": [{"ngo_id": ngo_id}, {"requester_id": ngo_id}],
+                "delivery_location": {"$regex": f"^{re.escape(raw_loc)}$", "$options": "i"},
+                "created_at": {"$gte": cutoff_spam},
+                "status": {"$nin": ["CANCELLED", "FULFILLED"]}
+            })
+            if recent_count >= 3:
+                auto_rej = {
+                    "request_id": f"rej_{uuid.uuid4().hex[:8]}",
+                    "ngo_id": ngo_id,
+                    "food_category": raw_food,
+                    "delivery_location": raw_loc,
+                    "status": "AUTO_REJECTED",
+                    "rejection_reason": "DUPLICATE_FLOOD_PROTECTION_3_PLUS",
+                    "warning_message": "Excessive back-to-back emergency requests from this location.",
+                    "created_at": now
+                }
+                await mongodb.db.emergencies.insert_one(auto_rej)
+                try:
+                    await mongodb.db.audit_logs.insert_one({
+                        "action": "EMERGENCY_AUTO_REJECTED",
+                        "entity": "emergency",
+                        "actor_id": ngo_id,
+                        "reason": "3+ consecutive emergency requests submitted back-to-back from same location",
+                        "timestamp": now.isoformat()
+                    })
+                except Exception:
+                    pass
+                raise HTTPException(
+                    status_code=429,
+                    detail="Duplicate request limit reached: You have already submitted 3 back-to-back emergency requests from this location. Please wait for incoming relief dispatch."
+                )
+
         priority_data = EmergencyService._calculate_priority(data.urgency, data.number_of_people, data.deadline)
 
         emergency_dict = data.model_dump()

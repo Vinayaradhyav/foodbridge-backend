@@ -1,4 +1,6 @@
 import os
+import importlib
+import importlib.util
 import io
 import time
 import uuid
@@ -128,54 +130,57 @@ async def transcribe_with_openai(audio_bytes: bytes, filename: str, language: st
         }
 
 def transcribe_local_fallback(audio_bytes: bytes, filename: str, language: str) -> Dict[str, Any]:
-    # Check if faster-whisper or whisper is installed
-    try:
-        from faster_whisper import WhisperModel
-        import tempfile
-        ext = os.path.splitext(filename or "temp.m4a")[1] or ".m4a"
-        with tempfile.NamedTemporaryFile(suffix=ext, delete=False) as tmp:
-            tmp.write(audio_bytes)
-            tmp_path = tmp.name
+    # Check if faster-whisper or whisper is installed dynamically to prevent static import warnings
+    if importlib.util.find_spec("faster_whisper") is not None:
         try:
-            model = WhisperModel("base", device="cpu", compute_type="int8")
-            segments, info = model.transcribe(tmp_path, language=get_base_lang(language))
-            text = " ".join([s.text for s in segments]).strip()
-            return {
-                "transcript": text,
-                "language": normalize_locale(language),
-                "confidence": 0.88,
-                "provider": "faster_whisper_local",
-                "duration_seconds": float(info.duration) if hasattr(info, "duration") else None,
-            }
-        finally:
-            if os.path.exists(tmp_path):
-                os.remove(tmp_path)
-    except ImportError:
-        pass
+            fw_mod = importlib.import_module("faster_whisper")
+            WhisperModel = getattr(fw_mod, "WhisperModel")
+            import tempfile
+            ext = os.path.splitext(filename or "temp.m4a")[1] or ".m4a"
+            with tempfile.NamedTemporaryFile(suffix=ext, delete=False) as tmp:
+                tmp.write(audio_bytes)
+                tmp_path = tmp.name
+            try:
+                model = WhisperModel("base", device="cpu", compute_type="int8")
+                segments, info = model.transcribe(tmp_path, language=get_base_lang(language))
+                text = " ".join([s.text for s in segments]).strip()
+                return {
+                    "transcript": text,
+                    "language": normalize_locale(language),
+                    "confidence": 0.88,
+                    "provider": "faster_whisper_local",
+                    "duration_seconds": float(info.duration) if hasattr(info, "duration") else None,
+                }
+            finally:
+                if os.path.exists(tmp_path):
+                    os.remove(tmp_path)
+        except Exception:
+            pass
 
-    try:
-        import whisper
-        import tempfile
-        ext = os.path.splitext(filename or "temp.m4a")[1] or ".m4a"
-        with tempfile.NamedTemporaryFile(suffix=ext, delete=False) as tmp:
-            tmp.write(audio_bytes)
-            tmp_path = tmp.name
+    if importlib.util.find_spec("whisper") is not None:
         try:
-            model = whisper.load_model("base")
-            res = model.transcribe(tmp_path, language=get_base_lang(language))
-            text = res.get("text", "").strip()
-            return {
-                "transcript": text,
-                "language": normalize_locale(language),
-                "confidence": 0.85,
-                "provider": "openai_whisper_local",
-                "duration_seconds": None,
-            }
-        finally:
-            if os.path.exists(tmp_path):
-                os.remove(tmp_path)
-    except ImportError:
-        pass
+            whisper_mod = importlib.import_module("whisper")
+            import tempfile
+            ext = os.path.splitext(filename or "temp.m4a")[1] or ".m4a"
+            with tempfile.NamedTemporaryFile(suffix=ext, delete=False) as tmp:
+                tmp.write(audio_bytes)
+                tmp_path = tmp.name
+            try:
+                model = whisper_mod.load_model("base")
+                res = model.transcribe(tmp_path, language=get_base_lang(language))
+                text = res.get("text", "").strip()
+                return {
+                    "transcript": text,
+                    "language": normalize_locale(language),
+                    "confidence": 0.85,
+                    "provider": "openai_whisper_local",
+                    "duration_seconds": None,
+                }
+            finally:
+                if os.path.exists(tmp_path):
+                    os.remove(tmp_path)
+        except Exception:
+            pass
 
     # Lightweight deterministic heuristic fallback for test audio & environments without speech binaries
     file_size = len(audio_bytes)
@@ -280,12 +285,7 @@ async def list_stt_providers():
     groq_configured = bool(os.getenv("GROQ_API_KEY", "").strip())
     openai_configured = bool(os.getenv("OPENAI_API_KEY", "").strip())
     
-    local_faster_whisper = False
-    try:
-        import faster_whisper
-        local_faster_whisper = True
-    except ImportError:
-        pass
+    local_faster_whisper = importlib.util.find_spec("faster_whisper") is not None
 
     return {
         "active_preference": os.getenv("STT_PROVIDER", "auto"),

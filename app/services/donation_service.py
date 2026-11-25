@@ -178,49 +178,69 @@ def _extract_four_digits(value: str | None) -> str | None:
 
 def _derive_canonical_order_and_otp(doc: dict) -> tuple[str, str]:
     """
-    Guarantees every donation has a canonical Zomato-style Order ID (`FB-XXXX`)
-    whose last 4 numeric digits deterministically match `pickup_otp`,
-    `delivery_otp`, and `handover_otp`.
+    Guarantees every donation has a unique chronological Order ID (`FB-YYYYMMDD-HHMM-XXXX`)
+    and a strictly confidential, independent Rapido-style Handover OTP (`XXXX`)
+    where the OTP NEVER repeats or matches the order ID digits.
     """
-    raw_order = str(doc.get("food_order_id") or "").strip()
+    raw_order = str(doc.get("food_order_id") or doc.get("order_id") or doc.get("donation_id") or "").strip()
+    
+    # Check if document already has a distinct, valid 4-digit handover OTP
+    existing_otp = None
+    for field in ("handover_otp", "pickup_otp", "delivery_otp"):
+        val = str(doc.get(field) or "").strip()
+        if val.isdigit() and len(val) == 4:
+            existing_otp = val
+            break
+
+    # Determine canonical order ID
     if raw_order.upper().startswith(("FB-", "#FB-")):
-        otp = _extract_four_digits(raw_order)
-        if otp:
-            return f"FB-{otp}", otp
+        canonical_order = raw_order.lstrip("#")
+    else:
+        now = datetime.now(timezone.utc)
+        date_str = now.strftime("%Y%m%d")
+        time_str = now.strftime("%H%M")
+        seed = str(doc.get("_id") or doc.get("id") or "foodbridge")
+        digest_num = int(hashlib.sha256(seed.encode("utf-8")).hexdigest(), 16)
+        order_num = (digest_num % 9000) + 1000
+        canonical_order = f"FB-{date_str}-{time_str}-{order_num}"
 
-    raw_don_id = str(doc.get("donation_id") or "").strip()
-    if raw_don_id.upper().startswith(("FB-", "#FB-")):
-        otp = _extract_four_digits(raw_don_id)
-        if otp:
-            return f"FB-{otp}", otp
+    # Ensure OTP is an independent, non-repeated PIN (Rapido pickup security principle)
+    if existing_otp and not canonical_order.endswith(existing_otp):
+        return canonical_order, existing_otp
 
-    for field in ("handover_otp", "delivery_otp", "pickup_otp"):
-        otp = _extract_four_digits(str(doc.get(field) or ""))
-        if otp and len(str(doc.get(field) or "").strip()) == 4 and str(doc.get(field) or "").strip().isdigit():
-            return f"FB-{otp}", str(doc.get(field)).strip()
-
-    otp = _extract_four_digits(raw_don_id)
-    if otp:
-        return f"FB-{otp}", otp
-
-    seed = str(doc.get("_id") or doc.get("id") or "foodbridge")
-    digest_num = int(hashlib.sha256(seed.encode("utf-8")).hexdigest(), 16)
-    otp = str((digest_num % 9000) + 1000)
-    return f"FB-{otp}", otp
+    # Generate or derive a distinct OTP that strictly does NOT match the order ID suffix
+    seed = str(doc.get("_id") or doc.get("id") or "foodbridge_otp")
+    digest_num = int(hashlib.sha256((seed + "_secret_handover").encode("utf-8")).hexdigest(), 16)
+    derived_otp = str((digest_num % 9000) + 1000)
+    if canonical_order.endswith(derived_otp):
+        derived_otp = str((int(derived_otp) + 241) % 9000 + 1000)
+    return canonical_order, derived_otp
 
 
 async def _generate_unique_order_and_otp() -> tuple[str, str]:
-    for _ in range(12):
-        order_num = secrets.randbelow(9000) + 1000
-        candidate_order = f"FB-{order_num}"
+    now = datetime.now(timezone.utc)
+    date_str = now.strftime("%Y%m%d")
+    time_str = now.strftime("%H%M")
+    
+    for _ in range(25):
+        seq_num = secrets.randbelow(9000) + 1000
+        candidate_order = f"FB-{date_str}-{time_str}-{seq_num}"
         existing = await mongodb.db.donations.find_one(
-            {"food_order_id": candidate_order},
+            {"$or": [{"food_order_id": candidate_order}, {"order_id": candidate_order}]},
             {"_id": 1},
         )
         if not existing:
-            return candidate_order, str(order_num)
-    fallback_num = secrets.randbelow(9000) + 1000
-    return f"FB-{fallback_num}", str(fallback_num)
+            # Independent, non-repeated Rapido-style pickup OTP (never matching order digits)
+            otp_num = secrets.randbelow(9000) + 1000
+            while str(otp_num) in candidate_order or str(otp_num) == str(seq_num):
+                otp_num = secrets.randbelow(9000) + 1000
+            return candidate_order, str(otp_num)
+            
+    fallback_seq = secrets.randbelow(9000) + 1000
+    fallback_otp = secrets.randbelow(9000) + 1000
+    while fallback_otp == fallback_seq:
+        fallback_otp = secrets.randbelow(9000) + 1000
+    return f"FB-{date_str}-{time_str}-{fallback_seq}", str(fallback_otp)
 
 
 async def _enrich_donation_names(docs: list[dict]) -> list[dict]:
@@ -409,18 +429,55 @@ async def create_donation(donor_id: str, donation) -> dict:
             res = await _enrich_donation_names([existing])
             return res[0]
 
-    # 2. Temporal deduplication window (300s) for double-taps, retries, or cold-start replays
+    # 2. Duplicate flood & back-to-back spam protection (3+ requests rule)
     norm_food = re.sub(r"\s+", " ", str(doc.get("food_name") or "").strip()).lower()
     norm_loc = re.sub(r"\s+", " ", str(doc.get("pickup_location") or "").strip()).lower()
     try:
         qty_val = float(doc.get("quantity") or 0)
     except Exception:
         qty_val = 0.0
+
+    # Check for rapid spam / flooding (3+ consecutive identical requests from same user & location)
+    cutoff_spam = now - timedelta(minutes=15)
+    recent_flood_count = await mongodb.db.donations.count_documents({
+        "$or": [{"donor_id": donor_id}, {"donor_uid": donor_id}],
+        "created_at": {"$gte": cutoff_spam},
+        "food_name": {"$regex": f"^{re.escape(norm_food)}$", "$options": "i"},
+        "status": {"$nin": ["CANCELLED", "EXPIRED"]}
+    })
+    if recent_flood_count >= 3:
+        logger.warning(f"[Anti-Spam Flood Gate] 3+ back-to-back requests rejected for donor={donor_id}, loc={norm_loc}")
+        rejection_doc = {
+            "donor_id": donor_id,
+            "donor_uid": donor_id,
+            "food_name": doc.get("food_name"),
+            "pickup_location": doc.get("pickup_location"),
+            "quantity": qty_val,
+            "status": "AUTO_REJECTED",
+            "rejection_reason": "DUPLICATE_FLOOD_PROTECTION_3_PLUS",
+            "warning_message": "Excessive back-to-back duplicate requests detected from this location.",
+            "created_at": now,
+            "blocked_at": now.isoformat()
+        }
+        await mongodb.db.donations.insert_one(rejection_doc)
+        await mongodb.db.audit_logs.insert_one({
+            "action": "DONATION_AUTO_REJECTED",
+            "entity": "donation",
+            "actor_id": donor_id,
+            "reason": "3+ consecutive identical requests submitted back-to-back",
+            "timestamp": now.isoformat()
+        })
+        raise HTTPException(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            detail="Duplicate request limit reached: You have already submitted 3 back-to-back requests for this requirement at this location. Please wait for volunteers or relief dispatch."
+        )
+
+    # 3. Temporal deduplication window (300s) for double-taps, retries, or cold-start replays
     cutoff = now - timedelta(seconds=300)
     recent_cursor = mongodb.db.donations.find({
         "$or": [{"donor_id": donor_id}, {"donor_uid": donor_id}],
         "created_at": {"$gte": cutoff},
-        "status": {"$nin": ["CANCELLED", "EXPIRED", "REJECTED"]},
+        "status": {"$nin": ["CANCELLED", "EXPIRED", "REJECTED", "AUTO_REJECTED"]},
     }).sort("created_at", -1).limit(10)
     async for cand in recent_cursor:
         c_food = re.sub(r"\s+", " ", str(cand.get("food_name") or "").strip()).lower()
